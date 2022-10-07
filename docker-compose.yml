@@ -22,12 +22,11 @@ services:
     ports:
       - '4000:4000'
     volumes:
-      - .:/app
-      - build:/app/_build
-      - build:/app/assets/node_modules
+      - ./:/app
+      - /app/_build
+      - /app/deps
+      - /app/priv/uploads
 
 volumes:
   db:
-    driver: local
-  build:
     driver: local
