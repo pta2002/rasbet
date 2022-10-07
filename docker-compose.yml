@@ -10,7 +10,23 @@ services:
       - '5432:5432'
     volumes:
       - db:/var/lib/postgresql/data
+  web:
+    build: .
+    depends_on:
+      - db
+    environment:
+      MIX_ENV: dev
+    env_file:
+      - .env.dev
+    ports:
+      - '4000:4000'
+    volumes:
+      - .:/app
+      - build:/app/_build
+      - build:/app/assets/node_modules
 
 volumes:
   db:
+    driver: local
+  build:
     driver: local
