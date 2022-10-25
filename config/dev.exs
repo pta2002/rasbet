@@ -2,7 +2,7 @@ import Config
 
 # Configure your database
 config :rasbet, Rasbet.Repo,
-  url: System.fetch_env!("DATABASE_URL"),
+  url: System.get_env("DATABASE_URL") || "postgres://postgres:postgres@localhost:5432/rasbet_dev",
   # username: "postgres",
   # password: "postgres",
   # hostname: "localhost",

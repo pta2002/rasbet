@@ -1,5 +1,19 @@
-<main class="container">
-  <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-  <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+<.container class="my-10">
+  <.alert
+    color="info"
+    class="mb-5"
+    label={get_flash(@conn, :info)}
+    phx-click="lv:clear-flash"
+    phx-value-key="info"
+  />
+
+  <.alert
+    color="danger"
+    class="mb-5"
+    label={get_flash(@conn, :error)}
+    phx-click="lv:clear-flash"
+    phx-value-key="error"
+  />
+
   <%= @inner_content %>
-</main>
+</.container>

@@ -4,7 +4,7 @@ defmodule Rasbet.Wallet.Transaction do
 
   schema "transactions" do
     field :type, Ecto.Enum, values: [:deposit, :withdrawal, :bet, :betwinning]
-    field :value, :integer
+    field :value, Money.Ecto.Amount.Type
     field :user_id, :id
 
     timestamps()
