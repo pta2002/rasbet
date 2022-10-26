@@ -78,6 +78,9 @@ defmodule RasbetWeb.Router do
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+
+    live "/users/wallet", WalletLive.Index, :index
+    live "/users/wallet/top-up", WalletLive.Index, :topup
   end
 
   scope "/", RasbetWeb do

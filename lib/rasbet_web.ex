@@ -47,6 +47,8 @@ defmodule RasbetWeb do
       use Phoenix.LiveView,
         layout: {RasbetWeb.LayoutView, "live.html"}
 
+      use PetalComponents
+
       unquote(view_helpers())
     end
   end

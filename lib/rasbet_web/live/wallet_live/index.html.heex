@@ -1,0 +1,13 @@
+<.h1>Wallet</.h1>
+
+<.button link_type="live_patch" to={Routes.wallet_index_path(@socket, :topup)} label="Top-up"/>
+
+<%= if @live_action == :topup do %>
+  <.modal max_width="lg" title="Top-up">
+    <.p>Select your payment method</.p>
+
+    <div class="flex justify-end">
+      <.button label="Cancel" variant="outline" color="danger" phx-click={PetalComponents.Modal.hide_modal()} />
+    </div>
+  </.modal>
+<% end %>
