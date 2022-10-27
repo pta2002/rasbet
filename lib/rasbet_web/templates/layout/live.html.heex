@@ -10,6 +10,14 @@
   />
 
   <.alert
+    color="success"
+    class="mb-5"
+    label={live_flash(@flash, :success)}
+    phx-click="lv:clear-flash"
+    phx-value-key="success"
+  />
+
+  <.alert
     color="danger"
     class="mb-5"
     label={live_flash(@flash, :error)}

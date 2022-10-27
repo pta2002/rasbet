@@ -6,6 +6,7 @@ defmodule Rasbet.Wallet.Transaction do
     field :type, Ecto.Enum, values: [:deposit, :withdrawal, :bet, :betwinning]
     field :value, Money.Ecto.Amount.Type
     field :user_id, :id
+    field :description, :string
 
     timestamps()
   end
@@ -13,6 +14,6 @@ defmodule Rasbet.Wallet.Transaction do
   @doc false
   def changeset(transaction, attrs) do
     transaction
-    |> cast(attrs, [:type, :value, :date])
+    |> cast(attrs, [:type, :value, :description])
   end
 end

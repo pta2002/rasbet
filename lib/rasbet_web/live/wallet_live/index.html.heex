@@ -1,13 +1,48 @@
-<.h1>Wallet</.h1>
+<.h1>Carteira</.h1>
 
-<.button link_type="live_patch" to={Routes.wallet_index_path(@socket, :topup)} label="Top-up"/>
+<.button link_type="live_patch" to={Routes.wallet_index_path(@socket, :topup)} label="Depositar"/>
+
+<.h2>Transações</.h2>
+<.table>
+  <.tr>
+    <.th>Data</.th>
+    <.th>Tipo</.th>
+    <.th>Descrição</.th>
+    <.th>Valor</.th>
+  </.tr>
+  <%= for transaction <- @transactions do %>
+  <.tr>
+    <.td><%= NaiveDateTime.to_string(transaction.inserted_at) %></.td>
+    <.td><%= transaction.type %></.td>
+    <.td><%= transaction.description %></.td>
+    <.td><%= transaction.value %></.td>
+  </.tr>
+  <% end %>
+</.table>
 
 <%= if @live_action == :topup do %>
-  <.modal max_width="lg" title="Top-up">
-    <.p>Select your payment method</.p>
+  <.modal max_width="lg" title="Depositar">
+    <.form :let={f} for={@changeset} phx-change="validate" phx-submit="deposit">
+      <.form_field
+        type="radio_group"
+        form={f} field={:method}
+        layout={:row}
+        label="Método de pagamento"
+        required
+        options={[
+          "Cartão": "card",
+          "Multibanco": "multibanco",
+          "MBWay": "mbway"
+        ]}
+        phx-debounce="blur"
+      />
 
-    <div class="flex justify-end">
-      <.button label="Cancel" variant="outline" color="danger" phx-click={PetalComponents.Modal.hide_modal()} />
-    </div>
+      <.form_field type="number_input" form={f} field={:amount} label="Valor"/>
+
+      <div class="flex place-content-between">
+        <.button label="Cancelar" variant="outline" color="danger" phx-click={PetalComponents.Modal.hide_modal()} />
+        <.button label="Depositar" color="primary" type="submit" phx_disable_with="A processar..."/>
+      </div>
+    </.form>
   </.modal>
 <% end %>
