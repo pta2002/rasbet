@@ -1,4 +1,4 @@
-<.h1>Carteira</.h1>
+<.h1>Carteira - <%= @current_user.balance %></.h1>
 
 <.button link_type="live_patch" to={Routes.wallet_index_path(@socket, :topup)} label="Depositar"/>
 

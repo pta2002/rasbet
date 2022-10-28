@@ -2,6 +2,8 @@ defmodule RasbetWeb.LiveAuth do
   import Phoenix.LiveView
   import Phoenix.Component
 
+  require Ecto.Query
+
   alias Rasbet.Accounts
   alias Rasbet.Accounts.User
   alias RasbetWeb.Router.Helpers, as: Routes
@@ -19,6 +21,10 @@ defmodule RasbetWeb.LiveAuth do
       %User{} ->
         {:cont, socket}
     end
+  end
+
+  def reassign_user(%{assigns: %{current_user: user}} = socket) do
+    socket |> assign(current_user: User |> Ecto.Query.where(id: ^user.id) |> Rasbet.Repo.one!())
   end
 
   defp assign_current_user(socket, session) do

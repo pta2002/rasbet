@@ -59,12 +59,14 @@ defmodule RasbetWeb.WalletLive.Index do
         description: "Depósito"
       }
 
-      Rasbet.Repo.insert!(transaction)
+      Wallet.apply_transaction(transaction)
 
       {:noreply,
        socket
        |> put_flash(:success, "Depositou #{transaction.value}€")
-       |> redirect(to: Router.Helpers.wallet_index_path(socket, :index))}
+       |> RasbetWeb.LiveAuth.reassign_user()
+       |> assign_transactions()
+       |> push_patch(to: Router.Helpers.wallet_index_path(socket, :index))}
     else
       {:noreply, socket |> assign(:changeset, changeset)}
     end
