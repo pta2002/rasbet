@@ -15,7 +15,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: colors.orange
+        primary: {
+          50: '#FFF7EF',
+          500: '#F24711',
+          600: '#FC2C03',
+          700: '#C92403',
+        }
       }
     },
   },

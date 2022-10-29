@@ -9,6 +9,15 @@ defmodule Rasbet.Accounts.User do
     field :confirmed_at, :naive_datetime
     field :balance, Money.Ecto.Amount.Type
 
+    field :phone, EctoPhoneNumber
+    field :taxid, :string
+    field :address1, :string
+    field :address2, :string
+    # two-letter country code
+    field :country, :string
+    field :city, :string
+    field :zipcode, :string
+
     timestamps()
   end
 
@@ -31,9 +40,35 @@ defmodule Rasbet.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, [
+      :email,
+      :password,
+      :phone,
+      :taxid,
+      :address1,
+      :address2,
+      :country,
+      :city,
+      :zipcode
+    ])
     |> validate_email()
+    |> validate_address()
+    |> validate_required([:phone, :taxid])
+    |> unsafe_validate_unique(:phone, Rasbet.Repo)
+    |> unique_constraint(:phone)
     |> validate_password(opts)
+  end
+
+  def validate_address(changeset) do
+    changeset
+    |> validate_required([:address1, :country, :city, :zipcode])
+    |> validate_change(:country, fn :country, country ->
+      if not Countries.exists?(:alpha2, country) do
+        [country: "country does not exist"]
+      else
+        []
+      end
+    end)
   end
 
   defp validate_email(changeset) do

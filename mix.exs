@@ -55,7 +55,9 @@ defmodule Rasbet.MixProject do
       {:petal_components, "~> 0.18"},
       {:heroicons, "~> 0.5.0"},
       {:httpoison, "~> 1.8"},
-      {:poison, "~> 5.0"}
+      {:poison, "~> 5.0"},
+      {:countries, "~> 1.6"},
+      {:ecto_phone_number, "~> 0.4"}
     ]
   end
 

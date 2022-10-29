@@ -3,6 +3,29 @@
 @import "tailwindcss/utilities";
 
 /* This file is for your main application CSS */
+body {
+  background-color: #f6f6f6;
+}
+
+.wordmark {
+  font-family: 'Fredoka One', sans-serif;
+  @apply text-4xl px-6;
+}
+
+.nav-item {
+  font-family: 'Oswald', 'Impact', sans-serif;
+  font-weight: 500;
+  @apply text-xl h-full flex items-center justify-center transition-colors duration-150 px-8;
+}
+
+.nav-item:hover {
+  @apply bg-primary-700;
+}
+
+.nav-item.selected {
+  @apply bg-primary-700;
+}
+
 .select-wrapper select {
   @apply text-sm border-gray-300 rounded-md shadow-sm disabled:bg-gray-100 disabled:cursor-not-allowed focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:focus:border-primary-500 dark:bg-gray-800 dark:text-gray-300 focus:outline-none ;
 }
