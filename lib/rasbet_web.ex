@@ -49,6 +49,8 @@ defmodule RasbetWeb do
 
       use PetalComponents
 
+      on_mount {RasbetWeb.LiveAuth, :fetch_current_user}
+
       unquote(view_helpers())
     end
   end

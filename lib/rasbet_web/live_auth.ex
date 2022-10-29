@@ -23,6 +23,10 @@ defmodule RasbetWeb.LiveAuth do
     end
   end
 
+  def on_mount(:fetch_current_user, _params, session, socket) do
+    {:cont, assign_current_user(socket, session)}
+  end
+
   def reassign_user(%{assigns: %{current_user: user}} = socket) do
     socket |> assign(current_user: User |> Ecto.Query.where(id: ^user.id) |> Rasbet.Repo.one!())
   end

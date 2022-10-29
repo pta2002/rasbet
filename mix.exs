@@ -53,6 +53,9 @@ defmodule Rasbet.MixProject do
       {:tailwind, "~>0.1.9", runtime: Mix.env() == :dev},
       {:money, "~> 1.11"},
       {:petal_components, "~> 0.18"},
+      {:heroicons, "~> 0.5.0"},
+      {:httpoison, "~> 1.8"},
+      {:poison, "~> 5.0"}
     ]
   end
 

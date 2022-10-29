@@ -8,7 +8,8 @@
 import Config
 
 config :rasbet,
-  ecto_repos: [Rasbet.Repo]
+  ecto_repos: [Rasbet.Repo],
+  endpoint: "http://ucras.di.uminho.pt/v1"
 
 # Configures the endpoint
 config :rasbet, RasbetWeb.Endpoint,
