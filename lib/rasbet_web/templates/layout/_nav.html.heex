@@ -9,10 +9,10 @@
       <.button icon to={Routes.wallet_index_path(@socket, :index)} link_type="live_patch">
         <%= @current_user.balance %>
       </.button>
-      <.button label="Log out" link_type="a" to={Routes.user_session_path(@socket, :delete)} method={:delete}/>
+      <.button label="Sair" link_type="a" to={Routes.user_session_path(@socket, :delete)} method={:delete}/>
     <% else %>
-      <.button label="Log in" link_type="a" to={Routes.user_session_path(@socket, :new)}/>
-      <%= link "Sign up",
+      <.button label="Iniciar sessão" link_type="a" to={Routes.user_session_path(@socket, :new)}/>
+      <%= link "Registar",
         to: Routes.user_registration_path(@socket, :new),
         class: "text-white hover:text-primary border-white hover:border-primary-600 hover:text-primary-700 active:bg-primary-200 hover:bg-primary-50 focus:border-primary-700 focus:shadow-outline-primary text-sm leading-5 px-4 py-2 font-medium rounded-md inline-flex items-center justify-center border focus:outline-none transition duration-150 ease-in-out"
       %>
