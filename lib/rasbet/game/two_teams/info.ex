@@ -3,13 +3,14 @@ defmodule Rasbet.Game.TwoTeams.Info do
   import Ecto.Changeset
 
   schema "two_team_game_info" do
-    field :api_id, :string
-    field :away_score, :integer
-    field :away_team, :string
-    field :home_score, :integer
-    field :home_team, :string
-    field :start_time, :utc_datetime
-    field :completed, :boolean
+    field(:api_id, :string)
+    field(:away_score, :integer)
+    field(:away_team, :string)
+    field(:home_score, :integer)
+    field(:home_team, :string)
+    field(:start_time, :utc_datetime)
+    field(:completed, :boolean)
+    field(:odds, :map)
 
     timestamps()
   end
@@ -19,21 +20,23 @@ defmodule Rasbet.Game.TwoTeams.Info do
     info
     |> cast(attrs, [
       :api_id,
-      :home_team,
-      :away_team,
-      :start_time,
-      :end_time,
-      :home_score,
       :away_score,
-      :completed
+      :away_team,
+      :home_score,
+      :home_team,
+      :start_time,
+      :completed,
+      :odds
     ])
     |> validate_required([
       :api_id,
-      :home_team,
+      :away_score,
       :away_team,
+      :home_score,
+      :home_team,
       :start_time,
-      :end_time,
-      :completed
+      :completed,
+      :odds
     ])
     |> unique_constraint(:api_id)
   end

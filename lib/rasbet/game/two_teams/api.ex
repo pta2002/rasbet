@@ -2,6 +2,7 @@ defmodule Rasbet.Game.TwoTeams.Api do
   use HTTPoison.Base
 
   alias Rasbet.Game.TwoTeams.Info
+  alias Rasbet.Repo
 
   @moduledoc """
   # Functions for interfacing with the provided API
@@ -23,6 +24,20 @@ defmodule Rasbet.Game.TwoTeams.Api do
       {:ok, %{body: {:error, reason}}} -> {:error, reason}
       {:error, reason} -> {:error, reason}
     end
+  end
+
+  def list_games do
+    Repo.all(Info)
+  end
+
+  def create_game(attrs \\ %{}) do
+    %Info{}
+    |> Info.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def delete_game(%Info{} = game_info) do
+    Repo.delete(game_info)
   end
 
   defp cast_game(
