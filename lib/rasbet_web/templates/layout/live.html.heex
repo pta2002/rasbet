@@ -1,29 +1,31 @@
-<%= render "_nav.html", socket: @socket, current_user: @current_user %>
+<div class="h-screen flex flex-col">
+  <%= render "_nav.html", socket: @socket, current_user: @current_user %>
 
-<.container class="my-10">
-  <.alert
-    color="info"
-    class="mb-5"
-    label={live_flash(@flash, :info)}
-    phx-click="lv:clear-flash"
-    phx-value-key="info"
-  />
+  <.container class="my-10 grow">
+    <.alert
+      color="info"
+      class="mb-5"
+      label={live_flash(@flash, :info)}
+      phx-click="lv:clear-flash"
+      phx-value-key="info"
+    />
 
-  <.alert
-    color="success"
-    class="mb-5"
-    label={live_flash(@flash, :success)}
-    phx-click="lv:clear-flash"
-    phx-value-key="success"
-  />
+    <.alert
+      color="success"
+      class="mb-5"
+      label={live_flash(@flash, :success)}
+      phx-click="lv:clear-flash"
+      phx-value-key="success"
+    />
 
-  <.alert
-    color="danger"
-    class="mb-5"
-    label={live_flash(@flash, :error)}
-    phx-click="lv:clear-flash"
-    phx-value-key="error"
-  />
+    <.alert
+      color="danger"
+      class="mb-5"
+      label={live_flash(@flash, :error)}
+      phx-click="lv:clear-flash"
+      phx-value-key="error"
+    />
 
-  <%= @inner_content %>
-</.container>
+    <%= @inner_content %>
+  </.container>
+</div>
