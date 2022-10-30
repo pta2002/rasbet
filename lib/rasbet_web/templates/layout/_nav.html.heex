@@ -1,6 +1,6 @@
 <nav class="w-full flex place-content-between bg-primary-600 text-white h-16">
   <div class="flex flex-row items-center align-center">
-    <.link navigate={Routes.game_index_path(@socket, :index)} class="wordmark">RASBet</.link>
+    <.link navigate={Routes.game_index_path(@socket, :index)} class="wordmark px-6">RASBet</.link>
     <.link navigate={Routes.game_index_path(@socket, :index)} class="nav-item selected">Jogos</.link>
     <.link navigate="/promos" class="nav-item px-8">Promoções</.link>
   </div>
@@ -12,7 +12,7 @@
       <.button label="Sair" link_type="a" to={Routes.user_session_path(@socket, :delete)} method={:delete}/>
     <% else %>
       <.link href={Routes.user_session_path(@socket, :new)} class="rounded-full px-6 py-2 border border-primary-50 font-medium hover:bg-primary-50 hover:text-primary-500 duration-150 transition-colors">Entrar</.link>
-      <.link href={Routes.user_registration_path(@socket, :new)} class="rounded-full px-6 py-2 border border-primary-50 bg-primary-50 text-primary-500 font-medium">Registar</.link>
+      <.link navigate={Routes.user_registration_path(@socket, :new)} class="rounded-full px-6 py-2 border border-primary-50 bg-primary-50 text-primary-500 font-medium">Registar</.link>
     <% end %>
   </div>
 </nav>

@@ -3,13 +3,15 @@ defmodule Rasbet.Accounts.User do
   import Ecto.Changeset
 
   schema "users" do
+    field :name, :string
     field :email, :string
     field :password, :string, virtual: true, redact: true
+    field :password_confirmation, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
     field :balance, Money.Ecto.Amount.Type
 
-    field :phone, EctoPhoneNumber
+    field :phone, :string
     field :taxid, :string
     field :address1, :string
     field :address2, :string
@@ -41,8 +43,10 @@ defmodule Rasbet.Accounts.User do
   def registration_changeset(user, attrs, opts \\ []) do
     user
     |> cast(attrs, [
+      :name,
       :email,
       :password,
+      :password_confirmation,
       :phone,
       :taxid,
       :address1,
@@ -52,11 +56,18 @@ defmodule Rasbet.Accounts.User do
       :zipcode
     ])
     |> validate_email()
+    |> validate_phone()
     |> validate_address()
-    |> validate_required([:phone, :taxid])
+    |> validate_required([:phone, :taxid, :name])
+    |> validate_password(opts)
+  end
+
+  def validate_phone(changeset) do
+    changeset
+    |> validate_required([:phone])
+    |> validate_format(:phone, ~r/^\+\d+$/, message: "invalid phone number")
     |> unsafe_validate_unique(:phone, Rasbet.Repo)
     |> unique_constraint(:phone)
-    |> validate_password(opts)
   end
 
   def validate_address(changeset) do
@@ -82,8 +93,9 @@ defmodule Rasbet.Accounts.User do
 
   defp validate_password(changeset, opts) do
     changeset
-    |> validate_required([:password])
+    |> validate_required([:password, :password_confirmation])
     |> validate_length(:password, min: 12, max: 72)
+    |> validate_confirmation(:password, message: "passwords don't match")
     # |> validate_format(:password, ~r/[a-z]/, message: "at least one lower case character")
     # |> validate_format(:password, ~r/[A-Z]/, message: "at least one upper case character")
     # |> validate_format(:password, ~r/[!?@#$%^&*_0-9]/, message: "at least one digit or punctuation character")

@@ -5,11 +5,12 @@
 /* This file is for your main application CSS */
 body {
   background-color: #f6f6f6;
+  font-family: 'Inter', sans-serif;
 }
 
 .wordmark {
   font-family: 'Fredoka One', sans-serif;
-  @apply text-4xl px-6;
+  @apply text-4xl;
 }
 
 .nav-item {
@@ -24,6 +25,14 @@ body {
 
 .nav-item.selected {
   @apply bg-primary-700;
+}
+
+.input {
+  @apply w-full bg-white col-span-2 rounded-md shadow-sm border-gray-300;
+}
+
+.input:focus {
+  @apply ring-primary-500 border-primary-500 outline-none;
 }
 
 .select-wrapper select {

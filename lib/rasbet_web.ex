@@ -55,6 +55,17 @@ defmodule RasbetWeb do
     end
   end
 
+  def live_auth do
+    quote do
+      use Phoenix.LiveView,
+        layout: {RasbetWeb.LayoutView, "auth.html"}
+
+      use PetalComponents
+
+      unquote(view_helpers())
+    end
+  end
+
   def live_component do
     quote do
       use Phoenix.LiveComponent

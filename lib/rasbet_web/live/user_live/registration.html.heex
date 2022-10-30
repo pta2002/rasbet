@@ -1,0 +1,98 @@
+<h1 class="text-2xl font-bold text-center">Registar</h1>
+
+<.form let={f} for={@changeset} phx-change="validate" phx-submit="register">
+<div class="grid grid-cols-1 md:grid-cols-2 md:gap-4">
+  <div class="max-w-sm">
+    <.input
+      type="text"
+      form={f}
+      field={:name}
+      label="Nome"
+      required
+    />
+
+    <.input
+      type="email"
+      form={f}
+      field={:email}
+      label="Email"
+      required
+    />
+
+    <.input
+      type="text"
+      form={f}
+      field={:phone}
+      label="Telemóvel"
+      required
+    />
+
+    <.input
+      type="password"
+      form={f}
+      field={:password}
+      label="Palavra-passe"
+      required
+    />
+
+    <.input
+      type="password"
+      form={f}
+      field={:password_confirmation}
+      label="Confirmar palavra-passe"
+      required
+    />
+  </div>
+
+  <div class="max-w-sm">
+    <.input
+      type="text"
+      form={f}
+      field={:address1}
+      label="Linha morada 1"
+      required
+    />
+    <.input
+      type="text"
+      form={f}
+      field={:address2}
+      label="Linha morada 2"
+    />
+    <div class="grid grid-cols-2 gap-4">
+      <.input
+        type="text"
+        form={f}
+        field={:zipcode}
+        label="Código postal"
+        required
+      />
+      <.input
+        type="text"
+        form={f}
+        field={:city}
+        label="Cidade"
+        required
+      />
+    </div>
+    <.input
+      type="text"
+      form={f}
+      field={:country}
+      label="País"
+      required
+    />
+    <.input
+      type="text"
+      form={f}
+      field={:taxid}
+      label="NIF"
+      required
+    />
+  </div>
+</div>
+
+<div class="flex place-content-between w-full items-center flex-row-reverse">
+  <%= submit "Registar", class: "bg-primary-500 px-6 py-2 rounded-full text-white" %>
+  <div>Já tem conta? <a href="/users/login" class="text-primary-500 font-semibold">Entrar</a></div>
+</div>
+</.form>
