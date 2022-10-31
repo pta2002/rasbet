@@ -58,13 +58,15 @@ defmodule RasbetWeb.UserLive.Registration do
     assigns = assigns |> Map.put(:countries, Countries.all())
 
     ~H"""
-      <div class="relative grid grid-cols-3 gap-4" x-data="{ open: false, selected: 'PT' }">
+      <div class="relative grid grid-cols-3 gap-4" x-data="{ open: false, selected: { emoji: '🇵🇹', code: '351' }, number: '' }">
         <div
           @click="open = !open"
           @keydown.escape.window="open = false"
-          class="cursor-pointer bg-white rounded-md shadow-sd border border-gray-300 focus:ring-primary-500 focus:border-primary-500 focus:outline-none flex items-center justify-center">
-          <div>🇵🇹</div>
-          <div class="mx-2">+351</div>
+          class="cursor-pointer bg-white rounded-md shadow-sd border border-gray-300 focus:ring-primary-500 focus:border-primary-500 focus:outline-none flex items-center place-content-around px-2">
+          <div>
+            <span x-text="selected.emoji"></span>
+            <span class="mx-2" x-text="'+' + selected.code"></span>
+          </div>
           <Heroicons.chevron_down class="w-4 h-4"/>
         </div>
 
@@ -82,24 +84,24 @@ defmodule RasbetWeb.UserLive.Registration do
           <input type="text" placeholder="Search" class="input" />
           <div class="max-h-40 flex flex-col overflow-scroll gap-1">
             <%= for country <- @countries do %>
-              <span class="p-2 hover:bg-slate-200 rounded-md cursor-pointer">
-                <%= country.alpha2 |> String.to_charlist() |> Enum.map(&(&1 - 65 + 127462)) |> List.to_string() %>&nbsp;
-                <%= country.name %> (+<%= country.country_code %>)
-              </span>
+              <%= with emoji = country.alpha2 |> String.to_charlist() |> Enum.map(&(&1 - 65 + 127462)) |> List.to_string() do %>
+                <span class="p-2 hover:bg-slate-200 rounded-md cursor-pointer" @click={ "selected.emoji = '#{emoji}'; selected.code = '#{country.country_code}'; open = false" }>
+                  <%= emoji %>&nbsp;
+                  <%= country.name %> (+<%= country.country_code %>)
+                </span>
+              <% end %>
             <% end %>
           </div>
-          <!--
-          <a class="flex items-center h-8 px-3 text-sm hover:bg-gray-200" href="#">Settings</a>
-          <a class="flex items-center h-8 px-3 text-sm hover:bg-gray-200" href="#">Support</a>
-          <a class="flex items-center h-8 px-3 text-sm hover:bg-gray-200" href="#">Sign Out</a>
-          -->
         </div>
+
+        <input type="text" x-model="number" class="input col-span-2"/>
 
         <%= text_input @form,
           @field,
-          class: "w-full bg-white col-span-2 rounded-md shadow-sm border-gray-300 focus:ring-primary-500 focus:border-primary-500 focus:outline-none",
-          type: "text"
+          type: "hidden",
+          "x-model": "'+' + selected.code + number"
         %>
+
       </div>
     """
   end
