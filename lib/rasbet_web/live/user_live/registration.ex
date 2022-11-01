@@ -30,7 +30,7 @@ defmodule RasbetWeb.UserLive.Registration do
 
         {:noreply,
          socket
-         |> put_flash(:info, "Registado com sucess, já pode iniciar sessão")
+         |> put_flash(:info, "Registado com sucesso, já pode iniciar sessão")
          |> redirect(to: Routes.user_session_path(socket, :new))}
 
       {:error, %Ecto.Changeset{} = changeset} ->
