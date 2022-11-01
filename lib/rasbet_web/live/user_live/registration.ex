@@ -77,20 +77,19 @@ defmodule RasbetWeb.UserLive.Registration do
           cursor: 0
         }"}>
         <div
-          @click="open = !open"
-          @keydown.enter.prevent = "open = !open";
-          @keydown.space.prevent = "open = !open";
+          x-on:click="open = !open"
+          x-on:keydown.enter.prevent = "open = !open"
+          x-on:keydown.space.prevent = "open = !open"
           x-effect="
             if (open) {
               search = '';
               filtered = countries;
               cursor = 0;
-              $nextTick(() => $refs.search.focus())
+              $nextTick(() => $refs.search.focus());
             }
           "
           tabindex="0"
-          @click.outside="open = false"
-          @keydown.escape.window="open = false"
+          x-on:keydown.escape.window="open = false"
           class="cursor-pointer bg-white rounded-md shadow-sd border border-gray-300 focus:ring-primary-500 focus:border-primary-500 focus:outline-none flex items-center place-content-around px-2">
           <span x-text="selected.emoji"></span>
           <span class="mx-2" x-text="'+' + selected.code"></span>
@@ -98,8 +97,10 @@ defmodule RasbetWeb.UserLive.Registration do
         </div>
 
         <div
+          x-on:click.outside="open = false"
           x-cloak
-          @blur="open = false;"
+          phx-update="ignore"
+          id={@field}
           x-show="open"
           x-transition:enter="transition ease-out duration-100"
           x-transition:enter-start="transform opacity-0 scale-95"
@@ -115,14 +116,16 @@ defmodule RasbetWeb.UserLive.Registration do
             class="input"
             x-ref="search"
             x-model="search"
-            @keydown.enter.prevent.stop="if (cursor != 0) {
+            x-on:keydown.enter.prevent.stop="if (cursor != 0) {
               selected = (filtered || countries)[cursor - 1];
               open = false;
             }"
-            @keydown.up.prevent="cursor = Math.max(0, cursor - 1)"
-            @keydown.down.prevent="cursor = Math.min(filtered.length, cursor + 1)"
-            @input="filtered = countries.filter(c => c.name.toLowerCase().startsWith(search.toLowerCase()));
-            cursor = (filtered.length === 1 ? 1 : 0)" />
+            x-on:keydown.up.prevent="cursor = Math.max(0, cursor - 1)"
+            x-on:keydown.down.prevent="cursor = Math.min(filtered.length, cursor + 1)"
+            x-on:input="
+              filtered = countries.filter(c => c.name.toLowerCase().startsWith(search.toLowerCase()));
+              cursor = (filtered.length === 1 ? 1 : 0)
+            " />
 
           <div class="max-h-40 flex flex-col overflow-scroll gap-1" tabindex="-1">
             <template x-for="(country, i) in (filtered || countries)">
@@ -130,7 +133,7 @@ defmodule RasbetWeb.UserLive.Registration do
                 x-bind:class="'p-2 hover:bg-slate-200 rounded-md cursor-pointer' +
                   (selected.short === country.short ? ' bg-slate-300' : '') +
                   (cursor - 1 === i ? ' bg-slate-200' : '')"
-                @click="selected = country; open = false"
+                x-on:click="selected = country; open = false"
                 x-effect="if (cursor === i + 1) $el.scrollIntoView()"
                 x-text="country.emoji + ' ' + country.name + ' (+' + country.code + ')'"
                 x-bind:key="country.short">
