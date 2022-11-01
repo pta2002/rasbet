@@ -3,19 +3,16 @@ defmodule RasbetWeb.GameLive.Index do
 
   alias Rasbet.Game.TwoTeams
 
-  def handle_info({:update_games}, socket) do
-    case TwoTeams.Api.games() do
-      {:ok, games} -> {:noreply, socket |> assign(:games, games)}
-      {:error, _} -> {:noreply, socket |> assign(:games, "Erro ao carregar jogos")}
-    end
+  def mount(_params, _session, socket) do
+    {:ok,
+     socket
+     |> assign(:games, TwoTeams.Info.list_games())
+     |> assign(:sports, Application.fetch_env!(:rasbet, :sports))
+     |> assign(:page_title, "Jogos")}
   end
 
-  def mount(_params, _session, socket) do
-    # {:ok, games} = TwoTeams.Api.games()
-    if connected?(socket) do
-      send(self(), {:update_games})
-    end
-
-    {:ok, socket |> assign(:games, TwoTeams.Info.list_games())}
+  def sport_name(sport) do
+    Application.fetch_env!(:rasbet, :sports)
+    |> Map.get(sport)
   end
 end

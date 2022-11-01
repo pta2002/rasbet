@@ -4,7 +4,10 @@ defmodule RasbetWeb.UserLive.Registration do
   alias Rasbet.Accounts
 
   def mount(_params, _session, socket) do
-    {:ok, socket |> assign(:changeset, Accounts.change_user_registration(%Accounts.User{}))}
+    {:ok,
+     socket
+     |> assign(:changeset, Accounts.change_user_registration(%Accounts.User{}))
+     |> assign(:page_title, "Registar")}
   end
 
   def handle_event("validate", %{"user" => params}, socket) do

@@ -1,58 +1,68 @@
 <div class="flex flex-row h-full gap-8">
-  <div class="flex flex-col">
-    <div class="bg-white flex-grow w-72 py-4 rounded-md shadow-md flex flex-col gap-2">
-      <h1 class="text-2xl font-medium px-4">Filtros</h1>
+  <div class="bg-white w-96 py-4 flex rounded-md shadow-md sticky top-0 h-full flex-col gap-2">
+    <h1 class="text-2xl font-medium px-4">Filtros</h1>
 
-      <div class="px-4">
-        <hr class="border-primary-700 border-2 rounded-full"/>
+    <div class="px-4">
+      <hr class="border-primary-700 border-2 rounded-full"/>
+    </div>
+
+    <div class="px-4">
+      <!-- TODO: Lista dinâmica -->
+      <h2 class="font-semibold text-lg mb-2">Desportos</h2>
+
+      <div class="flex flex-row gap-2 items-center">
+        <input type="checkbox" id="all" class="w-4 h-4 text-primary-500 bg-gray-100 rounded border-gray-300 focus:ring-primary-500"/>
+        <label for="todos">Todos</label>
       </div>
 
-      <div class="px-4">
-        <!-- TODO: Lista dinâmica -->
-        <h2 class="font-semibold text-lg mb-2">Desportos</h2>
-        <%= for i <- 0..6 do %>
+      <%= for {key, name} <- @sports do %>
         <div class="flex flex-row gap-2 items-center">
-          <input type="checkbox" id={"desporto" <> Integer.to_string(i)} class="w-4 h-4 text-primary-500 bg-gray-100 rounded border-gray-300 focus:ring-primary-500"/>
-          <label for={"desporto" <> Integer.to_string(i)}>Desporto <%= i %></label>
+          <input type="checkbox" id={key} class="w-4 h-4 text-primary-500 bg-gray-100 rounded border-gray-300 focus:ring-primary-500"/>
+          <label for={key}><%= name %></label>
         </div>
-        <% end %>
-      </div>
+      <% end %>
+    </div>
 
-      <div class="px-4">
-        <hr class="border-primary-700 border-2 rounded-full"/>
-      </div>
+    <div class="px-4">
+      <hr class="border-primary-700 border-2 rounded-full"/>
+    </div>
 
-      <h1 class="text-2xl font-medium mx-4">Apostas</h1>
+    <h1 class="text-2xl font-medium mx-4">Apostas</h1>
 
-      <div class="flex-grow shadow-inner bg-gray-50">
-        ...
-      </div>
+    <div class="flex-grow shadow-inner bg-gray-50">
+      ...
+    </div>
 
-      <div class="px-4 flex flex-col items-center">
-        <button class="bg-primary-200 text-white px-6 py-2 font-bold rounded-full" disabled>Apostar</button>
-      </div>
+    <div class="px-4 flex flex-col items-center">
+      <button class="bg-primary-200 text-white px-6 py-2 font-bold rounded-full" disabled>Apostar</button>
     </div>
   </div>
 
-  <div class="w-full">
-    <.h1 class="mb-5">Jogos</.h1>
+  <div class="w-full overflow-y-scroll">
+    <h1 class="mb-5 text-3xl font-medium">Jogos</h1>
 
     <%= if is_list @games do %>
       <%= for game <- @games do %>
-        <div class="bg-slate-200 p-5 mb-5 rounded flex justify-between">
-          <div class="grid grid-cols-2 grid-rows-2">
-            <span><%= game.home_team %></span>
-            <strong><%= game.home_score %></strong>
-            <span><%= game.away_team %></span>
-            <strong><%= game.away_score %></strong>
+        <div class="bg-white shadow-md p-4 mb-5 rounded grid grid-cols-2">
+          <div class="flex justify-between flex-col">
+            <div class="text-gray-500 text-sm">
+              <strong class="font-medium"><%= sport_name game.sport %></strong> - <%= Calendar.strftime(game.start_time, "%d/%m/%Y às %H:%M") %>
+            </div>
+            <div class="flex gap-3">
+              <span><%= game.home_team %></span>
+              <strong><%= game.home_score %></strong>
+              <span>&ndash;</span>
+              <strong><%= game.away_score %></strong>
+              <span><%= game.away_team %></span>
+            </div>
           </div>
 
           <%= if not game.completed do %>
-            <div class="grid grid-cols-3 grid-rows-1 gap-5">
+            <div class={"grid grid-rows-1 grid-cols-#{Enum.count game.odds} gap-5"}>
               <%= for {outcome, odd} <- game.odds do %>
                 <div class="rounded bg-primary-500 flex flex-col items-center p-2">
-                  <span class="text-sm text-gray-100"><%= outcome %></span>
-                  <span class="font-bold"><%= odd %></span>
+                  <span class="text-xs text-white"><%= outcome %></span>
+                  <span class="font-bold text-white"><%= odd %></span>
                 </div>
               <% end %>
             </div>

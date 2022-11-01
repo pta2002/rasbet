@@ -108,7 +108,8 @@ defmodule Rasbet.Game.TwoTeams.Api do
       completed: completed,
       home_score: home_score,
       away_score: away_score,
-      odds: odds
+      odds: odds,
+      sport: :football
     }
   end
 end

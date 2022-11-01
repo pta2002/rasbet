@@ -9,7 +9,10 @@ import Config
 
 config :rasbet,
   ecto_repos: [Rasbet.Repo],
-  endpoint: "http://ucras.di.uminho.pt/v1"
+  endpoint: "http://ucras.di.uminho.pt/v1",
+  sports: %{
+    football: "Futebol"
+  }
 
 # Configures the endpoint
 config :rasbet, RasbetWeb.Endpoint,
