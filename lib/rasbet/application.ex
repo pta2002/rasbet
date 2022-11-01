@@ -15,9 +15,10 @@ defmodule Rasbet.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Rasbet.PubSub},
       # Start the Endpoint (http/https)
-      RasbetWeb.Endpoint
+      RasbetWeb.Endpoint,
       # Start a worker by calling: Rasbet.Worker.start_link(arg)
       # {Rasbet.Worker, arg}
+      Rasbet.Scheduler
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

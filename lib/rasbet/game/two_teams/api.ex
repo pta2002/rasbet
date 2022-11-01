@@ -4,6 +4,8 @@ defmodule Rasbet.Game.TwoTeams.Api do
   alias Rasbet.Game.TwoTeams.Info
   alias Rasbet.Repo
 
+  require Logger
+
   @moduledoc """
   # Functions for interfacing with the provided API
   """
@@ -18,6 +20,28 @@ defmodule Rasbet.Game.TwoTeams.Api do
     Poison.decode(body)
   end
 
+  def update_games() do
+    case games() do
+      {:ok, games} ->
+        Logger.debug("Saving games...")
+
+        for game <- games do
+          case Repo.get_by(Info, api_id: game.api_id) do
+            nil -> %Info{api_id: game.api_id}
+            g -> g
+          end
+          |> Info.changeset(game)
+          |> Repo.insert_or_update()
+        end
+
+        Logger.debug("Games saved.")
+
+      {:error, _reason} ->
+        Logger.error("Failed to fetch games")
+    end
+  end
+
+  @spec games :: {:error, any} | {:ok, list}
   def games() do
     case get("/games") do
       {:ok, %{body: {:ok, body}}} -> {:ok, Enum.map(body, &cast_game/1)}
@@ -26,10 +50,8 @@ defmodule Rasbet.Game.TwoTeams.Api do
     end
   end
 
-  def list_games do
-    Repo.all(Info)
-  end
-
+  @spec create_game(:invalid | %{optional(:__struct__) => none, optional(atom | binary) => any}) ::
+          any
   def create_game(attrs \\ %{}) do
     %Info{}
     |> Info.changeset(attrs)
@@ -47,7 +69,8 @@ defmodule Rasbet.Game.TwoTeams.Api do
            "homeTeam" => home_team,
            "commenceTime" => start_time,
            "completed" => completed,
-           "scores" => score
+           "scores" => score,
+           "bookmakers" => bookmakers
          } = _game
        ) do
     time =
@@ -65,14 +88,27 @@ defmodule Rasbet.Game.TwoTeams.Api do
         [nil, nil]
       end
 
-    %Info{
+    # TODO: Ir buscar as odds de uma forma melhor...
+    odds =
+      case bookmakers do
+        [%{"markets" => [%{"key" => "h2h", "outcomes" => outcomes} | _]} | _] ->
+          Enum.reduce(outcomes, Map.new(), fn outcome, acc ->
+            Map.put(acc, outcome["name"], outcome["price"])
+          end)
+
+        _ ->
+          %{}
+      end
+
+    %{
       api_id: id,
       home_team: home_team,
       away_team: away_team,
       start_time: time,
       completed: completed,
       home_score: home_score,
-      away_score: away_score
+      away_score: away_score,
+      odds: odds
     }
   end
 end

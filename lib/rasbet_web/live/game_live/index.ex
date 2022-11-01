@@ -16,6 +16,6 @@ defmodule RasbetWeb.GameLive.Index do
       send(self(), {:update_games})
     end
 
-    {:ok, socket |> assign(:games, nil)}
+    {:ok, socket |> assign(:games, TwoTeams.Info.list_games())}
   end
 end

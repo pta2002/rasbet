@@ -56,7 +56,8 @@ defmodule Rasbet.MixProject do
       {:heroicons, "~> 0.5.0"},
       {:httpoison, "~> 1.8"},
       {:poison, "~> 5.0"},
-      {:countries, "~> 1.6"}
+      {:countries, "~> 1.6"},
+      {:quantum, "~> 3.0"}
     ]
   end
 

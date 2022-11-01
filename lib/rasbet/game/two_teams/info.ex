@@ -2,6 +2,9 @@ defmodule Rasbet.Game.TwoTeams.Info do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Rasbet.Game.TwoTeams.Info
+  alias Rasbet.Repo
+
   schema "two_team_game_info" do
     field(:api_id, :string)
     field(:away_score, :integer)
@@ -30,14 +33,18 @@ defmodule Rasbet.Game.TwoTeams.Info do
     ])
     |> validate_required([
       :api_id,
-      :away_score,
+      # :away_score,
       :away_team,
-      :home_score,
+      # :home_score,
       :home_team,
       :start_time,
       :completed,
       :odds
     ])
     |> unique_constraint(:api_id)
+  end
+
+  def list_games() do
+    Repo.all(Info)
   end
 end

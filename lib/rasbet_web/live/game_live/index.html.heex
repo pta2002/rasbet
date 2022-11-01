@@ -49,18 +49,12 @@
 
           <%= if not game.completed do %>
             <div class="grid grid-cols-3 grid-rows-1 gap-5">
-              <div class="rounded bg-primary-500 flex flex-col items-center p-2">
-                <span class="text-sm text-gray-100"><%= game.home_team %></span>
-                <span class="font-bold">TODO ODDS</span>
-              </div>
-              <div class="rounded bg-primary-500 flex flex-col items-center p-2">
-                <span class="text-sm text-gray-100">Empate</span>
-                <span class="font-bold">TODO ODDS</span>
-              </div>
-              <div class="rounded bg-primary-500 flex flex-col items-center p-2">
-                <span class="text-sm text-gray-100"><%= game.away_team %></span>
-                <span class="font-bold">TODO ODDS</span>
-              </div>
+              <%= for {outcome, odd} <- game.odds do %>
+                <div class="rounded bg-primary-500 flex flex-col items-center p-2">
+                  <span class="text-sm text-gray-100"><%= outcome %></span>
+                  <span class="font-bold"><%= odd %></span>
+                </div>
+              <% end %>
             </div>
           <% else %>
             <div class="text-xl flex items-center justify-center">Jogo concluído</div>
