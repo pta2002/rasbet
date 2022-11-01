@@ -40,14 +40,18 @@ defmodule RasbetWeb.UserLive.Registration do
       <div class="mb-4">
         <label for={@field} class="block mb-1"><%= @label %></label>
         <%= if @type == "phone" do %>
-          <.phone_input field={@field} form={@form} />
+          <.country_input field={@field} form={@form} type={:phone}/>
         <% else %>
-          <%= text_input @form,
-            @field,
-            id: @field,
-            class: "block w-full bg-white rounded-md shadow-sm border-gray-300 focus:ring-primary-500 focus:border-primary-500 focus:outline-none",
-            type: @type
-          %>
+          <%= if @type == "country" do %>
+            <.country_input field={@field} form={@form} type={:country}/>
+          <% else %>
+            <%= text_input @form,
+              @field,
+              id: @field,
+              class: "input",
+              type: @type
+            %>
+          <% end %>
         <% end %>
         <%= error_tag @form, @field %>
       </div>
@@ -63,14 +67,16 @@ defmodule RasbetWeb.UserLive.Registration do
     }
   end
 
-  def phone_input(assigns) do
+  def country_input(assigns) do
     assigns = assigns |> Map.put(:countries, Enum.map(Countries.all(), &to_country/1))
 
     ~H"""
-      <div class="relative grid grid-cols-3 gap-4" x-data={"{
+      <div
+        class={"relative grid" <> if @type == :phone do " grid-cols-3 gap-4" else "grid-cols-1" end}
+        x-data={"{
           open: false,
-          selected: { emoji: '🇵🇹', code: '351', short: 'PT' },
-          number: '',
+          selected: { emoji: '🇵🇹', code: '351', short: 'PT', name: 'Portugal' },
+          #{if @type == :phone do "number: ''," else "" end}
           countries: #{Poison.encode!(@countries)},
           search: '',
           filtered: null,
@@ -90,9 +96,15 @@ defmodule RasbetWeb.UserLive.Registration do
           "
           tabindex="0"
           x-on:keydown.escape.window="open = false"
-          class="cursor-pointer bg-white rounded-md shadow-sd border border-gray-300 focus:ring-primary-500 focus:border-primary-500 focus:outline-none flex items-center place-content-around px-2">
-          <span x-text="selected.emoji"></span>
-          <span class="mx-2" x-text="'+' + selected.code"></span>
+          class="input cursor-pointer flex items-center place-content-between">
+          <div class="flex flex-row">
+            <span x-text="selected.emoji"></span>
+            <%= if @type == :phone do %>
+              <span class="mx-2" x-text="'+' + selected.code"></span>
+            <% else %>
+              <span class="mx-2" x-text="selected.name"></span>
+            <% end %>
+          </div>
           <Heroicons.chevron_down class="w-4 h-4"/>
         </div>
 
@@ -108,7 +120,7 @@ defmodule RasbetWeb.UserLive.Registration do
           x-transition:leave="transition ease-in duration-75"
           x-transition:leave-start="transform opacity-100 scale-100"
           x-transition:leave-end="transform opacity-0 scale-95"
-          class="absolute rounded-md px-4 py-2 flex gap-4 flex-col w-full mt-12 bg-white border border-gray-300 shadow-sm">
+          class={"absolute rounded-md px-4 py-2 flex gap-4 flex-col w-full bg-white border border-gray-300 shadow-sm" <> if @type == :phone do " mt-12" else " mt-2" end}>
 
           <input
             type="text"
@@ -135,20 +147,28 @@ defmodule RasbetWeb.UserLive.Registration do
                   (cursor - 1 === i ? ' bg-slate-200' : '')"
                 x-on:click="selected = country; open = false"
                 x-effect="if (cursor === i + 1) $el.scrollIntoView()"
-                x-text="country.emoji + ' ' + country.name + ' (+' + country.code + ')'"
+                x-text={"country.emoji + ' ' + country.name" <> if @type == :phone do "+ ' (+' + country.code + ')'" else "" end}
                 x-bind:key="country.short">
               </span>
             </template>
           </div>
         </div>
 
-        <input type="text" x-model="number" class="input col-span-2"/>
+        <%= if @type == :phone do %>
+          <input type="text" x-model="number" class="input col-span-2"/>
 
-        <%= text_input @form,
-          @field,
-          type: "hidden",
-          "x-bind:value": "'+' + selected.code + number"
-        %>
+          <%= text_input @form,
+            @field,
+            type: "hidden",
+            "x-bind:value": "'+' + selected.code + number"
+          %>
+        <% else %>
+          <%= text_input @form,
+            @field,
+            type: "hidden",
+            "x-bind:value": "selected.short"
+          %>
+        <% end %>
 
       </div>
     """
