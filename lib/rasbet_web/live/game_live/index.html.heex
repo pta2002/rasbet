@@ -29,8 +29,26 @@
 
     <h1 class="text-2xl font-medium mx-4">Apostas</h1>
 
-    <div class="flex-grow shadow-inner bg-gray-50">
-      ...
+    <div class="flex-grow shadow-inner bg-gray-50 p-4 flex gap-2 flex-col overflow-scroll">
+      <%= if Enum.count(@bets_odds) == 0 do %>
+        Não tem apostas
+      <% else %>
+        <%= Enum.with_index(@bets_odds) |> Enum.map (fn {bet, i} -> %>
+          <div class="bg-white shadow-md rounded-md flex flex-row justify-between items-center p-2">
+            <div class="col-span-4">
+              <div class="text-xs text-gray-500 font-medium">
+                <%= bet.game.home_team %> &ndash; <%= bet.game.away_team %>
+              </div>
+              <div class="text-sm">
+                <span class="font-semibold"><%= bet.outcome %></span> &ndash; <span class="text-primary-500 font-semibold"><%= bet.odd %></span>
+              </div>
+            </div>
+            <div class="text-gray-500 h-full border-primary-500 flex cursor-pointer items-center" phx-click="delete_bet" phx-value-index={i}>
+              <Heroicons.x_mark class="w-6 h-6" />
+            </div>
+          </div>
+        <% end) %>
+      <% end %>
     </div>
 
     <div class="px-4 flex flex-col items-center">
@@ -60,7 +78,7 @@
           <%= if not game.completed do %>
             <div class={"grid grid-rows-1 grid-cols-#{Enum.count game.odds} gap-5"}>
               <%= for {outcome, odd} <- game.odds do %>
-                <div class="rounded bg-primary-500 flex flex-col items-center p-2">
+                <div class="rounded bg-primary-500 flex flex-col items-center p-2 cursor-pointer" phx-click="add_bet" phx-value-game={game.id} phx-value-outcome={outcome}>
                   <span class="text-xs text-white"><%= outcome %></span>
                   <span class="font-bold text-white"><%= odd %></span>
                 </div>

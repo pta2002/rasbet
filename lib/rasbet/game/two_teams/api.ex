@@ -13,6 +13,7 @@ defmodule Rasbet.Game.TwoTeams.Api do
   @endpoint Application.fetch_env!(:rasbet, :endpoint)
 
   def process_url(url) do
+    IO.puts(@endpoint <> url)
     @endpoint <> url
   end
 
