@@ -11,19 +11,30 @@ defmodule RasbetWeb.GameLive.Index do
      |> assign(:sports, Application.fetch_env!(:rasbet, :sports))
      |> assign(:bets, [])
      |> assign_odds()
+     |> assign(:gains, Money.new(0))
      |> assign(:page_title, "Jogos")}
   end
 
   def handle_event(
-        "add_bet",
+        "toggle_bet",
         %{"game" => game_id_s, "outcome" => outcome},
         %{assigns: %{bets: bets}} = socket
       ) do
     case Integer.parse(game_id_s) do
       {game_id, _} ->
+        index =
+          Enum.find_index(bets, fn %{id: id, outcome: o} -> id == game_id and o == outcome end)
+
         {:noreply,
          socket
-         |> assign(:bets, [%{id: game_id, outcome: outcome} | bets])
+         |> assign(
+           :bets,
+           if index do
+             List.delete_at(bets, index)
+           else
+             bets ++ [%{id: game_id, outcome: outcome}]
+           end
+         )
          |> assign_odds()}
 
       :error ->
@@ -38,21 +49,42 @@ defmodule RasbetWeb.GameLive.Index do
      |> assign_odds()}
   end
 
+  def handle_event(
+        "update_amount",
+        %{"bet" => %{"amount" => amount}},
+        %{assigns: %{final_odd: odds}} = socket
+      ) do
+    money =
+      case Float.parse(amount) do
+        {a, _} -> Money.new(round(a * 100))
+        :error -> Money.new(0)
+      end
+
+    {:noreply,
+     socket
+     |> assign(:gains, money |> Money.multiply(odds))}
+  end
+
   defp assign_odds(%{assigns: %{bets: bets}} = socket) do
-    socket
-    |> assign(
-      :bets_odds,
+    odds =
       Enum.map(bets, fn %{id: id, outcome: outcome} ->
         game = TwoTeams.Info |> Repo.get_by!(id: id)
         odd = game.odds[outcome]
 
         %{game: game, odd: odd, outcome: outcome}
       end)
-    )
+
+    socket
+    |> assign(:bets_odds, odds)
+    |> assign(:final_odd, Enum.reduce(odds, 1, fn %{odd: odd}, acc -> acc * (odd / 100) end))
   end
 
   def sport_name(sport) do
     Application.fetch_env!(:rasbet, :sports)
     |> Map.get(sport)
+  end
+
+  def show_odds(odds) do
+    :erlang.float_to_binary(odds / 100, decimals: 2)
   end
 end

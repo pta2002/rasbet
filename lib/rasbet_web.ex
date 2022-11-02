@@ -115,6 +115,8 @@ defmodule RasbetWeb do
       import RasbetWeb.Gettext
       alias RasbetWeb.Router.Helpers, as: Routes
 
+      import RasbetWeb.Components
+
       use PetalComponents
     end
   end

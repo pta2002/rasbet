@@ -94,7 +94,7 @@ defmodule Rasbet.Game.TwoTeams.Api do
       case bookmakers do
         [%{"markets" => [%{"key" => "h2h", "outcomes" => outcomes} | _]} | _] ->
           Enum.reduce(outcomes, Map.new(), fn outcome, acc ->
-            Map.put(acc, outcome["name"], outcome["price"])
+            Map.put(acc, outcome["name"], trunc(outcome["price"] * 100))
           end)
 
         _ ->

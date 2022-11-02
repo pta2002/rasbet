@@ -40,7 +40,7 @@
                 <%= bet.game.home_team %> &ndash; <%= bet.game.away_team %>
               </div>
               <div class="text-sm">
-                <span class="font-semibold"><%= bet.outcome %></span> &ndash; <span class="text-primary-500 font-semibold"><%= bet.odd %></span>
+                <span class="font-semibold"><%= bet.outcome %></span> &ndash; <span class="text-primary-500 font-semibold"><%= show_odds bet.odd %></span>
               </div>
             </div>
             <div class="text-gray-500 h-full border-primary-500 flex cursor-pointer items-center" phx-click="delete_bet" phx-value-index={i}>
@@ -51,9 +51,20 @@
       <% end %>
     </div>
 
-    <div class="px-4 flex flex-col items-center">
-      <button class="bg-primary-200 text-white px-6 py-2 font-bold rounded-full" disabled>Apostar</button>
-    </div>
+    <.form let={f} for={:bet} phx-change="update_amount">
+      <div class="p-4 flex flex-col items-center">
+        <.input form={f} field={:amount} type="number" label="Montante a apostar"/>
+        <div class="flex flex-row justify-between w-full">
+          <span>Cota final</span>
+          <span><%= show_odds (@final_odd * 100) %></span>
+        </div>
+        <div class="flex flex-row justify-between w-full text-lg">
+          <span>Ganhos</span>
+          <span class={if length(@bets) > 0 do "text-primary-600" end}><%= @gains %></span>
+        </div>
+        <button class="bg-primary-200 text-white px-6 py-2 font-bold rounded-full" disabled>Apostar</button>
+      </div>
+    </.form>
   </div>
 
   <div class="w-full overflow-y-scroll">
@@ -78,10 +89,16 @@
           <%= if not game.completed do %>
             <div class={"grid grid-rows-1 grid-cols-#{Enum.count game.odds} gap-5"}>
               <%= for {outcome, odd} <- game.odds do %>
-                <div class="rounded bg-primary-500 flex flex-col items-center p-2 cursor-pointer" phx-click="add_bet" phx-value-game={game.id} phx-value-outcome={outcome}>
-                  <span class="text-xs text-white"><%= outcome %></span>
-                  <span class="font-bold text-white"><%= odd %></span>
-                </div>
+                <%= with bet? = Enum.find(@bets, nil, fn %{id: id, outcome: o} -> id == game.id and o == outcome end) do %>
+                  <div
+                    class={"rounded #{if bet? do "bg-gray-900" else "bg-primary-500" end} flex flex-col items-center p-2 cursor-pointer transition-colors duration-150"}
+                    phx-click="toggle_bet"
+                    phx-value-game={game.id}
+                    phx-value-outcome={outcome}>
+                    <span class="text-xs text-white"><%= outcome %></span>
+                    <span class="font-bold text-white"><%= show_odds odd %></span>
+                  </div>
+                <% end %>
               <% end %>
             </div>
           <% else %>
