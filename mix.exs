@@ -57,7 +57,8 @@ defmodule Rasbet.MixProject do
       {:httpoison, "~> 1.8"},
       {:poison, "~> 5.0"},
       {:countries, "~> 1.6"},
-      {:quantum, "~> 3.0"}
+      {:quantum, "~> 3.0"},
+      {:decimal, "~> 2.0"}
     ]
   end
 

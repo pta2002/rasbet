@@ -3,7 +3,7 @@ defmodule Rasbet.Wallet.Deposit do
 
   # TODO: Tentar usar o Money aqui
   @types %{
-    amount: :integer,
+    amount: Money.Ecto.Amount.Type,
     method: {:parameterized, Ecto.Enum, Ecto.Enum.init(values: ~w(card mbway multibanco)a)}
   }
 

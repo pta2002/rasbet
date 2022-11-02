@@ -69,14 +69,17 @@ defmodule RasbetWeb.GameLive.Index do
     odds =
       Enum.map(bets, fn %{id: id, outcome: outcome} ->
         game = TwoTeams.Info |> Repo.get_by!(id: id)
-        odd = game.odds[outcome]
+        odd = Decimal.new(1, game.odds[outcome], -2)
 
         %{game: game, odd: odd, outcome: outcome}
       end)
 
     socket
     |> assign(:bets_odds, odds)
-    |> assign(:final_odd, Enum.reduce(odds, 1, fn %{odd: odd}, acc -> acc * (odd / 100) end))
+    |> assign(
+      :final_odd,
+      Enum.reduce(odds, Decimal.new(1), fn %{odd: odd}, acc -> Decimal.mult(acc, odd) end)
+    )
   end
 
   def sport_name(sport) do
@@ -85,6 +88,10 @@ defmodule RasbetWeb.GameLive.Index do
   end
 
   def show_odds(odds) do
-    :erlang.float_to_binary(odds / 100, decimals: 2)
+    case odds do
+      %Decimal{} -> Decimal.to_float(odds)
+      _ -> odds / 100
+    end
+    |> :erlang.float_to_binary(decimals: 2)
   end
 end
