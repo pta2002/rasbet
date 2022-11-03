@@ -5,7 +5,6 @@ let plugin = require('tailwindcss/plugin')
 const colors = require("tailwindcss/colors")
 
 module.exports = {
-  important: true,
   content: [
     './js/**/*.js',
     '../lib/*_web.ex',

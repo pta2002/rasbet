@@ -3,6 +3,7 @@ defmodule RasbetWeb.GameLive.Index do
 
   alias Rasbet.Game.TwoTeams
   alias Rasbet.Repo
+  alias Rasbet.Game.Bet
 
   def mount(_params, _session, socket) do
     {:ok,
@@ -10,8 +11,8 @@ defmodule RasbetWeb.GameLive.Index do
      |> assign(:games, TwoTeams.Info.list_games())
      |> assign(:sports, Application.fetch_env!(:rasbet, :sports))
      |> assign(:bets, [])
+     |> assign_changeset()
      |> assign_odds()
-     |> assign(:gains, Money.new(0))
      |> assign(:page_title, "Jogos")}
   end
 
@@ -49,20 +50,36 @@ defmodule RasbetWeb.GameLive.Index do
      |> assign_odds()}
   end
 
-  def handle_event(
-        "update_amount",
-        %{"bet" => %{"amount" => amount}},
-        %{assigns: %{final_odd: odds}} = socket
-      ) do
+  def handle_event("update_amount", %{"bet" => %{"amount" => amount}}, socket) do
     money =
       case Float.parse(amount) do
-        {a, _} -> Money.new(round(a * 100))
-        :error -> Money.new(0)
+        {a, _} -> round(a * 100)
+        :error -> 0
       end
+
+    changeset =
+      %Bet{}
+      |> Bet.changeset(%{amount: money})
+      |> Map.put(:action, :validate)
 
     {:noreply,
      socket
-     |> assign(:gains, money |> Money.multiply(odds))}
+     |> assign(:bet, changeset |> Ecto.Changeset.apply_changes())
+     |> assign_gains()
+     |> assign(:amount, amount)
+     |> assign(:changeset, changeset)}
+  end
+
+  defp assign_changeset(socket) do
+    socket
+    |> assign(:amount, "")
+    |> assign(:bet, %Bet{amount: Money.new(0)})
+    |> assign(:changeset, Bet.changeset(%Bet{}, %{}))
+  end
+
+  defp assign_gains(%{assigns: %{final_odd: odds, bet: %Bet{amount: amount}}} = socket) do
+    socket
+    |> assign(:gains, Money.multiply(amount, odds))
   end
 
   defp assign_odds(%{assigns: %{bets: bets}} = socket) do
@@ -80,6 +97,7 @@ defmodule RasbetWeb.GameLive.Index do
       :final_odd,
       Enum.reduce(odds, Decimal.new(1), fn %{odd: odd}, acc -> Decimal.mult(acc, odd) end)
     )
+    |> assign_gains()
   end
 
   def sport_name(sport) do

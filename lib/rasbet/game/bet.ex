@@ -15,5 +15,12 @@ defmodule Rasbet.Game.Bet do
     bet
     |> cast(attrs, [:amount])
     |> validate_required([:amount])
+    |> validate_change(:amount, fn :amount, a ->
+      unless Money.positive?(a) do
+        [amount: "Montante a apostar tem de ser maior que 0"]
+      else
+        []
+      end
+    end)
   end
 end

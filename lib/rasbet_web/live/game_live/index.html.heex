@@ -33,7 +33,7 @@
       <%= if Enum.count(@bets_odds) == 0 do %>
         Não tem apostas
       <% else %>
-        <%= Enum.with_index(@bets_odds) |> Enum.map (fn {bet, i} -> %>
+        <%= Enum.map(Enum.with_index(@bets_odds), fn {bet, i} -> %>
           <div class="bg-white shadow-md rounded-md flex flex-row justify-between items-center p-2">
             <div class="col-span-4">
               <div class="text-xs text-gray-500 font-medium">
@@ -51,9 +51,9 @@
       <% end %>
     </div>
 
-    <.form let={f} for={:bet} phx-change="update_amount">
+    <.form let={f} for={@changeset} phx-change="update_amount">
       <div class="p-4 flex flex-col items-center">
-        <.input form={f} field={:amount} type="number" label="Montante a apostar"/>
+        <.input form={f} field={:amount} type="number" label="Montante a apostar" value={@amount}/>
         <div class="flex flex-row justify-between w-full">
           <span>Cota final</span>
           <span><%= show_odds @final_odd %></span>
