@@ -36,8 +36,13 @@
         <div class="p-4 w-60 w-4/12 flex items-center flex-col justify-center">
           <h2 class="font-medium text-md">Montante apostado</h2>
           <span class="font-medium text-xl"><%= bet.amount %></span>
-          <h2 class="font-medium text-md">Ganhos possíveis</h2>
-          <span class="font-medium text-xl text-primary-500"><%= bet.possible_gains %></span>
+          <%= if @live_action == :completed do %>
+            <h2 class="font-medium text-md">Ganhos realizados</h2>
+            <span class="font-medium text-xl text-primary-500"><%= bet.final_gains %></span>
+          <% else %>
+            <h2 class="font-medium text-md">Ganhos possíveis</h2>
+            <span class="font-medium text-xl text-primary-500"><%= bet.possible_gains %></span>
+          <% end %>
         </div>
       </div>
     <% end %>

@@ -39,6 +39,13 @@ defmodule RasbetWeb.WalletLive.Bets do
       ])
       |> Map.get(:bets)
       |> Enum.map(&Bets.assign_odds/1)
+      |> Enum.map(fn bet ->
+        if bet.completed do
+          Bets.assign_winnings(bet)
+        else
+          bet
+        end
+      end)
 
     socket |> assign(:bets, bets)
   end
