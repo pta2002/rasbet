@@ -54,6 +54,7 @@ defmodule Rasbet.Game.TwoTeams.Game do
   def list_games() do
     Game
     |> Ecto.Query.where(completed: false)
+    |> Ecto.Query.order_by(asc: :start_time)
     |> Repo.all()
   end
 end
