@@ -16,6 +16,8 @@ defmodule Rasbet.Game.Bets.Bet do
     field :final_gains, Money.Ecto.Amount.Type, virtual: true
     field :possible_gains, Money.Ecto.Amount.Type, virtual: true
 
+    field :completed, :boolean
+
     timestamps()
   end
 

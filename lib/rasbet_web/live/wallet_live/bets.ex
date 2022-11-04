@@ -2,6 +2,9 @@ defmodule RasbetWeb.WalletLive.Bets do
   use RasbetWeb, :live_view
 
   alias Rasbet.Game.Bets
+  alias Rasbet.Game.Bets.Bet
+
+  import Ecto.Query
 
   on_mount {RasbetWeb.LiveAuth, :require_authenticated_user}
 
@@ -25,7 +28,15 @@ defmodule RasbetWeb.WalletLive.Bets do
   def assign_bets(%{assigns: %{live_action: action, current_user: user}} = socket) do
     bets =
       user
-      |> Rasbet.Repo.preload(bets: [entries: :game])
+      |> Rasbet.Repo.preload([
+        {:bets,
+         from(
+           b in Bet,
+           order_by: [desc: b.inserted_at],
+           where: [completed: ^(action == :completed)]
+         )},
+        bets: [entries: :game]
+      ])
       |> Map.get(:bets)
       |> Enum.map(&Bets.assign_odds/1)
 
