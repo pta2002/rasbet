@@ -9,7 +9,7 @@ defmodule RasbetWeb.GameLive.Index do
   def mount(_params, _session, socket) do
     {:ok,
      socket
-     |> assign(:games, TwoTeams.Info.list_games())
+     |> assign(:games, TwoTeams.Game.list_games())
      |> assign(:sports, Application.fetch_env!(:rasbet, :sports))
      |> assign(:bets, [])
      |> assign_changeset()
@@ -136,7 +136,7 @@ defmodule RasbetWeb.GameLive.Index do
   defp assign_odds(%{assigns: %{bets: bets}} = socket) do
     odds =
       Enum.map(bets, fn %{id: id, outcome: outcome} ->
-        game = TwoTeams.Info |> Repo.get_by!(id: id)
+        game = TwoTeams.Game |> Repo.get_by!(id: id)
         odd = Decimal.new(1, game.odds[outcome], -2)
 
         %{game: game, odd: odd, outcome: outcome}

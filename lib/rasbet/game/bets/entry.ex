@@ -3,13 +3,13 @@ defmodule Rasbet.Game.Bets.Entry do
   import Ecto.Changeset
 
   alias Rasbet.Game.Bets.Bet
-  alias Rasbet.Game.TwoTeams.Info
+  alias Rasbet.Game.TwoTeams.Game
 
   schema "bet_entries" do
     field :odds, :integer
     field :outcome, :string
     belongs_to :bet, Bet
-    belongs_to :game, Info
+    belongs_to :game, Game
 
     timestamps()
   end

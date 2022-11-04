@@ -40,11 +40,6 @@ defmodule RasbetWeb.WalletLive.Bets do
       |> Map.get(:bets)
       |> Enum.map(&Bets.assign_odds/1)
 
-    # case action do
-    #   :index -> ["a"]
-    #   :completed -> ["b"]
-    # end
-
     socket |> assign(:bets, bets)
   end
 end

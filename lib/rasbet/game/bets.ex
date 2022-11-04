@@ -1,10 +1,12 @@
 defmodule Rasbet.Game.Bets do
   alias Ecto.Multi
 
-  alias Rasbet.Game.TwoTeams.Info
+  alias Rasbet.Game.TwoTeams.Game
   alias Rasbet.Game.Bets.Entry
+  alias Rasbet.Game.Bets.Bet
   alias Rasbet.Wallet.Transaction
   alias Rasbet.Wallet
+  alias Rasbet.Games
 
   import Ecto.Query
 
@@ -27,7 +29,7 @@ defmodule Rasbet.Game.Bets do
        |> Enum.map(fn entry ->
          # TODO: Error if this is nil
          info =
-           Info
+           Game
            |> where([i], i.id == ^entry.id)
            |> repo.one()
 
@@ -52,5 +54,34 @@ defmodule Rasbet.Game.Bets do
       end)
 
     %{bet | final_odds: final_odds, possible_gains: Money.multiply(amount, final_odds)}
+  end
+
+  def assign_winnings(%Bet{} = bet) do
+    %{possible_gains: possible_gains} = bet = bet |> assign_odds()
+
+    case bet |> bet_status() do
+      :won -> %{bet | final_gains: possible_gains, completed: true}
+      :lost -> %{bet | final_gains: Money.new(0), completed: true}
+    end
+  end
+
+  def entry_status(%Entry{game: game, outcome: outcome}) do
+    if game.completed do
+      case Games.get_outcome(game) == outcome do
+        true -> :won
+        false -> :lost
+      end
+    else
+      :in_progress
+    end
+  end
+
+  def bet_status(%Bet{entries: entries}) do
+    Enum.reduce(entries, :won, fn entry, acc ->
+      case acc do
+        :won -> entry_status(entry)
+        a -> a
+      end
+    end)
   end
 end

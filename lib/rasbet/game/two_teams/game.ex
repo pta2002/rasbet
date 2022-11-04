@@ -1,9 +1,10 @@
-defmodule Rasbet.Game.TwoTeams.Info do
+defmodule Rasbet.Game.TwoTeams.Game do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Rasbet.Game.TwoTeams.Info
+  alias Rasbet.Game.TwoTeams.Game
   alias Rasbet.Repo
+  alias Rasbet.Game.Bets.Entry
 
   require Ecto.Query
 
@@ -17,6 +18,9 @@ defmodule Rasbet.Game.TwoTeams.Info do
     field(:completed, :boolean)
     field(:odds, :map)
     field(:sport, Ecto.Enum, values: Application.fetch_env!(:rasbet, :sports) |> Map.keys())
+
+    has_many(:entries, Entry)
+    has_many(:bets, through: [:entries, :bet])
 
     timestamps()
   end
@@ -48,7 +52,7 @@ defmodule Rasbet.Game.TwoTeams.Info do
   end
 
   def list_games() do
-    Info
+    Game
     |> Ecto.Query.where(completed: false)
     |> Repo.all()
   end

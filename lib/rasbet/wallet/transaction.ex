@@ -5,7 +5,7 @@ defmodule Rasbet.Wallet.Transaction do
   alias Rasbet.Game.Bets.Bet
 
   schema "transactions" do
-    field :type, Ecto.Enum, values: [:deposit, :withdrawal, :bet, :bet_winning]
+    field :type, Ecto.Enum, values: [:deposit, :withdrawal, :bet, :bet_winnings]
     field :value, Money.Ecto.Amount.Type
     field :description, :string
 
