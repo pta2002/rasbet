@@ -1,4 +1,4 @@
-# Rasbet
+# RASBet
 
 To start your Phoenix server:
 
