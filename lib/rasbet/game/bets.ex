@@ -43,4 +43,14 @@ defmodule Rasbet.Game.Bets do
     end)
     |> Multi.insert_all(:insert_entries, Entry, & &1.entries)
   end
+
+  def assign_odds(%{entries: entries, amount: amount} = bet) do
+    final_odds =
+      entries
+      |> Enum.reduce(Decimal.new(1), fn %{odds: odds}, acc ->
+        Decimal.mult(acc, Decimal.new(1, odds, -2))
+      end)
+
+    %{bet | final_odds: final_odds, possible_gains: Money.multiply(amount, final_odds)}
+  end
 end

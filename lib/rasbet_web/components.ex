@@ -142,4 +142,12 @@ defmodule RasbetWeb.Components do
       </div>
     """
   end
+
+  def show_odds(odds) do
+    case odds do
+      %Decimal{} -> Decimal.to_float(odds)
+      _ -> odds / 100
+    end
+    |> :erlang.float_to_binary(decimals: 2)
+  end
 end

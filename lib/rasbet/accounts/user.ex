@@ -2,6 +2,8 @@ defmodule Rasbet.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Rasbet.Game.Bets.Bet
+
   schema "users" do
     field :name, :string
     field :email, :string
@@ -19,6 +21,8 @@ defmodule Rasbet.Accounts.User do
     field :country, :string
     field :city, :string
     field :zipcode, :string
+
+    has_many :bets, Bet
 
     timestamps()
   end

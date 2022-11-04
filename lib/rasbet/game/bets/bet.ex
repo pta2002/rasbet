@@ -12,6 +12,10 @@ defmodule Rasbet.Game.Bets.Bet do
     has_many :entries, Entry
     has_one :transaction, Transaction
 
+    field :final_odds, :integer, virtual: true
+    field :final_gains, Money.Ecto.Amount.Type, virtual: true
+    field :possible_gains, Money.Ecto.Amount.Type, virtual: true
+
     timestamps()
   end
 

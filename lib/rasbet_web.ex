@@ -120,6 +120,8 @@ defmodule RasbetWeb do
       import RasbetWeb.Gettext
       alias RasbetWeb.Router.Helpers, as: Routes
 
+      alias Phoenix.LiveView.JS
+
       import RasbetWeb.Components
 
       use PetalComponents

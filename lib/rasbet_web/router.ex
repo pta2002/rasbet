@@ -80,8 +80,10 @@ defmodule RasbetWeb.Router do
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
 
-    live "/users/wallet", WalletLive.Index, :index
-    live "/users/wallet/top-up", WalletLive.Index, :topup
+    live "/user/wallet", WalletLive.Index, :index
+    live "/user/wallet/top-up", WalletLive.Index, :topup
+    live "/user/bets", WalletLive.Bets, :index
+    live "/user/bets/completed", WalletLive.Bets, :completed
   end
 
   scope "/", RasbetWeb do
