@@ -3,7 +3,8 @@ defmodule RasbetWeb.GameLive.Index do
 
   alias Rasbet.Game.TwoTeams
   alias Rasbet.Repo
-  alias Rasbet.Game.Bet
+  alias Rasbet.Game.Bets.Bet
+  alias Rasbet.Game.Bets
 
   def mount(_params, _session, socket) do
     {:ok,
@@ -36,7 +37,8 @@ defmodule RasbetWeb.GameLive.Index do
              bets ++ [%{id: game_id, outcome: outcome}]
            end
          )
-         |> assign_odds()}
+         |> assign_odds()
+         |> assign_validity()}
 
       :error ->
         {:noreply, socket |> put_flash(:error, "Incorrect game_id (you should never see this)")}
@@ -47,15 +49,12 @@ defmodule RasbetWeb.GameLive.Index do
     {:noreply,
      socket
      |> assign(:bets, List.delete_at(bets, String.to_integer(i)))
-     |> assign_odds()}
+     |> assign_odds()
+     |> assign_validity()}
   end
 
   def handle_event("update_amount", %{"bet" => %{"amount" => amount}}, socket) do
-    money =
-      case Float.parse(amount) do
-        {a, _} -> round(a * 100)
-        :error -> 0
-      end
+    money = parse_amount(amount)
 
     changeset =
       %Bet{}
@@ -67,7 +66,47 @@ defmodule RasbetWeb.GameLive.Index do
      |> assign(:bet, changeset |> Ecto.Changeset.apply_changes())
      |> assign_gains()
      |> assign(:amount, amount)
-     |> assign(:changeset, changeset)}
+     |> assign(:changeset, changeset)
+     |> assign_validity()}
+  end
+
+  def handle_event(
+        "bet",
+        %{"bet" => %{"amount" => amount}},
+        %{assigns: %{bets: bets, current_user: user}} = socket
+      ) do
+    if user do
+      money = parse_amount(amount)
+
+      changeset =
+        %Bet{user_id: user.id}
+        |> Bet.changeset(%{user_id: user.id, amount: money})
+
+      case Repo.transaction(Bets.place_bet(changeset, bets)) do
+        {:ok, _} ->
+          {:noreply,
+           socket
+           |> assign(:bets, [])
+           |> assign_changeset()
+           |> assign_odds()
+           |> put_flash(:info, "Bet successfully")}
+
+        {:error, _, _, _} ->
+          {:noreply, socket |> put_flash(:error, "Failed to place bet")}
+      end
+    else
+      {:noreply,
+       socket
+       |> put_flash(:info, "Inicie sessão para apostar")
+       |> redirect(to: Routes.user_session_path(socket, :new))}
+    end
+  end
+
+  defp parse_amount(amount) do
+    case Float.parse(amount) do
+      {a, _} -> Money.new(round(a * 100))
+      :error -> Money.new(0)
+    end
   end
 
   defp assign_changeset(socket) do
@@ -75,6 +114,18 @@ defmodule RasbetWeb.GameLive.Index do
     |> assign(:amount, "")
     |> assign(:bet, %Bet{amount: Money.new(0)})
     |> assign(:changeset, Bet.changeset(%Bet{}, %{}))
+    |> assign_validity()
+  end
+
+  defp assign_validity(%{assigns: %{bets: bets, changeset: changeset}} = socket) do
+    socket
+    |> assign(
+      :valid?,
+      case Ecto.Changeset.apply_action(changeset, :validate) do
+        {:ok, _} -> length(bets) > 0
+        {:error, _} -> false
+      end
+    )
   end
 
   defp assign_gains(%{assigns: %{final_odd: odds, bet: %Bet{amount: amount}}} = socket) do

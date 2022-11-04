@@ -1,5 +1,5 @@
 defmodule Rasbet.Wallet do
-  require Ecto.Query
+  import Ecto.Query
 
   alias Rasbet.Wallet.Transaction
   alias Rasbet.Wallet.Deposit
@@ -18,18 +18,25 @@ defmodule Rasbet.Wallet do
   def apply_transaction(transaction) do
     Multi.new()
     |> Multi.insert(:transaction, transaction)
-    |> Multi.update(:user, fn %{transaction: transaction} ->
-      user =
-        User
-        |> Ecto.Query.where(id: ^transaction.user_id)
-        |> Repo.one!()
-
-      user
-      |> Ecto.Changeset.change(
-        balance: Money.add(user.balance || Money.new(0), transaction.value)
-      )
+    |> Multi.one(:user, fn %{transaction: %{user_id: user_id}} ->
+      from(u in User, where: u.id == ^user_id)
     end)
-    |> Repo.transaction()
+    |> Multi.run(:new_balance, fn _repo, %{user: %{balance: bal}} ->
+      bal = Money.add(bal, transaction.value)
+
+      if Money.negative?(bal) do
+        {:error, "Transação levaria a saldo negativo"}
+      else
+        {:ok, bal}
+      end
+    end)
+    |> Multi.update(:update_user, fn %{new_balance: bal, user: user} ->
+      user |> Ecto.Changeset.change(balance: bal)
+    end)
+    |> Multi.run(:send_message, fn _repo, %{update_user: user} ->
+      RasbetWeb.Endpoint.broadcast("user:#{user.id}", "update-user", user)
+      {:ok, nil}
+    end)
   end
 
   def user_transactions(user) do

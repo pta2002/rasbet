@@ -59,7 +59,7 @@ defmodule RasbetWeb.WalletLive.Index do
         description: "Depósito"
       }
 
-      Wallet.apply_transaction(transaction)
+      Wallet.apply_transaction(transaction) |> Rasbet.Repo.transaction()
 
       {:noreply,
        socket

@@ -9,7 +9,8 @@ import Config
 
 config :rasbet,
   ecto_repos: [Rasbet.Repo],
-  endpoint: "https://rasapi.pta2002.com/v1",
+  endpoint: "http://ucras.di.uminho.pt/v1",
+  # endpoint: "https://rasapi.pta2002.com/v1",
   sports: %{
     football: "Futebol"
   }
@@ -67,6 +68,7 @@ config :money,
   default_currency: :EUR
 
 config :rasbet, Rasbet.Scheduler,
+  debug_logging: false,
   jobs: [
     fetch_games: [
       schedule: {:extended, "*/10"},

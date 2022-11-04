@@ -13,7 +13,6 @@ defmodule Rasbet.Game.TwoTeams.Api do
   @endpoint Application.fetch_env!(:rasbet, :endpoint)
 
   def process_url(url) do
-    IO.puts(@endpoint <> url)
     @endpoint <> url
   end
 
@@ -37,8 +36,8 @@ defmodule Rasbet.Game.TwoTeams.Api do
 
         Logger.debug("Games saved.")
 
-      {:error, _reason} ->
-        Logger.error("Failed to fetch games")
+      {:error, reason} ->
+        Logger.error("Failed to fetch games", reason: reason)
     end
   end
 

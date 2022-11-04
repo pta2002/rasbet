@@ -24,7 +24,13 @@ defmodule RasbetWeb.LiveAuth do
   end
 
   def on_mount(:fetch_current_user, _params, session, socket) do
-    {:cont, assign_current_user(socket, session)}
+    %{assigns: %{current_user: user}} = socket = assign_current_user(socket, session)
+
+    if connected?(socket) do
+      RasbetWeb.Endpoint.subscribe("user:#{user.id}")
+    end
+
+    {:cont, socket}
   end
 
   def reassign_user(%{assigns: %{current_user: user}} = socket) do

@@ -51,6 +51,11 @@ defmodule RasbetWeb do
 
       on_mount {RasbetWeb.LiveAuth, :fetch_current_user}
 
+      def handle_info(%{event: "update-user", payload: user}, socket) do
+        IO.inspect(user)
+        {:noreply, socket |> assign(:current_user, user)}
+      end
+
       unquote(view_helpers())
     end
   end

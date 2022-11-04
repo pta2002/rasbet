@@ -51,7 +51,7 @@
       <% end %>
     </div>
 
-    <.form let={f} for={@changeset} phx-change="update_amount">
+    <.form let={f} for={@changeset} phx-change="update_amount" phx-submit="bet">
       <div class="p-4 flex flex-col items-center">
         <.input form={f} field={:amount} type="number" label="Montante a apostar" value={@amount}/>
         <div class="flex flex-row justify-between w-full">
@@ -62,7 +62,11 @@
           <span>Ganhos</span>
           <span class={if length(@bets) > 0 do "text-primary-600" end}><%= @gains %></span>
         </div>
-        <button class="bg-primary-200 text-white px-6 py-2 font-bold rounded-full" disabled>Apostar</button>
+        <%= if @valid? do %>
+          <button class="bg-primary-500 text-white px-6 py-2 font-bold rounded-full">Apostar</button>
+        <% else %>
+          <button class="bg-primary-200 text-white px-6 py-2 font-bold rounded-full" disabled>Apostar</button>
+        <% end %>
       </div>
     </.form>
   </div>
