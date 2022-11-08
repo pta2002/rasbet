@@ -39,7 +39,7 @@ defmodule Rasbet.Game.TwoTeams.Api do
             Game.changeset(db_game || %Game{api_id: game.api_id}, game)
           end)
           |> Multi.run(:completed_bets, fn repo, %{game: game, new_game: new_game} ->
-            if new_game.completed and not game.completed do
+            if game != nil and new_game.completed and not game.completed do
               {:ok,
                game
                |> repo.preload(bets: [entries: :game])
@@ -91,7 +91,7 @@ defmodule Rasbet.Game.TwoTeams.Api do
 
   @spec games :: {:error, any} | {:ok, list}
   def games() do
-    case get("/games", [], timeout: 50_000, recv_timeout: 50_000) do
+    case IO.inspect(get("/games", [], timeout: 50_000, recv_timeout: 50_000)) do
       {:ok, %{body: {:ok, body}}} -> {:ok, Enum.map(body, &cast_game/1)}
       {:ok, %{body: {:error, reason}}} -> {:error, reason}
       {:error, reason} -> {:error, reason}
