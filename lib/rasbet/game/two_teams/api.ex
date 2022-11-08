@@ -91,7 +91,7 @@ defmodule Rasbet.Game.TwoTeams.Api do
 
   @spec games :: {:error, any} | {:ok, list}
   def games() do
-    case get("/games") do
+    case get("/games", [], timeout: 50_000, recv_timeout: 50_000) do
       {:ok, %{body: {:ok, body}}} -> {:ok, Enum.map(body, &cast_game/1)}
       {:ok, %{body: {:error, reason}}} -> {:error, reason}
       {:error, reason} -> {:error, reason}
