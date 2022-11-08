@@ -80,13 +80,6 @@ defmodule Rasbet.Game.TwoTeams.Api do
           end)
           |> Multi.inspect(only: :winning_transactions)
           |> Repo.transaction()
-
-          # case Repo.get_by(Info, api_id: game.api_id) do
-          #   nil -> %Info{api_id: game.api_id}
-          #   g -> g
-          # end
-          # |> Info.changeset(game)
-          # |> Repo.insert_or_update()
         end
 
         Logger.debug("Games saved.")
