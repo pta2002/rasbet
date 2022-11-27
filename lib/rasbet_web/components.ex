@@ -17,8 +17,7 @@ defmodule RasbetWeb.Components do
               @field,
               id: @field,
               class: "input",
-              type: @type,
-              value: assigns[:value]
+              type: @type
             %>
           <% end %>
         <% end %>

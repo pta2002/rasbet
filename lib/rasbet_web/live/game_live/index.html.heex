@@ -53,7 +53,7 @@
 
     <.form let={f} for={@changeset} phx-change="update_amount" phx-submit="bet">
       <div class="p-4 flex flex-col items-center">
-        <.input form={f} field={:amount} type="number" label="Montante a apostar" value={@amount}/>
+        <%= text_input f, :amount, type: "number", label: "Montante a apostar", value: @amount, class: "input" %>
         <div class="flex flex-row justify-between w-full">
           <span><%= gettext "Cota final"%></span>
           <span><%= show_odds @final_odd %></span>
