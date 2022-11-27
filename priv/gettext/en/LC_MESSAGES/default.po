@@ -83,6 +83,7 @@ msgstr "Postal code"
 msgid "Desportos"
 msgstr "Sports"
 
+#: lib/rasbet_web/live/user_live/list.html.heex:9
 #: lib/rasbet_web/live/user_live/registration.html.heex:18
 #: lib/rasbet_web/templates/user_registration/new.html.heex:16
 #: lib/rasbet_web/templates/user_session/new.html.heex:15
@@ -172,6 +173,7 @@ msgstr "Tax ID"
 msgid "New password"
 msgstr ""
 
+#: lib/rasbet_web/live/user_live/list.html.heex:8
 #: lib/rasbet_web/live/user_live/registration.html.heex:10
 #, elixir-autogen, elixir-format
 msgid "Nome"
@@ -239,6 +241,7 @@ msgstr "Balance"
 msgid "Settings"
 msgstr ""
 
+#: lib/rasbet_web/live/user_live/list.html.heex:10
 #: lib/rasbet_web/live/user_live/registration.html.heex:26
 #, elixir-autogen, elixir-format
 msgid "Telemóvel"
@@ -316,3 +319,18 @@ msgstr "Transactions"
 #, elixir-autogen, elixir-format
 msgid "Valor"
 msgstr "Value"
+
+#: lib/rasbet_web/live/user_live/list.html.heex:3
+#, elixir-autogen, elixir-format
+msgid "Adicionar utilizador"
+msgstr "Add user"
+
+#: lib/rasbet_web/live/user_live/list.html.heex:11
+#, elixir-autogen, elixir-format
+msgid "Ações"
+msgstr "Actions"
+
+#: lib/rasbet_web/live/user_live/list.html.heex:2
+#, elixir-autogen, elixir-format
+msgid "Pesquisar utilizador"
+msgstr "Search users"

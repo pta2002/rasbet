@@ -87,6 +87,12 @@ defmodule RasbetWeb.Router do
     live "/user/bets/completed", WalletLive.Bets, :completed
   end
 
+  scope "/admin", RasbetWeb do
+    pipe_through [:browser, :require_admin_user]
+
+    live "/users", UserLive.List, :index
+  end
+
   scope "/", RasbetWeb do
     pipe_through [:browser]
 

@@ -7,7 +7,7 @@
   <div class="flex flex-row items-center align-center gap-4 px-6" x-data="{ open: false }">
     <%= if @current_user do %>
       <%= if @current_user.is_admin do %>
-        <.link navigate={Routes.wallet_index_path(@socket, :index)} class="nav-item"><%= gettext "Gerir utilizadores" %></.link>
+        <.link navigate={Routes.user_list_path(@socket, :index)} class="nav-item"><%= gettext "Gerir utilizadores" %></.link>
       <% end %>
       <.link navigate={Routes.wallet_index_path(@socket, :index)} class="nav-item"><%= @current_user.balance %></.link>
       <div class="h-full">
