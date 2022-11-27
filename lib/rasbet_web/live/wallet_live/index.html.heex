@@ -1,14 +1,14 @@
-<.h1>Carteira - <%= @current_user.balance %></.h1>
+<.h1><%= gettext "Carteira - %{balance}", balance: @current_user.balance %></.h1>
 
-<.button link_type="live_patch" to={Routes.wallet_index_path(@socket, :topup)} label="Depositar"/>
+<.button link_type="live_patch" to={Routes.wallet_index_path(@socket, :topup)} label={gettext "Depositar"}/>
 
-<.h2>Transações</.h2>
+<.h2><%= gettext "Transações" %></.h2>
 <.table>
   <.tr>
-    <.th>Data</.th>
-    <.th>Tipo</.th>
-    <.th>Descrição</.th>
-    <.th>Valor</.th>
+    <.th><%= gettext "Data" %></.th>
+    <.th><%= gettext "Tipo" %></.th>
+    <.th><%= gettext "Descrição" %></.th>
+    <.th><%= gettext "Valor" %></.th>
   </.tr>
   <%= for transaction <- @transactions do %>
   <.tr>
@@ -21,13 +21,14 @@
 </.table>
 
 <%= if @live_action == :topup do %>
-  <.modal max_width="lg" title="Depositar">
+  <.modal max_width="lg" title={gettext "Depositar"}>
     <.form :let={f} for={@changeset} phx-change="validate" phx-submit="deposit">
+      <!-- TODO: traduzir as options -->
       <.form_field
         type="radio_group"
         form={f} field={:method}
         layout={:row}
-        label="Método de pagamento"
+        label={gettext "Método de pagamento"}
         required
         options={[
           "Cartão": "card",
@@ -37,11 +38,11 @@
         phx-debounce="blur"
       />
 
-      <.form_field type="number_input" form={f} field={:amount} label="Valor"/>
+      <.form_field type="number_input" form={f} field={:amount} label={gettext "Valor"}/>
 
       <div class="flex place-content-between">
-        <.button label="Cancelar" variant="outline" color="danger" phx-click={PetalComponents.Modal.hide_modal()} />
-        <.button label="Depositar" color="primary" type="submit" phx_disable_with="A processar..."/>
+        <.button label={gettext "Cancelar"} variant="outline" color="danger" phx-click={PetalComponents.Modal.hide_modal()} />
+        <.button label={gettext "Depositar"} color="primary" type="submit" phx_disable_with="A processar..."/>
       </div>
     </.form>
   </.modal>

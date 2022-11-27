@@ -37,7 +37,7 @@ msgstr ""
 msgid "Apostas concluídas"
 msgstr ""
 
-#: lib/rasbet_web/templates/layout/_nav.html.heex:18
+#: lib/rasbet_web/templates/layout/_nav.html.heex:21
 #, elixir-autogen, elixir-format
 msgid "Carteira"
 msgstr ""
@@ -90,7 +90,7 @@ msgid "Email"
 msgstr ""
 
 #: lib/rasbet_web/live/user_live/registration.html.heex:96
-#: lib/rasbet_web/templates/layout/_nav.html.heex:28
+#: lib/rasbet_web/templates/layout/_nav.html.heex:31
 #, elixir-autogen, elixir-format
 msgid "Entrar"
 msgstr ""
@@ -126,6 +126,7 @@ msgid "Jogo concluído"
 msgstr ""
 
 #: lib/rasbet_web/live/game_live/index.html.heex:75
+#: lib/rasbet_web/templates/layout/_nav.html.heex:4
 #, elixir-autogen, elixir-format
 msgid "Jogos"
 msgstr ""
@@ -150,7 +151,7 @@ msgstr ""
 msgid "Linha morada 2"
 msgstr ""
 
-#: lib/rasbet_web/templates/layout/_nav.html.heex:15
+#: lib/rasbet_web/templates/layout/_nav.html.heex:18
 #, elixir-autogen, elixir-format
 msgid "Minhas apostas"
 msgstr ""
@@ -206,7 +207,7 @@ msgstr ""
 
 #: lib/rasbet_web/live/user_live/registration.html.heex:1
 #: lib/rasbet_web/live/user_live/registration.html.heex:95
-#: lib/rasbet_web/templates/layout/_nav.html.heex:29
+#: lib/rasbet_web/templates/layout/_nav.html.heex:32
 #, elixir-autogen, elixir-format
 msgid "Registar"
 msgstr ""
@@ -222,7 +223,7 @@ msgstr ""
 msgid "Reset password"
 msgstr ""
 
-#: lib/rasbet_web/templates/layout/_nav.html.heex:22
+#: lib/rasbet_web/templates/layout/_nav.html.heex:25
 #, elixir-autogen, elixir-format
 msgid "Sair"
 msgstr ""
@@ -250,4 +251,67 @@ msgstr ""
 #: lib/rasbet_web/templates/layout/auth.html.heex:8
 #, elixir-autogen, elixir-format
 msgid "Voltar"
+msgstr ""
+
+#: lib/rasbet_web/templates/layout/_nav.html.heex:10
+#, elixir-autogen, elixir-format
+msgid "Gerir utilizadores"
+msgstr ""
+
+#: lib/rasbet_web/templates/layout/_nav.html.heex:14
+#, elixir-autogen, elixir-format
+msgid "Minha conta"
+msgstr ""
+
+#: lib/rasbet_web/templates/layout/_nav.html.heex:5
+#, elixir-autogen, elixir-format
+msgid "Promoções"
+msgstr ""
+
+#: lib/rasbet_web/live/wallet_live/index.html.heex:44
+#, elixir-autogen, elixir-format
+msgid "Cancelar"
+msgstr ""
+
+#: lib/rasbet_web/live/wallet_live/index.html.heex:1
+#, elixir-autogen, elixir-format
+msgid "Carteira - %{balance}"
+msgstr ""
+
+#: lib/rasbet_web/live/wallet_live/index.html.heex:8
+#, elixir-autogen, elixir-format
+msgid "Data"
+msgstr ""
+
+#: lib/rasbet_web/live/wallet_live/index.html.heex:3
+#: lib/rasbet_web/live/wallet_live/index.html.heex:24
+#: lib/rasbet_web/live/wallet_live/index.html.heex:45
+#, elixir-autogen, elixir-format
+msgid "Depositar"
+msgstr ""
+
+#: lib/rasbet_web/live/wallet_live/index.html.heex:10
+#, elixir-autogen, elixir-format
+msgid "Descrição"
+msgstr ""
+
+#: lib/rasbet_web/live/wallet_live/index.html.heex:31
+#, elixir-autogen, elixir-format
+msgid "Método de pagamento"
+msgstr ""
+
+#: lib/rasbet_web/live/wallet_live/index.html.heex:9
+#, elixir-autogen, elixir-format
+msgid "Tipo"
+msgstr ""
+
+#: lib/rasbet_web/live/wallet_live/index.html.heex:5
+#, elixir-autogen, elixir-format
+msgid "Transações"
+msgstr ""
+
+#: lib/rasbet_web/live/wallet_live/index.html.heex:11
+#: lib/rasbet_web/live/wallet_live/index.html.heex:41
+#, elixir-autogen, elixir-format
+msgid "Valor"
 msgstr ""
