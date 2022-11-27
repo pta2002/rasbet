@@ -4,7 +4,7 @@
     <.form let={f} for={@changeset} action={Routes.user_reset_password_path(@conn, :update, @token)}>
       <%= if @changeset.action do %>
         <div class="alert alert-danger">
-          <p>Oops, something went wrong! Please check the errors below.</p>
+          <p><%= gettext "Oops, something went wrong! Please check the errors below."%></p>
         </div>
       <% end %>
 
@@ -14,7 +14,7 @@
         field={:password}
         required={true}
         placeholder="New password"
-        label="New password"
+        label={gettext "New password"}
       />
 
       <.form_field
@@ -22,11 +22,11 @@
         form={f}
         field={:password_confirmation}
         placeholder="Confirm password"
-        label="Confirm password"
+        label={gettext "Confirm password"}
         required={true}
       />
 
-      <.button label="Reset password" color="primary" link_type="button" type="submit" class="w-full"/>
+      <.button label={gettext "Reset password"} color="primary" link_type="button" type="submit" class="w-full"/>
     </.form>
 
     <p>

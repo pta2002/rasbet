@@ -12,7 +12,7 @@
         field={:email}
         required={true}
         placeholder="Email"
-        label="Email"
+        label={gettext "Email"}
       />
 
       <.form_field
@@ -20,7 +20,7 @@
         form={f}
         field={:password}
         placeholder="Password"
-        label="Password"
+        label={gettext "Password"}
         required={true}
       />
 
@@ -28,7 +28,7 @@
       type="checkbox"
       form={f}
       field={:remember_me}
-      label="Keep me logged in for 60 days"
+      label={gettext "Keep me logged in for 60 days"}
     />
 
       <.button label="Log in" color="primary" link_type="button" type="submit" class="w-full"/>

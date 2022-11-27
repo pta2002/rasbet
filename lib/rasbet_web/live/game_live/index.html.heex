@@ -1,6 +1,6 @@
 <div class="flex flex-row gap-8">
   <div class="bg-white w-96 py-4 flex rounded-md shadow-md sticky top-[6.5rem] h-[calc(100vh-8rem)] flex-col gap-2">
-    <h1 class="text-2xl font-medium px-4">Filtros</h1>
+    <h1 class="text-2xl font-medium px-4"><%= gettext "Filtros"%></h1>
 
     <div class="px-4">
       <hr class="border-primary-700 border-2 rounded-full"/>
@@ -8,11 +8,11 @@
 
     <div class="px-4">
       <!-- TODO: Lista dinâmica -->
-      <h2 class="font-semibold text-lg mb-2">Desportos</h2>
+      <h2 class="font-semibold text-lg mb-2"><%= gettext "Desportos"%></h2>
 
       <div class="flex flex-row gap-2 items-center">
         <input type="checkbox" id="all" class="w-4 h-4 text-primary-500 bg-gray-100 rounded border-gray-300 focus:ring-primary-500"/>
-        <label for="todos">Todos</label>
+        <label for="todos"><%= gettext "Todos"%></label>
       </div>
 
       <%= for {key, name} <- @sports do %>
@@ -27,11 +27,11 @@
       <hr class="border-primary-700 border-2 rounded-full"/>
     </div>
 
-    <h1 class="text-2xl font-medium mx-4">Apostas</h1>
+    <h1 class="text-2xl font-medium mx-4"><%= gettext "Apostas"%></h1>
 
     <div class="flex-grow shadow-inner bg-gray-50 p-4 flex gap-2 flex-col overflow-scroll">
       <%= if Enum.count(@bets_odds) == 0 do %>
-        Não tem apostas
+        <%= gettext "Não tem apostas"%>
       <% else %>
         <%= Enum.map(Enum.with_index(@bets_odds), fn {bet, i} -> %>
           <div class="bg-white shadow-md rounded-md flex flex-row justify-between items-center p-2">
@@ -55,24 +55,24 @@
       <div class="p-4 flex flex-col items-center">
         <.input form={f} field={:amount} type="number" label="Montante a apostar" value={@amount}/>
         <div class="flex flex-row justify-between w-full">
-          <span>Cota final</span>
+          <span><%= gettext "Cota final"%></span>
           <span><%= show_odds @final_odd %></span>
         </div>
         <div class="flex flex-row justify-between w-full text-lg">
-          <span>Ganhos</span>
+          <span><%= gettext "Ganhos"%></span>
           <span class={if length(@bets) > 0 do "text-primary-600" end}><%= @gains %></span>
         </div>
         <%= if @valid? do %>
-          <button class="bg-primary-500 text-white px-6 py-2 font-bold rounded-full">Apostar</button>
+          <button class="bg-primary-500 text-white px-6 py-2 font-bold rounded-full"><%= gettext "Apostar"%></button>
         <% else %>
-          <button class="bg-primary-200 text-white px-6 py-2 font-bold rounded-full" disabled>Apostar</button>
+          <button class="bg-primary-200 text-white px-6 py-2 font-bold rounded-full" disabled><%= gettext "Apostar"%></button>
         <% end %>
       </div>
     </.form>
   </div>
 
   <div class="w-full overflow-y-scroll">
-    <h1 class="mb-5 text-3xl font-medium">Jogos</h1>
+    <h1 class="mb-5 text-3xl font-medium"><%= gettext "Jogos"%></h1>
 
     <%= if is_list @games do %>
       <%= for game <- @games do %>
@@ -106,7 +106,7 @@
               <% end %>
             </div>
           <% else %>
-            <div class="text-xl flex items-center justify-center">Jogo concluído</div>
+            <div class="text-xl flex items-center justify-center"><%= gettext "Jogo concluído"%></div>
           <% end %>
         </div>
       <% end %>
@@ -118,7 +118,7 @@
       <% else %>
         <div class="bg-slate-200 p-5 mb-5 rounded flex justify-center gap-5 items-center">
           <.spinner size="md" class="text-primary-500" />
-          <span>A carregar...</span>
+          <span><%= gettext "A carregar..."%></span>
         </div>
       <% end %>
     <% end %>

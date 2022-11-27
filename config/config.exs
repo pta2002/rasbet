@@ -67,6 +67,8 @@ config :tailwind,
 config :money,
   default_currency: :EUR
 
+config :rasbet, Rasbet.Gettext, default_locale: "pt", locales: ~w(en pt)
+
 config :rasbet, Rasbet.Scheduler,
   debug_logging: false,
   jobs: [

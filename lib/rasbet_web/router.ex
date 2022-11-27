@@ -11,6 +11,7 @@ defmodule RasbetWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
+    plug SetLocale, gettext: RasbetWeb.Gettext, default_locale: "pt"
   end
 
   pipeline :api do
@@ -18,6 +19,12 @@ defmodule RasbetWeb.Router do
   end
 
   scope "/", RasbetWeb do
+    pipe_through :browser
+
+    live "/", GameLive.Index, :index
+  end
+
+  scope "/:locale", RasbetWeb do
     pipe_through :browser
 
     live "/", GameLive.Index, :index

@@ -1,29 +1,29 @@
 <div class="flex flex-row gap-8">
   <div class="bg-white w-96 py-4 flex rounded-md shadow-md sticky flex-col gap-2 h-fit top-[6.5rem]">
     <div class="px-4">
-      <h1 class="font-medium text-lg">Estatísticas</h1>
+      <h1 class="font-medium text-lg"><%= gettext "Estatísticas"%></h1>
       TODO
     </div>
     <hr>
     <div class="px-4">
-      <h1 class="font-medium text-lg">Saldo</h1>
+      <h1 class="font-medium text-lg"><%= gettext "Saldo"%>%</h1>
       TODO
     </div>
   </div>
   <div class="w-full flex flex-col gap-4">
     <.tabs class="w-full bg-white rounded-md shadow-md justify-around">
       <.tab underline to={Routes.wallet_bets_path(@socket, :index)} link_type="live_patch" is_active={@live_action == :index} class="w-full justify-center">
-        Apostas ativas
+        <%= gettext "Apostas ativas"%>
       </.tab>
       <.tab underline to={Routes.wallet_bets_path(@socket, :completed)} link_type="live_patch" is_active={@live_action == :completed} class="w-full justify-center">
-        Apostas concluídas
+        <%= gettext "Apostas concluídas"%>
       </.tab>
     </.tabs>
-  
+
     <%= for bet <- @bets do %>
       <div class="w-full rounded-md shadow-md bg-white flex flex-row divide-x">
         <div class="p-4 w-8/12">
-          <h2 class="font-medium text-lg">Apostas</h2>
+          <h2 class="font-medium text-lg"><%= gettext "Apostas"%></h2>
 
           <ul class="list-disc list-inside">
             <%= for entry <- bet.entries do %>
@@ -34,13 +34,13 @@
           </ul>
         </div>
         <div class="p-4 w-60 w-4/12 flex items-center flex-col justify-center">
-          <h2 class="font-medium text-md">Montante apostado</h2>
+          <h2 class="font-medium text-md"><%= gettext "Montante apostado"%></h2>
           <span class="font-medium text-xl"><%= bet.amount %></span>
           <%= if @live_action == :completed do %>
-            <h2 class="font-medium text-md">Ganhos realizados</h2>
+            <h2 class="font-medium text-md"><%= gettext "Ganhos realizados"%></h2>
             <span class="font-medium text-xl text-primary-500"><%= bet.final_gains %></span>
           <% else %>
-            <h2 class="font-medium text-md">Ganhos possíveis</h2>
+            <h2 class="font-medium text-md"><%= gettext "Ganhos possíveis"%></h2>
             <span class="font-medium text-xl text-primary-500"><%= bet.possible_gains %></span>
           <% end %>
         </div>

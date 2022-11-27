@@ -20,7 +20,7 @@ defmodule Rasbet.MixProject do
   def application do
     [
       mod: {Rasbet.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :set_locale]
     ]
   end
 
@@ -58,7 +58,8 @@ defmodule Rasbet.MixProject do
       {:poison, "~> 5.0"},
       {:countries, "~> 1.6"},
       {:quantum, "~> 3.0"},
-      {:decimal, "~> 2.0"}
+      {:decimal, "~> 2.0"},
+      {:set_locale, "~> 0.2.1"}
     ]
   end
 
