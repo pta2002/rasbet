@@ -5,24 +5,25 @@ defmodule Rasbet.Accounts.User do
   alias Rasbet.Game.Bets.Bet
 
   schema "users" do
-    field :name, :string
-    field :email, :string
-    field :password, :string, virtual: true, redact: true
-    field :password_confirmation, :string, virtual: true, redact: true
-    field :hashed_password, :string, redact: true
-    field :confirmed_at, :naive_datetime
-    field :balance, Money.Ecto.Amount.Type
+    field(:name, :string)
+    field(:email, :string)
+    field(:password, :string, virtual: true, redact: true)
+    field(:password_confirmation, :string, virtual: true, redact: true)
+    field(:hashed_password, :string, redact: true)
+    field(:confirmed_at, :naive_datetime)
+    field(:balance, Money.Ecto.Amount.Type)
+    field(:is_admin, :boolean, default: false)
 
-    field :phone, :string
-    field :taxid, :string
-    field :address1, :string
-    field :address2, :string
-    # two-letter country code
-    field :country, :string
-    field :city, :string
-    field :zipcode, :string
+    field(:phone, :string)
+    field(:taxid, :string)
+    field(:address1, :string)
+    field(:address2, :string)
+    # two letter country code
+    field(:country, :string)
+    field(:city, :string)
+    field(:zipcode, :string)
 
-    has_many :bets, Bet
+    has_many(:bets, Bet)
 
     timestamps()
   end
