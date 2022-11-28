@@ -38,7 +38,7 @@ msgstr "Active bets"
 msgid "Apostas concluídas"
 msgstr "Completed bets"
 
-#: lib/rasbet_web/templates/layout/_nav.html.heex:21
+#: lib/rasbet_web/templates/layout/_nav.html.heex:25
 #, elixir-autogen, elixir-format
 msgid "Carteira"
 msgstr "Wallet"
@@ -92,7 +92,7 @@ msgid "Email"
 msgstr ""
 
 #: lib/rasbet_web/live/user_live/registration.html.heex:96
-#: lib/rasbet_web/templates/layout/_nav.html.heex:31
+#: lib/rasbet_web/templates/layout/_nav.html.heex:35
 #, elixir-autogen, elixir-format
 msgid "Entrar"
 msgstr "Login"
@@ -153,7 +153,7 @@ msgstr "Address line 1"
 msgid "Linha morada 2"
 msgstr "Address line 2"
 
-#: lib/rasbet_web/templates/layout/_nav.html.heex:18
+#: lib/rasbet_web/templates/layout/_nav.html.heex:22
 #, elixir-autogen, elixir-format
 msgid "Minhas apostas"
 msgstr "My bets"
@@ -210,7 +210,7 @@ msgstr "Country"
 
 #: lib/rasbet_web/live/user_live/registration.html.heex:1
 #: lib/rasbet_web/live/user_live/registration.html.heex:95
-#: lib/rasbet_web/templates/layout/_nav.html.heex:32
+#: lib/rasbet_web/templates/layout/_nav.html.heex:36
 #, elixir-autogen, elixir-format
 msgid "Registar"
 msgstr "Register"
@@ -226,7 +226,7 @@ msgstr ""
 msgid "Reset password"
 msgstr ""
 
-#: lib/rasbet_web/templates/layout/_nav.html.heex:25
+#: lib/rasbet_web/templates/layout/_nav.html.heex:29
 #, elixir-autogen, elixir-format
 msgid "Sair"
 msgstr "Exit"
@@ -257,6 +257,7 @@ msgstr "All"
 msgid "Voltar"
 msgstr "Back"
 
+#: lib/rasbet_web/live/user_live/list.ex:7
 #: lib/rasbet_web/templates/layout/_nav.html.heex:10
 #, elixir-autogen, elixir-format
 msgid "Gerir utilizadores"
@@ -334,3 +335,8 @@ msgstr "Actions"
 #, elixir-autogen, elixir-format
 msgid "Pesquisar utilizador"
 msgstr "Search users"
+
+#: lib/rasbet_web/templates/layout/_nav.html.heex:19
+#, elixir-autogen, elixir-format
+msgid "Definições"
+msgstr "Settings"
