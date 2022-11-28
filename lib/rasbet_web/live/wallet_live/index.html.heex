@@ -1,6 +1,8 @@
 <.h1><%= gettext "Carteira - %{balance}", balance: @current_user.balance %></.h1>
 
-<.button link_type="live_patch" to={Routes.wallet_index_path(@socket, :topup)} label={gettext "Depositar"}/>
+<.button link_type="live_patch" to={Routes.wallet_index_path(@socket, :topup_d)} label={gettext "Depositar"}/>
+
+<.button link_type="live_patch" to={Routes.wallet_index_path(@socket, :topup_w)} label={gettext "Levantar"}/>
 
 <.h2><%= gettext "Transações" %></.h2>
 <.table>
@@ -20,7 +22,7 @@
   <% end %>
 </.table>
 
-<%= if @live_action == :topup do %>
+<%= if @live_action == :topup_d do %>
   <.modal max_width="lg" title={gettext "Depositar"}>
     <.form :let={f} for={@changeset} phx-change="validate" phx-submit="deposit">
       <!-- TODO: traduzir as options -->
@@ -43,6 +45,27 @@
       <div class="flex place-content-between">
         <.button label={gettext "Cancelar"} variant="outline" color="danger" phx-click={PetalComponents.Modal.hide_modal()} />
         <.button label={gettext "Depositar"} color="primary" type="submit" phx_disable_with="A processar..."/>
+      </div>
+    </.form>
+  </.modal>
+<% end %>
+
+<%= if @live_action == :topup_w do %>
+  <.modal max_width="lg" title={gettext "Levantar"}>
+    <.form :let={f} for={@changeset} phx-change="validate" phx-submit="withdraw">
+      <!-- TODO: traduzir as options -->
+      <.form_field
+        type="text_input"
+        form={f} field={:iban}
+        label={gettext "IBAN"}
+        required
+      />
+
+      <.form_field type="number_input" form={f} field={:amount} label={gettext "Valor"}/>
+
+      <div class="flex place-content-between">
+        <.button label={gettext "Cancelar"} variant="outline" color="danger" phx-click={PetalComponents.Modal.hide_modal()} />
+        <.button label={gettext "Levantar"} color="primary" type="submit" phx_disable_with="A processar..."/>
       </div>
     </.form>
   </.modal>

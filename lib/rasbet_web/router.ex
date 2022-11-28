@@ -82,7 +82,8 @@ defmodule RasbetWeb.Router do
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
 
     live "/user/wallet", WalletLive.Index, :index
-    live "/user/wallet/top-up", WalletLive.Index, :topup
+    live "/user/wallet/top-up_d", WalletLive.Index, :topup_d
+    live "/user/wallet/top-up_w", WalletLive.Index, :topup_w
     live "/user/bets", WalletLive.Bets, :index
     live "/user/bets/completed", WalletLive.Bets, :completed
   end
