@@ -95,10 +95,6 @@ defmodule RasbetWeb.Components.UserSettings do
           </div>
         </div>
 
-        <div class="flex place-content-between w-full items-center flex-row-reverse">
-          <%= submit gettext "Registar", class: "bg-primary-500 px-6 py-2 rounded-full text-white" %>
-          <div><%= gettext "Já tem conta?"%> <a href="/users/login" class="text-primary-500 font-semibold"><%= gettext "Entrar"%></a></div>
-        </div>
       </.form>
     </div>
     """

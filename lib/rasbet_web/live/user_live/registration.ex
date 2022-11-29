@@ -1,6 +1,7 @@
 defmodule RasbetWeb.UserLive.Registration do
   use RasbetWeb, :live_auth
 
+  alias RasbetWeb.Components.UserSettings
   alias Rasbet.Accounts
 
   def mount(_params, _session, socket) do
