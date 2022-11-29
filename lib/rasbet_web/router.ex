@@ -4,24 +4,24 @@ defmodule RasbetWeb.Router do
   import RasbetWeb.UserAuth
 
   pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_live_flash
-    plug :put_root_layout, {RasbetWeb.LayoutView, :root}
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
-    plug :fetch_current_user
+    plug(:accepts, ["html"])
+    plug(:fetch_session)
+    plug(:fetch_live_flash)
+    plug(:put_root_layout, {RasbetWeb.LayoutView, :root})
+    plug(:protect_from_forgery)
+    plug(:put_secure_browser_headers)
+    plug(:fetch_current_user)
     # plug SetLocale, gettext: RasbetWeb.Gettext, default_locale: "pt"
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(:accepts, ["json"])
   end
 
   scope "/", RasbetWeb do
-    pipe_through :browser
+    pipe_through(:browser)
 
-    live "/", GameLive.Index, :index
+    live("/", GameLive.Index, :index)
   end
 
   # Other scopes may use custom stacks.
@@ -40,9 +40,9 @@ defmodule RasbetWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through :browser
+      pipe_through(:browser)
 
-      live_dashboard "/dashboard", metrics: RasbetWeb.Telemetry
+      live_dashboard("/dashboard", metrics: RasbetWeb.Telemetry)
     end
   end
 
@@ -52,54 +52,56 @@ defmodule RasbetWeb.Router do
   # node running the Phoenix server.
   if Mix.env() == :dev do
     scope "/dev" do
-      pipe_through :browser
+      pipe_through(:browser)
 
-      forward "/mailbox", Plug.Swoosh.MailboxPreview
+      forward("/mailbox", Plug.Swoosh.MailboxPreview)
     end
   end
 
   ## Authentication routes
 
   scope "/", RasbetWeb do
-    pipe_through [:browser, :redirect_if_user_is_authenticated]
+    pipe_through([:browser, :redirect_if_user_is_authenticated])
 
     # get "/users/register", UserRegistrationController, :new
-    live "/users/register", UserLive.Registration, :new
-    post "/users/register", UserRegistrationController, :create
-    get "/users/log_in", UserSessionController, :new
-    post "/users/log_in", UserSessionController, :create
-    get "/users/reset_password", UserResetPasswordController, :new
-    post "/users/reset_password", UserResetPasswordController, :create
-    get "/users/reset_password/:token", UserResetPasswordController, :edit
-    put "/users/reset_password/:token", UserResetPasswordController, :update
+    live("/users/register", UserLive.Registration, :new)
+    post("/users/register", UserRegistrationController, :create)
+    get("/users/log_in", UserSessionController, :new)
+    post("/users/log_in", UserSessionController, :create)
+    get("/users/reset_password", UserResetPasswordController, :new)
+    post("/users/reset_password", UserResetPasswordController, :create)
+    get("/users/reset_password/:token", UserResetPasswordController, :edit)
+    put("/users/reset_password/:token", UserResetPasswordController, :update)
   end
 
   scope "/", RasbetWeb do
-    pipe_through [:browser, :require_authenticated_user]
+    pipe_through([:browser, :require_authenticated_user])
 
-    live "/users/settings", UserLive.Edit, :index
-    get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+    live("/users/settings", UserLive.Edit, :index)
+    get("/users/settings/confirm_email/:token", UserSettingsController, :confirm_email)
 
-    live "/user/wallet", WalletLive.Index, :index
-    live "/user/wallet/top-up_d", WalletLive.Index, :topup_d
-    live "/user/wallet/top-up_w", WalletLive.Index, :topup_w
-    live "/user/bets", WalletLive.Bets, :index
-    live "/user/bets/completed", WalletLive.Bets, :completed
+    live("/user/wallet", WalletLive.Index, :index)
+    live("/user/wallet/top-up_d", WalletLive.Index, :topup_d)
+    live("/user/wallet/top-up_w", WalletLive.Index, :topup_w)
+    live("/user/bets", WalletLive.Bets, :index)
+    live("/user/bets/completed", WalletLive.Bets, :completed)
   end
 
   scope "/admin", RasbetWeb do
-    pipe_through [:browser, :require_admin_user]
+    pipe_through([:browser, :require_admin_user])
 
-    live "/users", UserLive.List, :index
+    live("/users", UserLive.List, :index)
+    live("/users/:id/edit", UserLive.Edit, :edit)
+    # post("/users/edit", UserLive.Edit, :update)
   end
 
   scope "/", RasbetWeb do
-    pipe_through [:browser]
+    pipe_through([:browser])
 
-    delete "/users/log_out", UserSessionController, :delete
-    get "/users/confirm", UserConfirmationController, :new
-    post "/users/confirm", UserConfirmationController, :create
-    get "/users/confirm/:token", UserConfirmationController, :edit
-    post "/users/confirm/:token", UserConfirmationController, :update
+    delete("/users/log_out", UserSessionController, :delete)
+    get("/users/confirm", UserConfirmationController, :new)
+    post("/users/confirm", UserConfirmationController, :create)
+    get("/users/confirm/:token", UserConfirmationController, :edit)
+    post("/users/confirm/:token", UserConfirmationController, :update)
   end
 end

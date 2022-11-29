@@ -17,8 +17,10 @@
       <.td><%= user.email %></.td>
       <.td><%= ExPhoneNumber.format(ExPhoneNumber.parse(user.phone, "PT") |> elem(1), :international) %></.td>
       <.td class="flex flex-row gap-4 justify-end">
-        <a><Heroicons.pencil_square class="w-6 h-6" /></a>
-        <a><Heroicons.x_mark class="w-6 h-6" /></a>
+              <Heroicons.pencil_square class="w-6 h-6" />
+              <Heroicons.x_mark class="w-6 h-6" />
+              <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: user.id, data: [confirm: "Are you sure?"] %></span>
+
       </.td>
     </.tr>
   <% end %>

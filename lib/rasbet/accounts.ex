@@ -108,6 +108,14 @@ defmodule Rasbet.Accounts do
     User.email_changeset(user, attrs)
   end
 
+  def delete_user(%User{} = user) do
+    Repo.delete(user)
+  end
+
+  def list_users do
+    Repo.all(User)
+  end
+
   @doc """
   Emulates that the email will change without actually changing
   it in the database.

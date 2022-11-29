@@ -1,2 +1,99 @@
-<.h2><%= gettext "Editar conta" %></.h2>
-<.live_component module={UserSettings} id="1" changeset={@changeset} />
+<h1 class="text-2xl font-bold text-center"><%= gettext "Editar"%></h1>
+
+<.form let={f} for={@changeset} phx-change="validate" phx-submit="edit_user">
+<div class="grid grid-cols-1 md:grid-cols-2 md:gap-4">
+  <div class="max-w-sm">
+    <.input
+      type="text"
+      form={f}
+      field={:name}
+      label={gettext "Nome"}
+      required
+    />
+
+    <.input
+      type="email"
+      form={f}
+      field={:email}
+      label={gettext "Email"}
+      required
+    />
+
+    <.input
+      type="phone"
+      form={f}
+      field={:phone}
+      label={gettext "Telemóvel"}
+      required
+    />
+
+    <.input
+      type="password"
+      form={f}
+      field={:password}
+      label={gettext "Palavra-passe"}
+      required
+    />
+
+    <.input
+      type="password"
+      form={f}
+      field={:password_confirmation}
+      label={gettext "Confirmar palavra-passe"}
+      required
+    />
+  </div>
+
+  <div class="max-w-sm">
+    <.input
+      type="text"
+      form={f}
+      field={:address1}
+      label={gettext "Linha morada 1"}
+      required
+    />
+    <.input
+      type="text"
+      form={f}
+      field={:address2}
+      label={gettext "Linha morada 2"}
+    />
+    <div class="grid grid-cols-2 gap-4">
+      <.input
+        type="text"
+        form={f}
+        field={:zipcode}
+        label={gettext "Código postal"}
+        required
+      />
+      <.input
+        type="text"
+        form={f}
+        field={:city}
+        label={gettext "Cidade"}
+        required
+      />
+    </div>
+    <.input
+      type="country"
+      form={f}
+      field={:country}
+      label={gettext "País"}
+      required
+    />
+    <.input
+      type="text"
+      form={f}
+      field={:taxid}
+      label={gettext "NIF"}
+      required
+    />
+  </div>
+</div>
+
+<div class="flex place-content-between w-full items-center flex-row-reverse">
+  <%= submit gettext "Editar", class: "bg-primary-500 px-6 py-2 rounded-full text-white" %>
+</div>
+</.form>
+
+
