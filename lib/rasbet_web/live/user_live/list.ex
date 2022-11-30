@@ -31,6 +31,12 @@ defmodule RasbetWeb.UserLive.List do
     |> assign(:product, nil)
   end
 
+  defp apply_action(socket, :edit, %{"id" => id}) do
+    socket
+    |> assign(:page_title, "Edit User")
+    |> assign(:user, Accounts.get_user!(id))
+  end
+
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
     user = Accounts.get_user!(id)
