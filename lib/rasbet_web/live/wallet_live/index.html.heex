@@ -24,7 +24,7 @@
 
 <%= if @live_action == :topup_d do %>
   <.modal max_width="lg" title={gettext "Depositar"}>
-    <.form :let={f} for={@changeset} phx-change="validate" phx-submit="deposit">
+    <.form :let={f} for={@changeset_d} phx-change="validate_d" phx-submit="deposit">
       <!-- TODO: traduzir as options -->
       <.form_field
         type="radio_group"
@@ -52,16 +52,17 @@
 
 <%= if @live_action == :topup_w do %>
   <.modal max_width="lg" title={gettext "Levantar"}>
-    <.form :let={f} for={@changeset} phx-change="validate" phx-submit="withdraw">
+    <.form :let={f} for={@changeset_w} phx-change="validate_w" phx-submit="withdrawal">
       <!-- TODO: traduzir as options -->
       <.form_field
         type="text_input"
         form={f} field={:iban}
         label={gettext "IBAN"}
         required
+        phx-debounce="blur"
       />
 
-      <.form_field type="number_input" form={f} field={:amount} label={gettext "Valor"}/>
+      <.form_field type="text_input" form={f} field={:amount} label={gettext "Valor"} inputmode="numeric" pattern="[0-9]+(\.[0-9]+)?"/>
 
       <div class="flex place-content-between">
         <.button label={gettext "Cancelar"} variant="outline" color="danger" phx-click={PetalComponents.Modal.hide_modal()} />

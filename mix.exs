@@ -60,7 +60,8 @@ defmodule Rasbet.MixProject do
       {:quantum, "~> 3.0"},
       {:decimal, "~> 2.0"},
       {:set_locale, "~> 0.2.1"},
-      {:ex_phone_number, "~> 0.3"}
+      {:ex_phone_number, "~> 0.3"},
+      {:exiban, "~> 0.0.5"}
     ]
   end
 

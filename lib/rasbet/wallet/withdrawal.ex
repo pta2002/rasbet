@@ -1,19 +1,21 @@
-defmodule Rasbet.Wallet.Deposit do
-  defstruct [:amount, :method]
+defmodule Rasbet.Wallet.Withdrawal do
+  defstruct [:amount, :iban]
 
   # TODO: Tentar usar o Money aqui
   @types %{
     amount: Money.Ecto.Amount.Type,
-    method: {:parameterized, Ecto.Enum, Ecto.Enum.init(values: ~w(card mbway multibanco)a)}
+    iban: :string
   }
 
-  alias Rasbet.Wallet.Deposit
+  alias Rasbet.Wallet.Withdrawal
   import Ecto.Changeset
+  import ExIban.EctoValidator
 
-  def changeset_d(%Deposit{} = deposit, attrs) do
-    {deposit, @types}
+  def changeset_w(%Withdrawal{} = withdrawal, attrs) do
+    {withdrawal, @types}
     |> cast(attrs, Map.keys(@types))
-    |> validate_required([:amount, :method])
+    |> validate_required([:amount, :iban])
+    |> validate_iban(:iban)
     |> validate_change(:amount, fn
       _, %Money{amount: amount} when amount > 0 -> []
       _, _ -> [amount: "must be greater than 0"]

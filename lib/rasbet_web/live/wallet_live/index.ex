@@ -3,6 +3,7 @@ defmodule RasbetWeb.WalletLive.Index do
 
   alias Rasbet.Wallet
   alias Rasbet.Wallet.Deposit
+  alias Rasbet.Wallet.Withdrawal
   alias RasbetWeb.Router
 
   on_mount {RasbetWeb.LiveAuth, :require_authenticated_user}
@@ -12,7 +13,9 @@ defmodule RasbetWeb.WalletLive.Index do
      socket
      |> assign_transactions()
      |> assign_deposit()
-     |> assign_changeset()}
+     |> assign_withdrawal()
+     |> assign_changeset_deposit()
+     |> assign_changeset_withdrawal()}
   end
 
   def handle_params(_params, _uri, socket) do
@@ -24,18 +27,33 @@ defmodule RasbetWeb.WalletLive.Index do
   end
 
   def handle_event(
-        "validate",
+        "validate_d",
         %{"deposit" => deposit_params},
         %{assigns: %{deposit: deposit}} = socket
       ) do
-    changeset =
+    changeset_d =
       deposit
       |> Wallet.change_deposit(deposit_params)
       |> Map.put(:action, :validate)
 
     {:noreply,
      socket
-     |> assign(:changeset, changeset)}
+     |> assign(:changeset_d, changeset_d)}
+  end
+
+  def handle_event(
+        "validate_w",
+        %{"withdrawal" => withdrawal_params},
+        %{assigns: %{withdrawal: withdrawal}} = socket
+      ) do
+    changeset_w =
+      withdrawal
+      |> Wallet.change_withdrawal(withdrawal_params)
+      |> Map.put(:action, :validate)
+
+    {:noreply,
+     socket
+     |> assign(:changeset_w, changeset_w)}
   end
 
   def handle_event(
@@ -43,13 +61,13 @@ defmodule RasbetWeb.WalletLive.Index do
         %{"deposit" => deposit_params},
         %{assigns: %{deposit: deposit, current_user: user}} = socket
       ) do
-    changeset =
+    changeset_d =
       deposit
       |> Wallet.change_deposit(deposit_params)
       |> Map.put(:action, :validate)
 
-    if changeset.valid? do
-      deposit = changeset |> Ecto.Changeset.apply_changes()
+    if changeset_d.valid? do
+      deposit = changeset_d |> Ecto.Changeset.apply_changes()
 
       transaction = %Wallet.Transaction{
         type: :deposit,
@@ -67,7 +85,40 @@ defmodule RasbetWeb.WalletLive.Index do
        |> assign_transactions()
        |> push_patch(to: Router.Helpers.wallet_index_path(socket, :index))}
     else
-      {:noreply, socket |> assign(:changeset, changeset)}
+      {:noreply, socket |> assign(:changeset_d, changeset_d)}
+    end
+  end
+
+  def handle_event(
+        "withdrawal",
+        %{"withdrawal" => withdrawal_params},
+        %{assigns: %{withdrawal: withdrawal, current_user: user}} = socket
+      ) do
+    changeset_w =
+      withdrawal
+      |> Wallet.change_withdrawal(withdrawal_params)
+      |> Map.put(:action, :validate)
+
+    if changeset_w.valid? do
+      withdrawal = changeset_w |> Ecto.Changeset.apply_changes()
+
+      transaction = %Wallet.Transaction{
+        type: :withdrawal,
+        value: withdrawal.amount,
+        user_id: user.id,
+        description: "Levantamento"
+      }
+
+      Wallet.apply_transaction(transaction) |> Rasbet.Repo.transaction()
+
+      {:noreply,
+       socket
+       |> put_flash(:success, "Levantou #{transaction.value}€")
+       |> RasbetWeb.LiveAuth.reassign_user()
+       |> assign_transactions()
+       |> push_patch(to: Router.Helpers.wallet_index_path(socket, :index))}
+    else
+      {:noreply, socket |> assign(:changeset_w, changeset_w)}
     end
   end
 
@@ -79,7 +130,15 @@ defmodule RasbetWeb.WalletLive.Index do
     socket |> assign(:deposit, %Deposit{})
   end
 
-  defp assign_changeset(%{assigns: %{deposit: deposit}} = socket) do
-    socket |> assign(:changeset, Wallet.change_deposit(deposit))
+  defp assign_withdrawal(socket) do
+    socket |> assign(:withdrawal, %Withdrawal{})
+  end
+
+  defp assign_changeset_deposit(%{assigns: %{deposit: deposit}} = socket) do
+    socket |> assign(:changeset_d, Wallet.change_deposit(deposit))
+  end
+
+  defp assign_changeset_withdrawal(%{assigns: %{withdrawal: withdrawal}} = socket) do
+    socket |> assign(:changeset_w, Wallet.change_withdrawal(withdrawal))
   end
 end
