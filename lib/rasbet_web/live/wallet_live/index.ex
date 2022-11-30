@@ -43,7 +43,6 @@ defmodule RasbetWeb.WalletLive.Index do
         %{"deposit" => deposit_params},
         %{assigns: %{deposit: deposit, current_user: user}} = socket
       ) do
-    # Wallet.deposit_user(deposit, deposit_params)
     changeset =
       deposit
       |> Wallet.change_deposit(deposit_params)
@@ -54,7 +53,7 @@ defmodule RasbetWeb.WalletLive.Index do
 
       transaction = %Wallet.Transaction{
         type: :deposit,
-        value: Money.new(deposit.amount * 100),
+        value: deposit.amount,
         user_id: user.id,
         description: "Depósito"
       }

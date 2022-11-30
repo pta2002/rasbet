@@ -14,6 +14,9 @@ defmodule Rasbet.Wallet.Deposit do
     {deposit, @types}
     |> cast(attrs, Map.keys(@types))
     |> validate_required([:amount, :method])
-    |> validate_number(:amount, greater_than: 0)
+    |> validate_change(:amount, fn
+      _, %Money{amount: amount} when amount > 0 -> []
+      _, _ -> [amount: "must be greater than 0"]
+    end)
   end
 end
