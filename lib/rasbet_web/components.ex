@@ -50,7 +50,10 @@ defmodule RasbetWeb.Components do
       |> Map.put(:countries, Enum.map(Countries.all(), &to_country/1))
       |> Map.put(
         :selected_country,
-        to_country(List.first(Countries.filter_by(:country_code, assigns.form.data.country_code)))
+        to_country(List.first(case assigns.type do
+          :phone -> Countries.filter_by(:country_code, Phoenix.HTML.Form.input_value(assigns.form, assigns.ccfield))
+          :country -> Countries.filter_by(:alpha2, Phoenix.HTML.Form.input_value(assigns.form, assigns.field))
+        end) || Countries.get("PT"))
       )
 
     ~H"""

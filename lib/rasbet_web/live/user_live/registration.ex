@@ -34,7 +34,10 @@ defmodule RasbetWeb.UserLive.Registration do
          |> redirect(to: Routes.user_session_path(socket, :new))}
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, socket |> assign(:changeset, Map.put(changeset, :action, :validate))}
+        {:noreply,
+         socket
+         |> assign(:changeset, Map.put(changeset, :action, :validate))
+         |> put_flash(:error, "Erro ao registar")}
     end
   end
 end

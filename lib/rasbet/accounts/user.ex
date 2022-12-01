@@ -56,7 +56,8 @@ defmodule Rasbet.Accounts.User do
       :email,
       :password,
       :password_confirmation,
-      :phone,
+      :country_code,
+      :local_phone,
       :taxid,
       :address1,
       :address2,
@@ -72,7 +73,13 @@ defmodule Rasbet.Accounts.User do
   end
 
   def validate_phone(changeset) do
+    # TODO: If :phone is set, ignore country code and local phone
     changeset
+    |> validate_required([:country_code, :local_phone])
+    |> put_change(
+      :phone,
+      "+#{get_change(changeset, :country_code)}#{get_change(changeset, :local_phone)}"
+    )
     |> validate_required([:phone])
     |> validate_format(:phone, ~r/^\+\d+$/, message: "invalid phone number")
     |> unsafe_validate_unique(:phone, Rasbet.Repo)
