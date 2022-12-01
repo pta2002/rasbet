@@ -1,42 +1,44 @@
-<div class="flex flex-row justify-between mb-8">
-  <input class="input !w-[50%]" type="text" placeholder={gettext "Pesquisar utilizador"}/>
-  <button class="bg-primary-500 text-white px-6 py-2 font-bold rounded-full"><%= gettext "Adicionar utilizador" %></button>
-</div>
+<.container>
+  <div class="flex flex-row justify-between mb-8">
+    <input class="input !w-[50%]" type="text" placeholder={gettext "Pesquisar utilizador"}/>
+    <button class="bg-primary-500 text-white px-6 py-2 font-bold rounded-full"><%= gettext "Adicionar utilizador" %></button>
+  </div>
 
-<%= if @live_action in [:new, :edit] do %>
-  <.modal return_to={Routes.user_list_path(@socket, :index)}>
-    <.live_component
-      id={@user.id || :new}
-      title={@page_title}
-      action={@live_action}
-      user={@user}
-      return_to={Routes.user_list_path(@socket, :index)}
-    />
-  </.modal>
-<% end %>
-
-<.table>
-  <.tr>
-    <.th><%= gettext "Nome" %></.th>
-    <.th><%= gettext "Email" %></.th>
-    <.th><%= gettext "Telemóvel" %></.th>
-    <.th class="flex justify-end"><%= gettext "Ações" %></.th>
-  </.tr>
-
-  <%= for user <- @users do %>
-    <.tr>
-      <.td><%= user.name %></.td>
-      <.td><%= user.email %></.td>
-      <.td><%= ExPhoneNumber.format(ExPhoneNumber.parse(user.phone, "PT") |> elem(1), :international) %></.td>
-      <.td class="flex flex-row gap-4 justify-end">
-        <.link navigate={Routes.user_edit_path(@socket, :edit, user)}>
-            <Heroicons.pencil_square class="w-6 h-6" />
-        </.link>
-
-        <a phx-click="delete" phx-value-id={user.id} data={[confirm: "Are you sure?"]} class="cursor-pointer">
-          <Heroicons.x_mark class="w-6 h-6" />
-        </a>
-      </.td>
-    </.tr>
+  <%= if @live_action in [:new, :edit] do %>
+    <.modal return_to={Routes.user_list_path(@socket, :index)}>
+      <.live_component
+        id={@user.id || :new}
+        title={@page_title}
+        action={@live_action}
+        user={@user}
+        return_to={Routes.user_list_path(@socket, :index)}
+      />
+    </.modal>
   <% end %>
-</.table>
+
+  <.table>
+    <.tr>
+      <.th><%= gettext "Nome" %></.th>
+      <.th><%= gettext "Email" %></.th>
+      <.th><%= gettext "Telemóvel" %></.th>
+      <.th class="flex justify-end"><%= gettext "Ações" %></.th>
+    </.tr>
+
+    <%= for user <- @users do %>
+      <.tr>
+        <.td><%= user.name %></.td>
+        <.td><%= user.email %></.td>
+        <.td><%= ExPhoneNumber.format(ExPhoneNumber.parse(user.phone, "PT") |> elem(1), :international) %></.td>
+        <.td class="flex flex-row gap-4 justify-end">
+          <.link navigate={Routes.user_edit_path(@socket, :edit, user)}>
+              <Heroicons.pencil_square class="w-6 h-6" />
+          </.link>
+
+          <a phx-click="delete" phx-value-id={user.id} data={[confirm: "Are you sure?"]} class="cursor-pointer">
+            <Heroicons.x_mark class="w-6 h-6" />
+          </a>
+        </.td>
+      </.tr>
+    <% end %>
+  </.table>
+</.container>
