@@ -1,73 +1,115 @@
-<.h1><%= gettext "Carteira - %{balance}", balance: @current_user.balance %></.h1>
+<div class="flex flex-row gap-8">
+  <div class="bg-white w-96 py-4 flex rounded-md shadow-md sticky top-[6.5rem] h-[calc(100vh-8rem)] flex-col gap-2">
 
-<.button link_type="live_patch" to={Routes.wallet_index_path(@socket, :topup_d)} label={gettext "Depositar"}/>
+    <div class="flex flex-col gap-4 justify-center items-center">
+      <.h2><%= gettext "Carteira" %></.h2>
+      <.h2><%= gettext "%{balance}", balance: @current_user.balance %></.h2>
+    </div>
 
-<.button link_type="live_patch" to={Routes.wallet_index_path(@socket, :topup_w)} label={gettext "Levantar"}/>
+    <div class="flex flex-col gap-2 justify-center items-center">
+      <.button class="px-6 py-2 font-bold rounded-full" link_type="live_patch" to={Routes.wallet_index_path(@socket, :topup_d)} label={gettext "Depositar"}/>
+      <.button class="px-6 py-2 font-bold rounded-full" link_type="live_patch" link_type="live_patch" to={Routes.wallet_index_path(@socket, :topup_w)} label={gettext "Levantar"}/>
+    </div>
 
-<.h2><%= gettext "Transações" %></.h2>
-<.table>
-  <.tr>
-    <.th><%= gettext "Data" %></.th>
-    <.th><%= gettext "Tipo" %></.th>
-    <.th><%= gettext "Descrição" %></.th>
-    <.th><%= gettext "Valor" %></.th>
-  </.tr>
-  <%= for transaction <- @transactions do %>
-  <.tr>
-    <.td><%= NaiveDateTime.to_string(transaction.inserted_at) %></.td>
-    <.td><%= transaction.type %></.td>
-    <.td><%= transaction.description %></.td>
-    <.td><%= transaction.value %></.td>
-  </.tr>
-  <% end %>
-</.table>
+    <div class="px-10 py-6">
+      <hr class="border-primary-700 border-2 rounded-full"/>
+    </div>
 
-<%= if @live_action == :topup_d do %>
-  <.modal max_width="lg" title={gettext "Depositar"}>
-    <.form :let={f} for={@changeset_d} phx-change="validate_d" phx-submit="deposit">
-      <!-- TODO: traduzir as options -->
-      <.form_field
-        type="radio_group"
-        form={f} field={:method}
-        layout={:row}
-        label={gettext "Método de pagamento"}
-        required
-        options={[
-          "Cartão": "card",
-          "Multibanco": "multibanco",
-          "MBWay": "mbway"
-        ]}
-        phx-debounce="blur"
-      />
+    <div class="flex flex-col px-4 justify-center items-center gap-6">
 
-      <.form_field type="text_input" form={f} field={:amount} label={gettext "Valor"} inputmode="numeric" pattern="[0-9]+(\.[0-9]+)?"/>
+      <.h2><%= gettext "Transações" %></.h2>
+      <%= if Enum.count(@transactions) == 0 do %>
+          <%= gettext "Ainda não fez nenhuma transação"%>
+      <% else %>
+        <.table>
+          <.tr>
+            <.th><%= gettext "Data" %></.th>
+            <.th><%= gettext "Tipo" %></.th>
+            <.th><%= gettext "Valor" %></.th>
+          </.tr>
+          <%= for transaction <- @transactions do %>
+          <.tr>
+            <.td><%= NaiveDateTime.to_string(transaction.inserted_at) %></.td>
+            <.td><%= transaction.type %></.td>
+            <.td><%= transaction.value %></.td>
+          </.tr>
+          <% end %>
+        </.table>
+      <% end %>
+    </div>
 
-      <div class="flex place-content-between">
-        <.button label={gettext "Cancelar"} variant="outline" color="danger" phx-click={PetalComponents.Modal.hide_modal()} />
-        <.button label={gettext "Depositar"} color="primary" type="submit" phx_disable_with={gettext "A processar..."}/>
-      </div>
-    </.form>
-  </.modal>
-<% end %>
+    <%= if @live_action == :topup_d do %>
+      <.modal max_width="sm" title={gettext "Depositar"}>
+        <div class="flex flex-col px-4 justify-center items-center gap-6">
+          <.form :let={f} for={@changeset_d} phx-change="validate_d" phx-submit="deposit">
+            <.form_field type="text_input" form={f} field={:amount} label={gettext "Valor"} inputmode="numeric" pattern="[0-9]+(\.[0-9]+)?"/>
 
-<%= if @live_action == :topup_w do %>
-  <.modal max_width="lg" title={gettext "Levantar"}>
-    <.form :let={f} for={@changeset_w} phx-change="validate_w" phx-submit="withdrawal">
-      <!-- TODO: traduzir as options -->
-      <.form_field
-        type="text_input"
-        form={f} field={:iban}
-        label={gettext "IBAN"}
-        required
-        phx-debounce="blur"
-      />
+            <div class="py-2">
+              <hr class="border-primary-700 border-2 rounded-full"/>
+            </div>
 
-      <.form_field type="text_input" form={f} field={:amount} label={gettext "Valor"} inputmode="numeric" pattern="[0-9]+(\.[0-9]+)?"/>
+            <div class="flex place-content-between py-4">
+              <!-- TODO: traduzir as options -->
+              <.form_field
+                type="radio_group"
+                form={f} field={:method}
+                layout={:row}
+                label={gettext "Método de pagamento"}
+                required
+                options={[
+                  "Cartão": "card",
+                  "Multibanco": "multibanco",
+                  "MBWay": "mbway"
+                ]}
+                phx-debounce="blur"
+              />
+            </div>
 
-      <div class="flex place-content-between">
-        <.button label={gettext "Cancelar"} variant="outline" color="danger" phx-click={PetalComponents.Modal.hide_modal()} />
-        <.button label={gettext "Levantar"} color="primary" type="submit" phx_disable_with={gettext "A processar..."}/>
-      </div>
-    </.form>
-  </.modal>
-<% end %>
+            <div>
+              <hr class="border-primary-700 border-2 rounded-full"/>
+            </div>
+
+            <div class="flex place-content-between py-6">
+              <.button class="px-6 py-2 font-bold rounded-full" label={gettext "Cancelar"} variant="outline" color="danger" phx-click={PetalComponents.Modal.hide_modal()} />
+              <.button class="px-6 py-2 font-bold rounded-full" label={gettext "Depositar"} color="primary" type="submit" phx_disable_with={gettext "A processar..."}/>
+            </div>
+          </.form>
+        </div>
+      </.modal>
+    <% end %>
+
+    <%= if @live_action == :topup_w do %>
+      <.modal max_width="sm" title={gettext "Levantar"}>
+
+        <div class="flex flex-col px-4 justify-center items-center gap-6">
+          <.form :let={f} for={@changeset_w} phx-change="validate_w" phx-submit="withdrawal">
+            <!-- TODO: traduzir as options -->
+            <.form_field
+              type="text_input"
+              form={f} field={:iban}
+              label={gettext "IBAN"}
+              required
+              phx-debounce="blur"
+            />
+
+            <.form_field type="text_input" form={f} field={:amount} label={gettext "Valor"} inputmode="numeric" pattern="[0-9]+(\.[0-9]+)?"/>
+
+            <div class="py-2">
+              <hr class="border-primary-700 border-2 rounded-full"/>
+            </div>
+
+            <div class="flex place-content-between py-4">
+              <.button class="px-6 py-2 font-bold rounded-full" label={gettext "Cancelar"} variant="outline" color="danger" phx-click={PetalComponents.Modal.hide_modal()} />
+              <.button class="px-6 py-2 font-bold rounded-full" label={gettext "Levantar"} color="primary" type="submit" phx_disable_with={gettext "A processar..."}/>
+            </div>
+          </.form>
+        </div>
+      </.modal>
+    <% end %>
+  </div>
+
+  <div class="w-full overflow-y-scroll">
+      <.h3><%= gettext "Minhas Promoções" %></.h3>
+      <.h1> TODOOO: igual a pagina de promocoes </.h1>
+  </div>
+</div>
