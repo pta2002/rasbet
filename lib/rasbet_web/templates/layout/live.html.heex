@@ -1,7 +1,7 @@
 <div class="h-screen flex flex-col">
   <%= render "_nav.html", socket: @socket, current_user: @current_user %>
 
-  <.container class="my-10 grow">
+  <div class="m-8 grow flex">
     <.alert
       color="info"
       class="mb-5"
@@ -27,5 +27,5 @@
     />
 
     <%= @inner_content %>
-  </.container>
+  </div>
 </div>

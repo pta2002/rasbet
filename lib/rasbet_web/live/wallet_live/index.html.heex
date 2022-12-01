@@ -1,5 +1,6 @@
 <div class="flex flex-row gap-8">
-  <div class="bg-white w-96 py-4 flex rounded-md shadow-md sticky top-[6.5rem] h-[calc(100vh-8rem)] flex-col gap-2">
+  <div class="bg-white w-96 py-4 flex rounded-md shadow-md sticky top-[6.5rem] h-[calc(100vh-8rem)] flex-col">
+<!--  <div class="bg-white w-96 py-4 flex rounded-md shadow-md sticky top-[6.5rem] h-[calc(100vh-8rem)] flex-col gap-2">-->
 
     <div class="flex flex-col gap-4 justify-center items-center">
       <.h2><%= gettext "Carteira" %></.h2>
@@ -21,20 +22,22 @@
       <%= if Enum.count(@transactions) == 0 do %>
           <%= gettext "Ainda não fez nenhuma transação"%>
       <% else %>
-        <.table>
-          <.tr>
-            <.th><%= gettext "Data" %></.th>
-            <.th><%= gettext "Tipo" %></.th>
-            <.th><%= gettext "Valor" %></.th>
-          </.tr>
-          <%= for transaction <- @transactions do %>
-          <.tr>
-            <.td><%= NaiveDateTime.to_string(transaction.inserted_at) %></.td>
-            <.td><%= transaction.type %></.td>
-            <.td><%= transaction.value %></.td>
-          </.tr>
-          <% end %>
-        </.table>
+        <div class="w-full overflow-y-scroll">
+            <.table>
+              <.tr>
+                <.th><%= gettext "Data" %></.th>
+                <.th><%= gettext "Tipo" %></.th>
+                <.th><%= gettext "Valor" %></.th>
+              </.tr>
+              <%= for transaction <- @transactions do %>
+              <.tr>
+                <.td><%= NaiveDateTime.to_string(transaction.inserted_at) %></.td>
+                <.td><%= transaction.type %></.td>
+                <.td><%= transaction.value %></.td>
+              </.tr>
+              <% end %>
+            </.table>
+        </div>
       <% end %>
     </div>
 
