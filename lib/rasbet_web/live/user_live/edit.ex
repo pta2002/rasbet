@@ -22,6 +22,12 @@ defmodule RasbetWeb.UserLive.Edit do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
+  defp apply_action(socket, :index, _params) do
+    socket
+    |> assign(:page_title, gettext("Definições"))
+    |> assign(:user, socket.assigns.current_user)
+  end
+
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit User")

@@ -110,7 +110,7 @@ defmodule RasbetWeb.Components.UserSettings do
 
   @impl true
   def update(%{user: user} = assigns, socket) do
-    changeset = Accounts.change_user_registration(user)
+    changeset = Accounts.change_user_registration(user |> Accounts.assign_user_phone())
 
     {:ok,
      socket
