@@ -358,4 +358,14 @@ defmodule Rasbet.Accounts do
       {:error, :user, changeset, _} -> {:error, changeset}
     end
   end
+
+  def assign_user_phone(user) do
+    {:ok, phone} = ExPhoneNumber.parse(user.phone, "PT")
+
+    %User{
+      user
+      | country_code: to_string(phone.country_code),
+        local_phone: to_string(phone.national_number)
+    }
+  end
 end

@@ -15,6 +15,10 @@ defmodule Rasbet.Accounts.User do
     field(:is_admin, :boolean, default: false)
 
     field(:phone, :string)
+
+    field(:country_code, :string, virtual: true)
+    field(:local_phone, :string, virtual: true)
+
     field(:taxid, :string)
     field(:address1, :string)
     field(:address2, :string)

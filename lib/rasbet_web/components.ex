@@ -6,9 +6,13 @@ defmodule RasbetWeb.Components do
   def input(assigns) do
     ~H"""
       <div class="mb-4">
-        <label for={@field} class="block mb-1"><%= @label %></label>
         <%= if @type == "phone" do %>
-          <.country_input field={@field} form={@form} type={:phone}/>
+          <label for={@phonefield} class="block mb-1"><%= @label %></label>
+        <% else %>
+          <label for={@field} class="block mb-1"><%= @label %></label>
+        <% end %>
+        <%= if @type == "phone" do %>
+          <.country_input ccfield={@ccfield} phonefield={@phonefield} form={@form} type={:phone}/>
         <% else %>
           <%= if @type == "country" do %>
             <.country_input field={@field} form={@form} type={:country}/>
@@ -21,7 +25,12 @@ defmodule RasbetWeb.Components do
             %>
           <% end %>
         <% end %>
-        <%= error_tag @form, @field %>
+        <%= if @type == "phone" do %>
+          <%= error_tag @form, @ccfield %>
+          <%= error_tag @form, @phonefield %>
+        <% else %>
+          <%= error_tag @form, @field %>
+        <% end %>
       </div>
     """
   end
@@ -36,15 +45,20 @@ defmodule RasbetWeb.Components do
   end
 
   def country_input(assigns) do
-    assigns = assigns |> Map.put(:countries, Enum.map(Countries.all(), &to_country/1))
+    assigns =
+      assigns
+      |> Map.put(:countries, Enum.map(Countries.all(), &to_country/1))
+      |> Map.put(
+        :selected_country,
+        to_country(List.first(Countries.filter_by(:country_code, assigns.form.data.country_code)))
+      )
 
     ~H"""
       <div
         class={"relative grid" <> if @type == :phone do " grid-cols-3 gap-4" else "grid-cols-1" end}
         x-data={"{
           open: false,
-          selected: { emoji: '🇵🇹', code: '351', short: 'PT', name: 'Portugal' },
-          #{if @type == :phone do "number: ''," else "" end}
+          selected: #{Poison.encode!(@selected_country)},
           countries: #{Poison.encode!(@countries)},
           search: '',
           filtered: null,
@@ -80,8 +94,8 @@ defmodule RasbetWeb.Components do
           x-on:click.outside="open = false"
           x-cloak
           phx-update="ignore"
-          id={@field}
-          x-show="open"
+          id={if @type == :phone do @phonefield else @field end}
+          x-show="open == true"
           x-transition:enter="transition ease-out duration-100"
           x-transition:enter-start="transform opacity-0 scale-95"
           x-transition:enter-end="transform opacity-100 scale-100"
@@ -123,12 +137,12 @@ defmodule RasbetWeb.Components do
         </div>
 
         <%= if @type == :phone do %>
-          <input type="text" x-model="number" class="input col-span-2"/>
+          <%= text_input @form, @phonefield, type: "text", class: "input col-span-2" %>
 
           <%= text_input @form,
-            @field,
+            @ccfield,
             type: "hidden",
-            "x-bind:value": "'+' + selected.code + number"
+            "x-bind:value": "selected.code"
           %>
         <% else %>
           <%= text_input @form,

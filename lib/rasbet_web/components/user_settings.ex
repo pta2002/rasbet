@@ -26,7 +26,8 @@ defmodule RasbetWeb.Components.UserSettings do
             <.input
               type="phone"
               form={f}
-              field={:phone}
+              ccfield={:country_code}
+              phonefield={:local_phone}
               label={gettext "Telemóvel"}
               required
             />
