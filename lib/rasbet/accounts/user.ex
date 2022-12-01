@@ -69,7 +69,13 @@ defmodule Rasbet.Accounts.User do
     |> validate_phone()
     |> validate_address()
     |> validate_required([:phone, :taxid, :name])
-    |> validate_password(opts)
+    |> then(fn changeset ->
+      if not Keyword.get(opts, :is_edit, false) do
+        validate_password(changeset, opts)
+      else
+        changeset
+      end
+    end)
   end
 
   def validate_phone(changeset) do

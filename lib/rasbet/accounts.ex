@@ -93,6 +93,10 @@ defmodule Rasbet.Accounts do
     User.registration_changeset(user, attrs, hash_password: false)
   end
 
+  def change_user_edit(%User{} = user, attrs \\ %{}) do
+    User.registration_changeset(user, attrs, is_edit: true)
+  end
+
   ## Settings
 
   @doc """

@@ -4,19 +4,6 @@ defmodule RasbetWeb.UserLive.Edit do
   alias Rasbet.Accounts
   alias RasbetWeb.Components.UserSettings
 
-  # @impl true
-  # def mount(_params, _session, socket) do
-  #  {:ok,
-  #   socket
-  #   |> assign(
-  #     changeset:
-  #       Accounts.change_user_registration(
-  #         socket.assigns.current_user
-  #         |> Accounts.assign_user_phone()
-  #       )
-  #   )}
-  # end
-
   @impl true
   def handle_params(params, _url, socket) do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
@@ -34,13 +21,18 @@ defmodule RasbetWeb.UserLive.Edit do
     |> assign(:user, Accounts.get_user!(id))
   end
 
-  @impl true
-  def handle_event("validate", %{"user" => params}, socket) do
-    changeset =
-      socket.assigns.current_user
-      |> Accounts.change_user_registration(params)
-      |> Map.put(:action, :validate)
+  def handle_info({:save, updated_user}, socket) do
+    case socket.assigns.user
+         |> Accounts.change_user_edit(updated_user)
+         |> Rasbet.Repo.update() do
+      {:ok, _user} ->
+        {:noreply, socket |> put_flash(:info, gettext("Utilizador atualizado"))}
 
-    {:noreply, socket |> assign(:changeset, changeset)}
+      {:error, changeset} ->
+        {:noreply,
+         socket
+         |> assign(:changeset, Map.put(changeset, :action, :validate))
+         |> put_flash(:error, "Error")}
+    end
   end
 end

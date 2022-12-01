@@ -7,9 +7,8 @@ defmodule RasbetWeb.Components.UserSettings do
   def render(assigns) do
     ~H"""
     <div>
-      <.form let={f} for={@changeset} phx-change="validate" phx-submit="register">
-        <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4">
-          <div>
+      <.form let={f} for={@changeset} phx-change="validate" phx-submit="save" phx-target={@myself}>
+        <div class={"grid grid-cols-1 md:grid-cols-2 md:gap-x-4 gap-y-1 grid-flow-col #{if @edit do "grid-rows-4" else "grid-rows-5" end}"}>
             <.input
               type="text"
               form={f}
@@ -35,24 +34,24 @@ defmodule RasbetWeb.Components.UserSettings do
               required
             />
 
-            <.input
-              type="password"
-              form={f}
-              field={:password}
-              label={gettext "Palavra-passe"}
-              required
-            />
+            <%= if not @edit do %>
+              <.input
+                type="password"
+                form={f}
+                field={:password}
+                label={gettext "Palavra-passe"}
+                required
+              />
 
-            <.input
-              type="password"
-              form={f}
-              field={:password_confirmation}
-              label={gettext "Confirmar palavra-passe"}
-              required
-            />
-          </div>
+              <.input
+                type="password"
+                form={f}
+                field={:password_confirmation}
+                label={gettext "Confirmar palavra-passe"}
+                required
+              />
+            <% end %>
 
-          <div>
             <.input
               type="text"
               form={f}
@@ -96,12 +95,15 @@ defmodule RasbetWeb.Components.UserSettings do
               label={gettext "NIF"}
               required
             />
-          </div>
         </div>
 
         <div class="flex place-content-between w-full items-center flex-row-reverse">
-          <%= submit gettext "Registar", class: "bg-primary-500 px-6 py-2 rounded-full text-white" %>
-          <div><%= gettext "Já tem conta?"%> <a href="/users/login" class="text-primary-500 font-semibold"><%= gettext "Entrar"%></a></div>
+          <%= if @edit do %>
+            <%= submit gettext("Editar"), class: "bg-primary-500 px-6 py-2 rounded-full text-white" %>
+          <% else %>
+            <%= submit gettext("Registar"), class: "bg-primary-500 px-6 py-2 rounded-full text-white" %>
+            <div><%= gettext "Já tem conta?"%> <a href="/users/login" class="text-primary-500 font-semibold"><%= gettext "Entrar"%></a></div>
+          <% end %>
         </div>
       </.form>
     </div>
@@ -109,12 +111,44 @@ defmodule RasbetWeb.Components.UserSettings do
   end
 
   @impl true
-  def update(%{user: user} = assigns, socket) do
-    changeset = Accounts.change_user_registration(user |> Accounts.assign_user_phone())
+  def update(%{user: user, edit: true} = assigns, socket) do
+    changeset = Accounts.change_user_edit(user |> Accounts.assign_user_phone())
 
     {:ok,
      socket
      |> assign(assigns)
      |> assign(:changeset, changeset)}
+  end
+
+  @impl true
+  def update(%{user: user, edit: false} = assigns, socket) do
+    changeset = Accounts.change_user_registration(user)
+
+    {:ok,
+     socket
+     |> assign(assigns)
+     |> assign(:changeset, changeset)}
+  end
+
+  @impl true
+  def handle_event("validate", %{"user" => params}, socket) do
+    changeset =
+      socket.assigns.user
+      |> then(fn user ->
+        if socket.assigns.edit do
+          Accounts.change_user_edit(user, params)
+        else
+          Accounts.change_user_registration(user, params)
+        end
+      end)
+      |> Map.put(:action, :validate)
+
+    {:noreply, socket |> assign(:changeset, changeset)}
+  end
+
+  @impl true
+  def handle_event("save", %{"user" => params}, socket) do
+    send(self(), {:save, params})
+    {:noreply, socket}
   end
 end

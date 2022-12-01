@@ -10,16 +10,7 @@ defmodule RasbetWeb.UserLive.Registration do
      |> assign(:page_title, "Registar")}
   end
 
-  def handle_event("validate", %{"user" => params}, socket) do
-    changeset =
-      %Accounts.User{}
-      |> Accounts.change_user_registration(params)
-      |> Map.put(:action, :validate)
-
-    {:noreply, socket |> assign(:changeset, changeset)}
-  end
-
-  def handle_event("register", %{"user" => params}, socket) do
+  def handle_info({:save, params}, socket) do
     case Accounts.register_user(params) do
       {:ok, user} ->
         {:ok, _} =
