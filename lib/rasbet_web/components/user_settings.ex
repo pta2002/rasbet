@@ -1,6 +1,9 @@
 defmodule RasbetWeb.Components.UserSettings do
   use RasbetWeb, :live_component
 
+  alias Rasbet.Accounts
+
+  @impl true
   def render(assigns) do
     ~H"""
     <div>
@@ -103,5 +106,15 @@ defmodule RasbetWeb.Components.UserSettings do
       </.form>
     </div>
     """
+  end
+
+  @impl true
+  def update(%{user: user} = assigns, socket) do
+    changeset = Accounts.change_user_registration(user)
+
+    {:ok,
+     socket
+     |> assign(assigns)
+     |> assign(:changeset, changeset)}
   end
 end

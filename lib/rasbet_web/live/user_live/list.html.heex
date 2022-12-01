@@ -3,6 +3,18 @@
   <button class="bg-primary-500 text-white px-6 py-2 font-bold rounded-full"><%= gettext "Adicionar utilizador" %></button>
 </div>
 
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.user_list_path(@socket, :index)}>
+    <.live_component
+      id={@user.id || :new}
+      title={@page_title}
+      action={@live_action}
+      product={@user}
+      return_to={Routes.user_list_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
 <.table>
   <.tr>
     <.th><%= gettext "Nome" %></.th>
