@@ -92,6 +92,8 @@ defmodule RasbetWeb.Router do
 
     live("/users", UserLive.List, :index)
     live("/users/:id/edit", UserLive.Edit, :edit)
+    live("/users/register", UserLive.Registration, :admin_new_user)
+    post("/users/register", UserRegistrationController, :admin_create_user)
     # post("/users/edit", UserLive.Edit, :update)
   end
 

@@ -1,9 +1,4 @@
 <.container>
-  <div class="flex flex-row justify-between mb-8">
-    <input class="input !w-[50%]" type="text" placeholder={gettext "Pesquisar utilizador"}/>
-    <button class="bg-primary-500 text-white px-6 py-2 font-bold rounded-full"><%= gettext "Adicionar utilizador" %></button>
-  </div>
-
   <%= if @live_action in [:new, :edit] do %>
     <.modal return_to={Routes.user_list_path(@socket, :index)}>
       <.live_component
@@ -15,6 +10,12 @@
       />
     </.modal>
   <% end %>
+
+  <div class="flex flex-row justify-between mb-8">
+    <input class="input !w-[50%]" type="text" placeholder={gettext "Pesquisar utilizador"}/>
+  <.button class="bg-primary-500 text-white px-6 py-2 font-bold rounded-full"
+    link_type="live_redirect" to={Routes.user_registration_path(@socket, :admin_new_user)} label={gettext "Adicionar Utilizador"}/>
+  </div>
 
   <.table>
     <.tr>
