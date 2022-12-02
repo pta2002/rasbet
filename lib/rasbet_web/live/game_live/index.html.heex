@@ -99,7 +99,7 @@
                     phx-click="toggle_bet"
                     phx-value-game={game.id}
                     phx-value-outcome={outcome}>
-                    <span class="text-xs text-white"><%= outcome %></span>
+                    <span class="text-xs text-white"><%= Gettext.gettext(RasbetWeb.Gettext, outcome) %></span>
                     <span class="font-bold text-white"><%= show_odds odd %></span>
                   </div>
                 <% end %>

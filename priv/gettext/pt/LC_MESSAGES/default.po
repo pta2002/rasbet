@@ -436,3 +436,7 @@ msgstr ""
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Valor mínimo"
 msgstr ""
+
+#: lib/rasbet_web/live/promos_live/index.html.heex:16
+msgid "Draw"
+msgstr "Empate"

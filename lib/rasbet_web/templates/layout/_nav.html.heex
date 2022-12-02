@@ -33,6 +33,7 @@
           </.link>
         </div>
       </div>
+    <% else %>
       <div class="h-full" x-data="{ open: false}">
         <a class="nav-item cursor-pointer" x-on:click="open = !open"><%= gettext "Idioma" %></a>
 
@@ -46,7 +47,6 @@
           </.link>
         </div>
       </div>
-    <% else %>
       <.link href={Routes.user_session_path(@socket, :new)} class="rounded-full px-6 py-2 border border-primary-50 font-medium hover:bg-primary-50 hover:text-primary-500 duration-150 transition-colors"><%= gettext "Entrar"%></.link>
       <.link navigate={Routes.user_registration_path(@socket, :new)} class="rounded-full px-6 py-2 border border-primary-50 bg-primary-50 text-primary-500 font-medium"><%= gettext "Registar"%></.link>
     <% end %>
