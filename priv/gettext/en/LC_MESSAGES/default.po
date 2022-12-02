@@ -382,7 +382,7 @@ msgstr "Add user"
 #: lib/rasbet_web/templates/layout/_nav.html.heex:7
 #, elixir-autogen, elixir-format
 msgid "Idioma"
-msgstr ""
+msgstr "Language"
 
 #: lib/rasbet_web/templates/layout/_nav.html.heex:15
 #, elixir-autogen, elixir-format
