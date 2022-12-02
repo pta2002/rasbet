@@ -1,5 +1,6 @@
 defmodule RasbetWeb.Plugs.SetLocale do
   import Plug.Conn
+  import Phoenix.LiveView
 
   @supported_locales Gettext.known_locales(RasbetWeb.Gettext)
 
@@ -12,9 +13,19 @@ defmodule RasbetWeb.Plugs.SetLocale do
 
       locale ->
         RasbetWeb.Gettext |> Gettext.put_locale(locale)
-        conn |> put_resp_cookie("locale", locale, max_age: 365 * 24 * 60 * 60)
+
+        conn
+        |> put_resp_cookie("locale", locale, max_age: 365 * 24 * 60 * 60)
+        |> put_session("locale", locale)
     end
   end
+
+  def on_mount(:set_locale, _params, %{"locale" => locale}, socket) do
+    Gettext.put_locale(RasbetWeb.Gettext, locale)
+    {:cont, socket}
+  end
+
+  def on_mount(:set_locale, _params, _session, socket), do: {:cont, socket}
 
   defp fetch_locale_from(conn) do
     (conn.params["locale"] || conn.cookies["locale"])

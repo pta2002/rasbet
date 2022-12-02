@@ -50,6 +50,7 @@ defmodule RasbetWeb do
       use PetalComponents
 
       on_mount {RasbetWeb.LiveAuth, :fetch_current_user}
+      on_mount {RasbetWeb.Plugs.SetLocale, :set_locale}
 
       def handle_info(%{event: "update-user", payload: user}, socket) do
         {:noreply, socket |> assign(:current_user, user)}
@@ -65,6 +66,8 @@ defmodule RasbetWeb do
         layout: {RasbetWeb.LayoutView, "auth.html"}
 
       use PetalComponents
+
+      on_mount {RasbetWeb.Plugs.SetLocale, :set_locale}
 
       unquote(view_helpers())
     end
