@@ -1,0 +1,37 @@
+<div class="flex flex-row justify-between">
+  <h1 class="mb-5 text-3xl font-medium"><%= gettext("Promoções") %></h1>
+  <%= if @current_user.is_admin do %>
+    <%= if @live_action == :create do %>
+      <.modal max_width="sm" title={gettext "Criar promoção"}>
+        <.form :let={f} for={@changeset} phx-change="validate" phx-submit="create">
+          <.input type="text" form={f} label={gettext "Nome"} field={:name}/>
+          <.input type="long_text" form={f} label={gettext "Descrição"} field={:description}/>
+          <.input
+            type="select"
+            form={f}
+            label={gettext "Tipo"}
+            field={:type}
+            options={[{gettext("Percentual"), :percent}, {gettext("Créditos"), :freebet}]}/>
+          <.input type="text" form={f} label={gettext "Valor"} field={:value} inputmode="numeric" pattern="[0-9]+(\.[0-9]+)?"/>
+          <.input type="text" form={f} label={gettext "Valor mínimo"} field={:minimum} inputmode="numeric" pattern="[0-9]+(\.[0-9]+)?"/>
+          <.input type="checkbox" form={f} class="" field={:new_accounts_only} label={gettext "Apenas novas contas"}/>
+
+          <%= submit gettext("Criar"), class: "button w-full", disabled: not @changeset.valid? %>
+        </.form>
+      </.modal>
+    <% end %>
+
+    <.link class="button cursor-pointer" navigate={Routes.promos_index_path(@socket, :create)}><%= gettext("Criar promoção")%></.link>
+  <% end %>
+</div>
+
+<%= if length(@promos) == 0 do %>
+  <p><%= gettext("Não existem promoções ativas neste momento") %></p>
+<% else %>
+  <%= for promo <- @promos do %>
+    <div class="bg-white shadow-md mb-5 rounded p-4">
+      <h2 class="text-2xl"><%= Gettext.gettext(RasbetWeb.Gettext, promo.name) %></h2>
+      <h2><%= Gettext.gettext(RasbetWeb.Gettext, promo.description) %></h2>
+    </div>
+  <% end %>
+<% end %>

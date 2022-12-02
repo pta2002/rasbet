@@ -4,8 +4,13 @@ defmodule RasbetWeb.Components do
   import RasbetWeb.ErrorHelpers
 
   def input(assigns) do
+    assigns =
+      assigns
+      |> Map.put(:extra, assigns_to_attributes(assigns, [:class, :type, :id, :field, :form]))
+      |> Map.put_new(:class, "")
+
     ~H"""
-      <div class="mb-4">
+      <div class={"mb-4 #{if @type == "checkbox" do "flex flex-row justify-between items-center" end}"}>
         <%= if @type == "phone" do %>
           <label for={@phonefield} class="block mb-1"><%= @label %></label>
         <% else %>
@@ -17,12 +22,24 @@ defmodule RasbetWeb.Components do
           <%= if @type == "country" do %>
             <.country_input field={@field} form={@form} type={:country}/>
           <% else %>
-            <%= text_input @form,
-              @field,
-              id: @field,
-              class: "input",
-              type: @type
-            %>
+            <%= if @type == "long_text" do %>
+              <%= textarea @form,
+                @field,
+                id: @field,
+                class: "input min-h-[8rem]"
+              %>
+            <% else %>
+              <%= if @type == "select" do %>
+                <%= select @form, @field, @options, id: @field, class: "input" %>
+              <% else %>
+                <%= text_input @form,
+                  @field,
+                  [id: @field,
+                  class: "input " <> @class,
+                  type: @type] ++ @extra
+                %>
+              <% end %>
+            <% end %>
           <% end %>
         <% end %>
         <%= if @type == "phone" do %>
@@ -50,10 +67,23 @@ defmodule RasbetWeb.Components do
       |> Map.put(:countries, Enum.map(Countries.all(), &to_country/1))
       |> Map.put(
         :selected_country,
-        to_country(List.first(case assigns.type do
-          :phone -> Countries.filter_by(:country_code, Phoenix.HTML.Form.input_value(assigns.form, assigns.ccfield))
-          :country -> Countries.filter_by(:alpha2, Phoenix.HTML.Form.input_value(assigns.form, assigns.field))
-        end) || Countries.get("PT"))
+        to_country(
+          List.first(
+            case assigns.type do
+              :phone ->
+                Countries.filter_by(
+                  :country_code,
+                  Phoenix.HTML.Form.input_value(assigns.form, assigns.ccfield)
+                )
+
+              :country ->
+                Countries.filter_by(
+                  :alpha2,
+                  Phoenix.HTML.Form.input_value(assigns.form, assigns.field)
+                )
+            end
+          ) || Countries.get("PT")
+        )
       )
 
     ~H"""

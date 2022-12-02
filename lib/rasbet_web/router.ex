@@ -22,6 +22,7 @@ defmodule RasbetWeb.Router do
     pipe_through(:browser)
 
     live("/", GameLive.Index, :index)
+    live("/promos", PromosLive.Index, :index)
   end
 
   # Other scopes may use custom stacks.
@@ -78,7 +79,7 @@ defmodule RasbetWeb.Router do
     pipe_through([:browser, :require_authenticated_user])
 
     live("/users/settings", UserLive.Edit, :index)
-    get("/users/settings/confirm_email/:token", UserSettingsController, :confirm_email)
+    # get("/users/settings/confirm_email/:token", UserSettingsController, :confirm_email)
 
     live("/user/wallet", WalletLive.Index, :index)
     live("/user/wallet/top-up_d", WalletLive.Index, :topup_d)
@@ -94,7 +95,8 @@ defmodule RasbetWeb.Router do
     live("/users/:id/edit", UserLive.Edit, :edit)
     live("/users/register", UserLive.Registration, :admin_new_user)
     post("/users/register", UserRegistrationController, :admin_create_user)
-    # post("/users/edit", UserLive.Edit, :update)
+
+    live("/promos/create", PromosLive.Index, :create)
   end
 
   scope "/", RasbetWeb do

@@ -27,23 +27,45 @@ body {
   @apply bg-primary-700;
 }
 
-.input {
+.input:not([type="checkbox"]) {
   @apply w-full bg-white rounded-md shadow-sm border border-gray-300 h-10 p-4 m-0;
+}
+
+.input[type="checkbox"] {
+  @apply w-4 h-4 text-primary-500 rounded border-gray-300 focus:ring-primary-500 accent-primary-500;
 }
 
 .input:focus {
   @apply ring-primary-500 border-primary-500 outline-none;
 }
 
+select.input {
+  @apply !py-0;
+}
+
 .select-wrapper select {
-  @apply text-sm border-gray-300 rounded-md shadow-sm disabled:bg-gray-100 disabled:cursor-not-allowed focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:focus:border-primary-500 dark:bg-gray-800 dark:text-gray-300 focus:outline-none ;
+  @apply text-sm border-gray-300 rounded-md shadow-sm;
+}
+
+.button {
+  @apply bg-primary-500 px-6 py-2 rounded-full text-white transition-colors duration-150 h-fit;
+}
+
+.button:hover {
+  @apply bg-primary-700;
+}
+
+.button[disabled] {
+  @apply bg-primary-200;
 }
 
 label.has-error:not(.phx-no-feedback) {
-  @apply !text-red-900 dark:!text-red-200;
+  @apply !text-red-900 dark:!text-red-200
 }
 
-textarea.has-error:not(.phx-no-feedback), input.has-error:not(.phx-no-feedback), select.has-error:not(.phx-no-feedback) {
+textarea.has-error:not(.phx-no-feedback),
+input.has-error:not(.phx-no-feedback),
+select.has-error:not(.phx-no-feedback) {
   @apply !border-red-500 focus:!border-red-500 !text-red-900 !placeholder-red-700 !bg-red-50 dark:!text-red-100 dark:!placeholder-red-300 dark:!bg-red-900 focus:!ring-red-500;
 }
 
@@ -68,17 +90,31 @@ input[type=radio].has-error:not(.phx-no-feedback) {
   animation: 0.2s ease-out 0s normal forwards 1 fade-in-keys;
 }
 
-@keyframes fade-in-scale-keys{
-  0% { scale: 0.95; opacity: 0; }
-  100% { scale: 1.0; opacity: 1; }
+@keyframes fade-in-scale-keys {
+  0% {
+    scale: 0.95;
+    opacity: 0;
+  }
+
+  100% {
+    scale: 1.0;
+    opacity: 1;
+  }
 }
 
-@keyframes fade-in-keys{
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+@keyframes fade-in-keys {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
-[x-cloak] { display: none !important; }
+[x-cloak] {
+  display: none !important;
+}
 
 html {
   scroll-behavior: smooth;
