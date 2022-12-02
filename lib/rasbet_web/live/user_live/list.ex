@@ -27,8 +27,8 @@ defmodule RasbetWeb.UserLive.List do
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Products")
-    |> assign(:product, nil)
+    |> assign(:page_title, "Listing Users")
+    |> assign(:user, nil)
   end
 
   defp apply_action(socket, :edit, %{"id" => id}) do
@@ -40,7 +40,7 @@ defmodule RasbetWeb.UserLive.List do
   defp apply_action(socket, :new, _params) do
     socket
     |> assign(:page_title, "New User")
-    |> assign(:product, %Accounts.User{})
+    |> assign(:user, %Accounts.User{})
   end
 
   @impl true

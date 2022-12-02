@@ -19,10 +19,19 @@ defmodule RasbetWeb.UserLive.Registration do
             &Routes.user_confirmation_url(socket, :edit, &1)
           )
 
-        {:noreply,
-         socket
-         |> put_flash(:info, "Registado com sucesso, já pode iniciar sessão")
-         |> redirect(to: Routes.user_session_path(socket, :new))}
+        cond do
+          socket.assigns.live_action == :new ->
+            {:noreply,
+             socket
+             |> put_flash(:info, "Registado com sucesso, já pode iniciar sessão")
+             |> redirect(to: Routes.user_session_path(socket, :new))}
+
+          true ->
+            {:noreply,
+             socket
+             |> put_flash(:info, "Utilizador criado com sucesso")
+             |> redirect(to: Routes.user_list_path(socket, :index))}
+        end
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply,
