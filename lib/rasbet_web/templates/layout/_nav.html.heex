@@ -1,9 +1,25 @@
 <nav class="w-full flex place-content-between bg-primary-600 text-white min-h-[4rem] max-h-16 sticky top-0">
-  <div class="flex flex-row items-center align-center">
+
+  <div class="flex flex-row items-center align-center gap-4 px-6">
     <.link navigate={Routes.game_index_path(@socket, :index)} class="wordmark px-6">RASBet</.link>
+
+    <div class="z-50 h-full" x-data="{ open: false }">
+        <a class="nav-item cursor-pointer" x-on:click="open = !open"><%= gettext "Idioma" %></a>
+
+        <div class="relative bg-white shadow-md rounded-md w-full text-black py-2 flex flex-col gap-2 text-sm" x-show="open" x-cloak x-on:click.outside="open = false">
+
+          <.link x-show="open" class="w-full flex justify-between items-center px-2" x-cloak navigate={Routes.user_edit_path(@socket, :index)}>
+            <%= gettext "Português"%>
+          </.link>
+          <.link x-show="open" class="w-full flex justify-between items-center px-2" x-cloak patch={Routes.wallet_bets_path(@socket, :index)}>
+            <%= gettext "Inglês"%>
+          </.link>
+      </div>
+   </div>
     <.link navigate={Routes.game_index_path(@socket, :index)} class="nav-item selected"><%= gettext "Jogos" %></.link>
     <.link navigate={Routes.promos_index_path(@socket, :index)} class="nav-item px-8"><%= gettext "Promoções" %></.link>
   </div>
+
   <div class="flex flex-row items-center align-center gap-4 px-6" x-data="{ open: false }">
     <%= if @current_user do %>
       <%= if @current_user.is_admin do %>

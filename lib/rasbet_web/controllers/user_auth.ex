@@ -50,20 +50,20 @@ defmodule RasbetWeb.UserAuth do
   # you must explicitly fetch the session data before clearing
   # and then immediately set it after clearing, for example:
   #
-  #     defp renew_session(conn) do
-  #       preferred_locale = get_session(conn, :preferred_locale)
-  #
-  #       conn
-  #       |> configure_session(renew: true)
-  #       |> clear_session()
-  #       |> put_session(:preferred_locale, preferred_locale)
-  #     end
-  #
   defp renew_session(conn) do
+    #preferred_locale = get_session(conn, :preferred_locale)
+
     conn
     |> configure_session(renew: true)
     |> clear_session()
+    #|> put_session(:preferred_locale, preferred_locale)
   end
+
+  # defp renew_session(conn) do
+  #  conn
+  #  |> configure_session(renew: true)
+  #  |> clear_session()
+  # end
 
   @doc """
   Logs the user out.
