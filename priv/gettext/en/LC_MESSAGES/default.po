@@ -39,15 +39,10 @@ msgid "Apostas concluídas"
 msgstr "Completed bets"
 
 #: lib/rasbet_web/live/wallet_live/index.html.heex:6
-#: lib/rasbet_web/templates/layout/_nav.html.heex:41
+#: lib/rasbet_web/templates/layout/_nav.html.heex:27
 #, elixir-autogen, elixir-format
 msgid "Carteira"
 msgstr "Wallet"
-
-#: lib/rasbet_web/templates/user_settings/edit.html.heex:3
-#, elixir-autogen, elixir-format
-msgid "Change email"
-msgstr ""
 
 #: lib/rasbet_web/components/user_settings.ex:80
 #, elixir-autogen, elixir-format
@@ -93,7 +88,7 @@ msgid "Email"
 msgstr ""
 
 #: lib/rasbet_web/components/user_settings.ex:105
-#: lib/rasbet_web/templates/layout/_nav.html.heex:51
+#: lib/rasbet_web/templates/layout/_nav.html.heex:50
 #, elixir-autogen, elixir-format
 msgid "Entrar"
 msgstr "Login"
@@ -129,7 +124,7 @@ msgid "Jogo concluído"
 msgstr "Game finished"
 
 #: lib/rasbet_web/live/game_live/index.html.heex:75
-#: lib/rasbet_web/templates/layout/_nav.html.heex:19
+#: lib/rasbet_web/templates/layout/_nav.html.heex:5
 #, elixir-autogen, elixir-format
 msgid "Jogos"
 msgstr "Games"
@@ -154,7 +149,7 @@ msgstr "Address line 1"
 msgid "Linha morada 2"
 msgstr "Address line 2"
 
-#: lib/rasbet_web/templates/layout/_nav.html.heex:38
+#: lib/rasbet_web/templates/layout/_nav.html.heex:24
 #, elixir-autogen, elixir-format
 msgid "Minhas apostas"
 msgstr "My bets"
@@ -175,6 +170,7 @@ msgid "New password"
 msgstr ""
 
 #: lib/rasbet_web/components/user_settings.ex:16
+#: lib/rasbet_web/live/promos_live/index.html.heex:7
 #: lib/rasbet_web/live/user_live/list.html.heex:22
 #, elixir-autogen, elixir-format
 msgid "Nome"
@@ -187,8 +183,6 @@ msgstr "No bets"
 
 #: lib/rasbet_web/templates/user_registration/new.html.heex:7
 #: lib/rasbet_web/templates/user_reset_password/edit.html.heex:7
-#: lib/rasbet_web/templates/user_settings/edit.html.heex:8
-#: lib/rasbet_web/templates/user_settings/edit.html.heex:32
 #, elixir-autogen, elixir-format
 msgid "Oops, something went wrong! Please check the errors below."
 msgstr ""
@@ -211,7 +205,7 @@ msgstr "Country"
 
 #: lib/rasbet_web/components/user_settings.ex:104
 #: lib/rasbet_web/live/user_live/registration.html.heex:1
-#: lib/rasbet_web/templates/layout/_nav.html.heex:52
+#: lib/rasbet_web/templates/layout/_nav.html.heex:51
 #, elixir-autogen, elixir-format
 msgid "Registar"
 msgstr "Register"
@@ -227,7 +221,7 @@ msgstr ""
 msgid "Reset password"
 msgstr ""
 
-#: lib/rasbet_web/templates/layout/_nav.html.heex:45
+#: lib/rasbet_web/templates/layout/_nav.html.heex:31
 #, elixir-autogen, elixir-format
 msgid "Sair"
 msgstr "Exit"
@@ -236,11 +230,6 @@ msgstr "Exit"
 #, elixir-autogen, elixir-format
 msgid "Saldo"
 msgstr "Balance"
-
-#: lib/rasbet_web/templates/user_settings/edit.html.heex:1
-#, elixir-autogen, elixir-format
-msgid "Settings"
-msgstr ""
 
 #: lib/rasbet_web/components/user_settings.ex:33
 #: lib/rasbet_web/live/user_live/list.html.heex:24
@@ -259,17 +248,18 @@ msgid "Voltar"
 msgstr "Back"
 
 #: lib/rasbet_web/live/user_live/list.ex:10
-#: lib/rasbet_web/templates/layout/_nav.html.heex:26
+#: lib/rasbet_web/templates/layout/_nav.html.heex:12
 #, elixir-autogen, elixir-format
 msgid "Gerir utilizadores"
 msgstr "Manage users"
 
-#: lib/rasbet_web/templates/layout/_nav.html.heex:30
+#: lib/rasbet_web/templates/layout/_nav.html.heex:16
 #, elixir-autogen, elixir-format
 msgid "Minha conta"
 msgstr "My account"
 
-#: lib/rasbet_web/templates/layout/_nav.html.heex:20
+#: lib/rasbet_web/live/promos_live/index.html.heex:2
+#: lib/rasbet_web/templates/layout/_nav.html.heex:6
 #, elixir-autogen, elixir-format
 msgid "Promoções"
 msgstr "Promos"
@@ -297,6 +287,7 @@ msgstr "Deposit"
 msgid "Método de pagamento"
 msgstr "Payment method"
 
+#: lib/rasbet_web/live/promos_live/index.html.heex:12
 #: lib/rasbet_web/live/wallet_live/index.html.heex:29
 #, elixir-autogen, elixir-format
 msgid "Tipo"
@@ -307,6 +298,7 @@ msgstr "Type"
 msgid "Transações"
 msgstr "Transactions"
 
+#: lib/rasbet_web/live/promos_live/index.html.heex:15
 #: lib/rasbet_web/live/wallet_live/index.html.heex:30
 #: lib/rasbet_web/live/wallet_live/index.html.heex:48
 #: lib/rasbet_web/live/wallet_live/index.html.heex:98
@@ -325,7 +317,7 @@ msgid "Pesquisar utilizador"
 msgstr "Search users"
 
 #: lib/rasbet_web/live/user_live/edit.ex:14
-#: lib/rasbet_web/templates/layout/_nav.html.heex:35
+#: lib/rasbet_web/templates/layout/_nav.html.heex:21
 #, elixir-autogen, elixir-format
 msgid "Definições"
 msgstr "Settings"
@@ -379,17 +371,68 @@ msgstr "Updated user"
 msgid "Adicionar Utilizador"
 msgstr "Add user"
 
-#: lib/rasbet_web/templates/layout/_nav.html.heex:7
+#: lib/rasbet_web/templates/layout/_nav.html.heex:37
 #, elixir-autogen, elixir-format
 msgid "Idioma"
 msgstr "Language"
 
-#: lib/rasbet_web/templates/layout/_nav.html.heex:15
+#: lib/rasbet_web/templates/layout/_nav.html.heex:45
 #, elixir-autogen, elixir-format
 msgid "Inglês"
-msgstr ""
+msgstr "English"
 
-#: lib/rasbet_web/templates/layout/_nav.html.heex:12
+#: lib/rasbet_web/templates/layout/_nav.html.heex:42
 #, elixir-autogen, elixir-format
 msgid "Português"
+msgstr "Portuguese"
+
+#: lib/rasbet_web/live/promos_live/index.html.heex:17
+#, elixir-autogen, elixir-format
+msgid "Apenas novas contas"
 msgstr ""
+
+#: lib/rasbet_web/live/promos_live/index.html.heex:19
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Criar"
+msgstr "Wallet"
+
+#: lib/rasbet_web/live/promos_live/index.html.heex:5
+#: lib/rasbet_web/live/promos_live/index.html.heex:24
+#, elixir-autogen, elixir-format
+msgid "Criar promoção"
+msgstr "Create Promotion"
+
+#: lib/rasbet_web/live/promos_live/index.html.heex:14
+#, elixir-autogen, elixir-format
+msgid "Créditos"
+msgstr "Credits"
+
+#: lib/rasbet_web/live/promos_live/index.html.heex:8
+#, elixir-autogen, elixir-format
+msgid "Descrição"
+msgstr "Description"
+
+#: lib/rasbet_web/live/promos_live/index.ex:50
+#, elixir-autogen, elixir-format
+msgid "Erro ao criar promoção"
+msgstr "Error creating promotion"
+
+#: lib/rasbet_web/live/promos_live/index.html.heex:29
+#, elixir-autogen, elixir-format
+msgid "Não existem promoções ativas neste momento"
+msgstr "There are currently no active promotions"
+
+#: lib/rasbet_web/live/promos_live/index.html.heex:14
+#, elixir-autogen, elixir-format
+msgid "Percentual"
+msgstr "Percentage"
+
+#: lib/rasbet_web/live/promos_live/index.ex:46
+#, elixir-autogen, elixir-format
+msgid "Promoção criada com sucesso"
+msgstr "Promotion created successfully"
+
+#: lib/rasbet_web/live/promos_live/index.html.heex:16
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Valor mínimo"
+msgstr "Minimum Value"
