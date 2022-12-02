@@ -18,7 +18,7 @@
       <%= for {key, name} <- @sports do %>
         <div class="flex flex-row gap-2 items-center">
           <input type="checkbox" id={key} class="w-4 h-4 text-primary-500 bg-gray-100 rounded border-gray-300 focus:ring-primary-500"/>
-          <label for={key}><%= name %></label>
+          <label for={key}><%= Gettext.gettext(RasbetWeb.Gettext,name) %></label>
         </div>
       <% end %>
     </div>
@@ -79,7 +79,7 @@
         <div class="bg-white shadow-md p-4 mb-5 rounded grid grid-cols-2">
           <div class="flex justify-between flex-col">
             <div class="text-gray-500 text-sm">
-              <strong class="font-medium"><%= sport_name game.sport %></strong> - <%= Calendar.strftime(game.start_time, "%d/%m/%Y às %H:%M") %>
+              <strong class="font-medium"><%= Gettext.gettext(RasbetWeb.Gettext,sport_name game.sport) %></strong> - <%= Calendar.strftime(game.start_time, "%d/%m/%Y às %H:%M") %>
             </div>
             <div class="flex gap-3">
               <span><%= game.home_team %></span>

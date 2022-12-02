@@ -16,6 +16,10 @@ msgstr ""
 msgid "A carregar..."
 msgstr "Loading..."
 
+#: lib/rasbet_web/live/game_live/index.html.heex:21
+msgid "Futebol"
+msgstr "Football"
+
 #: lib/rasbet_web/live/game_live/index.html.heex:66
 #: lib/rasbet_web/live/game_live/index.html.heex:68
 #, elixir-autogen, elixir-format
