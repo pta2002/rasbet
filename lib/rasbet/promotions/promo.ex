@@ -3,7 +3,7 @@ defmodule Rasbet.Promotions.Promo do
   import Ecto.Changeset
 
   schema "promos" do
-    field :active, :boolean, default: false
+    field :active, :boolean, default: true
     field :description, :string
     field :discount, :integer
     field :free_credits, Money.Ecto.Amount.Type
@@ -12,7 +12,7 @@ defmodule Rasbet.Promotions.Promo do
     field :new_accounts_only, :boolean, default: false
 
     field :type, Ecto.Enum, values: [:percent, :freebet], virtual: true
-    field :value, :integer, virtual: true
+    field :value, :float, virtual: true
 
     timestamps()
   end
@@ -42,6 +42,13 @@ defmodule Rasbet.Promotions.Promo do
         []
       end
     end)
+    |> validate_change(:free_credits, fn :free_credits, value ->
+      if Money.negative?(value) do
+        [value: RasbetWeb.ErrorHelpers.translate_error({"must be positive", []})]
+      else
+        []
+      end
+    end)
   end
 
   defp validate_types(changeset) do
@@ -58,8 +65,21 @@ defmodule Rasbet.Promotions.Promo do
           |> validate_number(:value, greater_than: 0, less_than_or_equal_to: 100)
 
         :freebet ->
-          {:ok, money} = Money.parse(get_change(changeset, :value))
-          put_change(changeset, :free_credits, money)
+          if get_change(changeset, :value) != nil do
+            case Money.parse(get_change(changeset, :value)) do
+              {:ok, money} ->
+                changeset
+                |> put_change(:free_credits, money)
+
+              _ ->
+                changeset
+                |> validate_change(:value, fn _, _ ->
+                  [value: RasbetWeb.ErrorHelpers.translate_error({"invalid value", []})]
+                end)
+            end
+          else
+            changeset
+          end
       end
     end)
   end

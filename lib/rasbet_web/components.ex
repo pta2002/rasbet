@@ -10,7 +10,7 @@ defmodule RasbetWeb.Components do
       |> Map.put_new(:class, "")
 
     ~H"""
-      <div class={"mb-4 #{if @type == "checkbox" do "flex flex-row justify-between items-center" end}"}>
+      <div class={"mb-4 w-full #{if @type == "checkbox" do "flex flex-row justify-between items-center" end}"}>
         <%= if @type == "phone" do %>
           <label for={@phonefield} class="block mb-1"><%= @label %></label>
         <% else %>

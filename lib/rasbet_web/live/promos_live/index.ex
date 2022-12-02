@@ -65,6 +65,6 @@ defmodule RasbetWeb.PromosLive.Index do
   end
 
   defp assign_promos(socket) do
-    assign(socket, promos: Promo |> Rasbet.Repo.all())
+    assign(socket, promos: Rasbet.Promotions.applicable_promotions())
   end
 end

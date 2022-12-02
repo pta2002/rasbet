@@ -12,6 +12,7 @@ defmodule RasbetWeb.GameLive.Index do
      |> assign(:games, TwoTeams.Game.list_games())
      |> assign(:sports, Application.fetch_env!(:rasbet, :sports))
      |> assign(:bets, [])
+     |> assign_promos()
      |> assign_changeset()
      |> assign_odds()
      |> assign(:page_title, "Jogos")}
@@ -53,19 +54,17 @@ defmodule RasbetWeb.GameLive.Index do
      |> assign_validity()}
   end
 
-  def handle_event("update_amount", %{"bet" => %{"amount" => amount}}, socket) do
-    money = parse_amount(amount)
-
+  def handle_event("update_amount", %{"bet" => bet}, socket) do
     changeset =
       %Bet{}
-      |> Bet.changeset(%{amount: money})
+      |> Bet.changeset(bet)
       |> Map.put(:action, :validate)
 
     {:noreply,
      socket
      |> assign(:bet, changeset |> Ecto.Changeset.apply_changes())
      |> assign_gains()
-     |> assign(:amount, amount)
+     #  |> assign(:amount, amount)
      |> assign(:changeset, changeset)
      |> assign_validity()}
   end
@@ -149,6 +148,11 @@ defmodule RasbetWeb.GameLive.Index do
       Enum.reduce(odds, Decimal.new(1), fn %{odd: odd}, acc -> Decimal.mult(acc, odd) end)
     )
     |> assign_gains()
+  end
+
+  defp assign_promos(%{assigns: %{current_user: user}} = socket) do
+    socket
+    |> assign(promos: Enum.map(Rasbet.Promotions.applicable_promotions(user), &{&1.name, &1.id}))
   end
 
   def sport_name(sport) do

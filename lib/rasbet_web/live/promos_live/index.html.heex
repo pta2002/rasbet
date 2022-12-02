@@ -13,7 +13,7 @@
             field={:type}
             options={[{gettext("Percentual"), :percent}, {gettext("Créditos"), :freebet}]}/>
           <.input type="text" form={f} label={gettext "Valor"} field={:value} inputmode="numeric" pattern="[0-9]+(\.[0-9]+)?"/>
-          <.input type="text" form={f} label={gettext "Valor mínimo"} field={:minimum} inputmode="numeric" pattern="[0-9]+(\.[0-9]+)?"/>
+          <.input type="text" form={f} label={gettext "Valor mínimo"} field={:minimum} inputmode="numeric" pattern=".?[0-9]+(\.[0-9]+)?"/>
           <.input type="checkbox" form={f} class="" field={:new_accounts_only} label={gettext "Apenas novas contas"}/>
 
           <%= submit gettext("Criar"), class: "button w-full", disabled: not @changeset.valid? %>
