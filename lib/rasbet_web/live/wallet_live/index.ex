@@ -5,9 +5,11 @@ defmodule RasbetWeb.WalletLive.Index do
   alias Rasbet.Wallet.Deposit
   alias Rasbet.Wallet.Withdrawal
   alias RasbetWeb.Router
+  alias Rasbet.Promotions.Promo
 
   on_mount {RasbetWeb.LiveAuth, :require_authenticated_user}
 
+  @impl true
   def mount(_params, _session, socket) do
     {:ok,
      socket
@@ -15,17 +17,21 @@ defmodule RasbetWeb.WalletLive.Index do
      |> assign_deposit()
      |> assign_withdrawal()
      |> assign_changeset_deposit()
-     |> assign_changeset_withdrawal()}
+     |> assign_changeset_withdrawal()
+     |> assign_promos()}
   end
 
+  @impl true
   def handle_params(_params, _uri, socket) do
     {:noreply, socket}
   end
 
+  @impl true
   def handle_event("close_modal", _, socket) do
     {:noreply, push_patch(socket, to: RasbetWeb.Router.Helpers.wallet_index_path(socket, :index))}
   end
 
+  @impl true
   def handle_event(
         "validate_d",
         %{"deposit" => deposit_params},
@@ -41,6 +47,7 @@ defmodule RasbetWeb.WalletLive.Index do
      |> assign(:changeset_d, changeset_d)}
   end
 
+  @impl true
   def handle_event(
         "validate_w",
         %{"withdrawal" => withdrawal_params},
@@ -56,6 +63,7 @@ defmodule RasbetWeb.WalletLive.Index do
      |> assign(:changeset_w, changeset_w)}
   end
 
+  @impl true
   def handle_event(
         "deposit",
         %{"deposit" => deposit_params},
@@ -89,6 +97,7 @@ defmodule RasbetWeb.WalletLive.Index do
     end
   end
 
+  @impl true
   def handle_event(
         "withdrawal",
         %{"withdrawal" => withdrawal_params},
@@ -140,5 +149,9 @@ defmodule RasbetWeb.WalletLive.Index do
 
   defp assign_changeset_withdrawal(%{assigns: %{withdrawal: withdrawal}} = socket) do
     socket |> assign(:changeset_w, Wallet.change_withdrawal(withdrawal))
+  end
+
+  defp assign_promos(socket) do
+    assign(socket, promos: Rasbet.Promotions.applicable_promotions())
   end
 end

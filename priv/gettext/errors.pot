@@ -9,86 +9,87 @@
 ## effect: edit them in PO (`.po`) files instead.
 ## From Ecto.Changeset.cast/4
 msgid "can't be blank"
-msgstr ""
+msgstr "Não pode ser vazio"
 
 ## From Ecto.Changeset.unique_constraint/3
 msgid "has already been taken"
-msgstr ""
+msgstr "já foi usado"
 
 ## From Ecto.Changeset.put_change/3
 msgid "is invalid"
-msgstr ""
+msgstr "é inválido"
 
 ## From Ecto.Changeset.validate_acceptance/3
 msgid "must be accepted"
-msgstr ""
+msgstr "deve ser aceite"
 
 ## From Ecto.Changeset.validate_format/3
 msgid "has invalid format"
-msgstr ""
+msgstr "formato inválido"
 
 ## From Ecto.Changeset.validate_subset/3
 msgid "has an invalid entry"
-msgstr ""
+msgstr "entrada inválida"
 
 ## From Ecto.Changeset.validate_exclusion/3
 msgid "is reserved"
-msgstr ""
+msgstr "reservado"
 
 ## From Ecto.Changeset.validate_confirmation/3
 msgid "does not match confirmation"
-msgstr ""
+msgstr "não coincide com a confirmação"
 
 ## From Ecto.Changeset.no_assoc_constraint/3
 msgid "is still associated with this entry"
-msgstr ""
+msgstr "ainda está associada a esta entrada"
 
 msgid "are still associated with this entry"
-msgstr ""
+msgstr "ainda está associada a estas entradas"
 
 ## From Ecto.Changeset.validate_length/3
 msgid "should be %{count} character(s)"
 msgid_plural "should be %{count} character(s)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "deve conter %{count} character"
+msgstr[1] "deve conter %{count} characters"
 
 msgid "should have %{count} item(s)"
 msgid_plural "should have %{count} item(s)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "deve conter %{count} item"
+msgstr[1] "deve conter %{count} items"
 
 msgid "should be at least %{count} character(s)"
 msgid_plural "should be at least %{count} character(s)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "deve conter pelo menos %{count} character"
+msgstr[1] "deve conter pelo menos %{count} characters"
 
 msgid "should have at least %{count} item(s)"
 msgid_plural "should have at least %{count} item(s)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "deve conter pelo menos %{count} character"
+msgstr[1] "deve conter pelo menos %{count} characters"
+
 
 msgid "should be at most %{count} character(s)"
 msgid_plural "should be at most %{count} character(s)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "deve conter no máximo %{count} character"
+msgstr[1] "deve conter no máximo %{count} characters"
 
 msgid "should have at most %{count} item(s)"
 msgid_plural "should have at most %{count} item(s)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "deve conter no máximo %{count} item"
+msgstr[1] "deve conter no máximo %{count} items"
 
 ## From Ecto.Changeset.validate_number/3
 msgid "must be less than %{number}"
-msgstr ""
+msgstr "deve ser menor do que %{number}"
 
 msgid "must be greater than %{number}"
-msgstr ""
+msgstr "deve ser maior que %{number}"
 
 msgid "must be less than or equal to %{number}"
-msgstr ""
+msgstr "deve ser menor ou igual do que %{number}"
 
 msgid "must be greater than or equal to %{number}"
-msgstr ""
+msgstr "deve ser maior ou igual do que %{number}"
 
 msgid "must be equal to %{number}"
-msgstr ""
+msgstr "deve ser igual do que %{number}"

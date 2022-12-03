@@ -113,6 +113,15 @@
 
   <div class="w-full overflow-y-scroll">
       <.h3><%= gettext "Minhas Promoções" %></.h3>
-      <.h1> TODOOO: igual a pagina de promocoes </.h1>
+      <%= if length(@promos) == 0 do %>
+        <p><%= gettext("Não existem promoções ativas neste momento") %></p>
+      <% else %>
+        <%= for promo <- @promos do %>
+          <div class="bg-white shadow-md mb-5 rounded p-4">
+            <h2 class="text-2xl"><%= Gettext.gettext(RasbetWeb.Gettext, promo.name) %></h2>
+            <h2><%= Gettext.gettext(RasbetWeb.Gettext, promo.description) %></h2>
+          </div>
+        <% end %>
+      <% end %>
   </div>
 </div>
