@@ -35,4 +35,13 @@ defmodule RasbetWeb.UserLive.Edit do
          |> put_flash(:error, "Error")}
     end
   end
+
+  @impl true
+  def handle_event("delete", _params, socket) do
+    IO.puts("HELLO")
+    user = socket.assigns.current_user
+    {:ok, _} = Accounts.delete_user(user)
+
+    {:noreply, socket |> put_flash(:info, gettext("Utilizador Eliminado"))}
+  end
 end

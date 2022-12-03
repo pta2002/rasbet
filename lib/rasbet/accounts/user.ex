@@ -75,7 +75,8 @@ defmodule Rasbet.Accounts.User do
     |> validate_email()
     |> validate_phone()
     |> validate_address()
-    |> validate_required([:phone, :taxid, :name])
+    |> validate_age()
+    |> validate_required([:phone, :taxid, :name, :profession, :id_number])
     |> then(fn changeset ->
       if not Keyword.get(opts, :is_edit, false) do
         validate_password(changeset, opts)
@@ -83,6 +84,39 @@ defmodule Rasbet.Accounts.User do
         changeset
       end
     end)
+  end
+
+  def validate_age(changeset) do
+    changeset
+    |> validate_required([:birthdate])
+    |> validate_over_18()
+  end
+
+  def validate_over_18(changeset) do
+    date? = fetch_field!(changeset, :birthdate)
+
+    if date? do
+      %Date{year: y_birth, month: m_birth, day: d_birth} = date?
+      {{y_curr, m_curr, d_curr}, _time} = :calendar.now_to_datetime(:erlang.now())
+
+      age =
+        cond do
+          m_curr > m_birth or
+              (m_birth == m_curr and d_curr >= d_birth) ->
+            y_curr - y_birth
+
+          true ->
+            y_curr - y_birth - 1
+        end
+
+      if(age < 18) do
+        add_error(changeset, :birthdate, "You need to be over 18 to create an account")
+      else
+        changeset
+      end
+    else
+      changeset
+    end
   end
 
   def validate_phone(changeset) do
