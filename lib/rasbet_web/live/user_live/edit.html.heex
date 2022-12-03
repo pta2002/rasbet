@@ -1,5 +1,7 @@
 <.container>
   <h1 class="text-2xl font-bold text-center"><%= gettext "Editar"%></h1>
 
-  <.live_component module={UserSettings} id="1" user={@user} edit={true}/>
+  <div class="bg-white p-4 rounded-md shadow flex gap-2 flex-col">
+    <.live_component module={UserSettings} id="1" user={@user} edit={true}/>
+  </div>
 </.container>
