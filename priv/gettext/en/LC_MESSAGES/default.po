@@ -137,7 +137,7 @@ msgstr "Already have an account?"
 
 #: lib/rasbet_web/templates/user_session/new.html.heex:28
 #, elixir-autogen, elixir-format
-msgid "Keep me logged in for 60 days"
+msgid "Keep me logged in"
 msgstr ""
 
 #: lib/rasbet_web/components/user_settings.ex:59

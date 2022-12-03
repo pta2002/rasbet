@@ -136,8 +136,8 @@ msgstr ""
 
 #: lib/rasbet_web/templates/user_session/new.html.heex:28
 #, elixir-autogen, elixir-format
-msgid "Keep me logged in for 60 days"
-msgstr "Mantenha-me logado por 60 dias"
+msgid "Keep me logged in"
+msgstr "Mantenha-me logado"
 
 #: lib/rasbet_web/components/user_settings.ex:59
 #, elixir-autogen, elixir-format
