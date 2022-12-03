@@ -27,6 +27,10 @@ defmodule Rasbet.Accounts.User do
     field(:city, :string)
     field(:zipcode, :string)
 
+    field(:birthdate, :date)
+    field(:profession, :string)
+    field(:id_number, :string)
+
     has_many(:bets, Bet)
 
     timestamps()
@@ -63,7 +67,10 @@ defmodule Rasbet.Accounts.User do
       :address2,
       :country,
       :city,
-      :zipcode
+      :zipcode,
+      :birthdate,
+      :profession,
+      :id_number
     ])
     |> validate_email()
     |> validate_phone()

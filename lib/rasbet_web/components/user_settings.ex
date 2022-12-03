@@ -13,7 +13,7 @@ defmodule RasbetWeb.Components.UserSettings do
               type="text"
               form={f}
               field={:name}
-              label={gettext "Nome"}
+              label={gettext "Nome Completo"}
               required
             />
 

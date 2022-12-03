@@ -214,6 +214,13 @@ msgstr "Country"
 msgid "Registar"
 msgstr "Register"
 
+#: lib/rasbet_web/components/user_settings.ex:104
+#: lib/rasbet_web/live/user_live/registration.html.heex:1
+#: lib/rasbet_web/templates/layout/_nav.html.heex:51
+#, elixir-autogen, elixir-format
+msgid "Nome Completo"
+msgstr "Full Name"
+
 #: lib/rasbet_web/templates/user_registration/new.html.heex:2
 #: lib/rasbet_web/templates/user_registration/new.html.heex:29
 #, elixir-autogen, elixir-format
