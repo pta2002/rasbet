@@ -30,13 +30,13 @@ defmodule Rasbet.Game.Bets do
          # TODO: Error if this is nil
          info =
            Game
-           |> where([i], i.id == ^entry.id)
+           |> where([i], i.id == ^entry.game_id)
            |> repo.one()
 
          %{
            odds: info.odds[entry.outcome],
            outcome: entry.outcome,
-           game_id: entry.id,
+           game_id: entry.game_id,
            bet_id: bet.id,
            inserted_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second),
            updated_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second)
@@ -46,14 +46,28 @@ defmodule Rasbet.Game.Bets do
     |> Multi.insert_all(:insert_entries, Entry, & &1.entries)
   end
 
-  def assign_odds(%{entries: entries, amount: amount} = bet) do
+  def assign_odds(%{entries: entries, amount: amount, promo: promo} = bet) do
     final_odds =
       entries
       |> Enum.reduce(Decimal.new(1), fn %{odds: odds}, acc ->
         Decimal.mult(acc, Decimal.new(1, odds, -2))
       end)
 
-    %{bet | final_odds: final_odds, possible_gains: Money.multiply(amount, final_odds)}
+    gains =
+      Money.multiply(amount || Money.new(0), final_odds)
+      |> then(
+        &if promo do
+          Rasbet.Promotions.calculate_promotion(&1, promo)
+        else
+          &1
+        end
+      )
+
+    %{bet | final_odds: final_odds, possible_gains: gains}
+  end
+
+  def assign_entry_odds(%Entry{game: %Game{odds: odds}, outcome: outcome} = entry) do
+    Map.put(entry, :odds, Map.get(odds, outcome))
   end
 
   def assign_winnings(%Bet{} = bet) do

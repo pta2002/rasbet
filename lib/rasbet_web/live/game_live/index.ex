@@ -14,7 +14,8 @@ defmodule RasbetWeb.GameLive.Index do
      |> assign(:bets, [])
      |> assign_promos()
      |> assign_changeset()
-     |> assign_odds()
+     |> assign_bet()
+     |> assign_gains()
      |> assign(:page_title, "Jogos")}
   end
 
@@ -35,10 +36,17 @@ defmodule RasbetWeb.GameLive.Index do
            if index do
              List.delete_at(bets, index)
            else
-             bets ++ [%{id: game_id, outcome: outcome}]
+             bets ++
+               [
+                 %Rasbet.Game.Bets.Entry{game_id: game_id, outcome: outcome}
+                 |> Repo.preload(:game)
+                 |> Bets.assign_entry_odds()
+               ]
            end
          )
-         |> assign_odds()
+         |> reassign_changeset_bets()
+         |> assign_bet()
+         |> assign_gains()
          |> assign_validity()}
 
       :error ->
@@ -50,36 +58,36 @@ defmodule RasbetWeb.GameLive.Index do
     {:noreply,
      socket
      |> assign(:bets, List.delete_at(bets, String.to_integer(i)))
-     |> assign_odds()
+     |> reassign_changeset_bets()
+     |> assign_bet()
+     |> assign_gains()
      |> assign_validity()}
   end
 
-  def handle_event("validate", %{"bet" => bet}, socket) do
+  def handle_event("validate", %{"bet" => params}, %{assigns: %{bets: bets}} = socket) do
     changeset =
-      %Bet{}
-      |> Bet.changeset(bet)
+      %Bet{entries: bets}
+      |> Bet.changeset(params)
       |> Map.put(:action, :validate)
 
     {:noreply,
      socket
-     |> assign(:bet, changeset |> Ecto.Changeset.apply_changes())
-     |> assign_gains()
-     |> assign(:amount, Map.get(bet, "amount"))
      |> assign(:changeset, changeset)
+     |> assign_bet()
+     |> assign_gains()
+     |> assign(:amount, Map.get(params, "amount"))
      |> assign_validity()}
   end
 
   def handle_event(
         "bet",
-        %{"bet" => %{"amount" => amount}},
+        %{"bet" => bet},
         %{assigns: %{bets: bets, current_user: user}} = socket
       ) do
     if user do
-      money = parse_amount(amount)
-
       changeset =
         %Bet{user_id: user.id}
-        |> Bet.changeset(%{user_id: user.id, amount: money})
+        |> Bet.changeset(bet)
 
       case Repo.transaction(Bets.place_bet(changeset, bets)) do
         {:ok, _} ->
@@ -87,7 +95,7 @@ defmodule RasbetWeb.GameLive.Index do
            socket
            |> assign(:bets, [])
            |> assign_changeset()
-           |> assign_odds()
+           |> assign_bet()
            |> put_flash(:info, "Bet successfully")}
 
         {:error, _, _, _} ->
@@ -108,12 +116,29 @@ defmodule RasbetWeb.GameLive.Index do
     end
   end
 
+  def assign_bet(%{assigns: %{changeset: changeset, bets: entries}} = socket) do
+    assign(
+      socket,
+      bet:
+        changeset
+        |> Ecto.Changeset.apply_changes()
+        |> struct(entries: entries)
+        |> Repo.preload([:promo, entries: [:game]])
+        |> Rasbet.Game.Bets.assign_odds()
+    )
+  end
+
   defp assign_changeset(socket) do
     socket
     |> assign(:amount, "")
-    |> assign(:bet, %Bet{amount: Money.new(0)})
-    |> assign(:changeset, Bet.changeset(%Bet{}, %{}))
+    # |> assign(:bet, %Bet{amount: Money.new(0), entries: [], promo: nil})
+    |> assign(:changeset, Bet.changeset(%Bet{entries: [], promo: nil}, %{}))
+    |> assign_bet()
     |> assign_validity()
+  end
+
+  def reassign_changeset_bets(%{assigns: %{bets: bets, bet: bet}} = socket) do
+    assign(socket, bet: %Bet{bet | entries: bets})
   end
 
   defp assign_validity(%{assigns: %{bets: bets, changeset: changeset}} = socket) do
@@ -127,27 +152,9 @@ defmodule RasbetWeb.GameLive.Index do
     )
   end
 
-  defp assign_gains(%{assigns: %{final_odd: odds, bet: %Bet{amount: amount}}} = socket) do
+  defp assign_gains(%{assigns: %{bet: bet}} = socket) do
     socket
-    |> assign(:gains, Money.multiply(amount, odds))
-  end
-
-  defp assign_odds(%{assigns: %{bets: bets}} = socket) do
-    odds =
-      Enum.map(bets, fn %{id: id, outcome: outcome} ->
-        game = TwoTeams.Game |> Repo.get_by!(id: id)
-        odd = Decimal.new(1, game.odds[outcome], -2)
-
-        %{game: game, odd: odd, outcome: outcome}
-      end)
-
-    socket
-    |> assign(:bets_odds, odds)
-    |> assign(
-      :final_odd,
-      Enum.reduce(odds, Decimal.new(1), fn %{odd: odd}, acc -> Decimal.mult(acc, odd) end)
-    )
-    |> assign_gains()
+    |> assign(:gains, bet |> Rasbet.Game.Bets.assign_odds() |> Map.get(:possible_gains))
   end
 
   defp assign_promos(%{assigns: %{current_user: user}} = socket) do

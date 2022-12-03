@@ -7,7 +7,8 @@ defmodule Rasbet.Game.Bets.Bet do
   alias Rasbet.Wallet.Transaction
 
   schema "bets" do
-    field :amount, Money.Ecto.Amount.Type, default: 0
+    # , default: Money.new(0)
+    field :amount, Money.Ecto.Amount.Type
     belongs_to :user, User
     has_many :entries, Entry
     has_one :transaction, Transaction
@@ -27,6 +28,7 @@ defmodule Rasbet.Game.Bets.Bet do
   def changeset(bet, attrs) do
     bet
     |> cast(attrs, [:amount, :promo_id])
+    |> cast_assoc(:entries)
     |> validate_required([:amount])
     |> validate_change(:amount, fn :amount, a ->
       unless Money.positive?(a) do
@@ -56,7 +58,7 @@ defmodule Rasbet.Game.Bets.Bet do
           [promo_id: RasbetWeb.ErrorHelpers.translate_error({"invalid promo id", []})]
 
         promo ->
-          if Money.cmp(amount, promo.minimum) == :lt do
+          if Money.cmp(amount || Money.new(0), promo.minimum) == :lt do
             [
               amount:
                 RasbetWeb.ErrorHelpers.translate_error(

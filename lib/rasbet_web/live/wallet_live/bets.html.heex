@@ -22,16 +22,26 @@
 
     <%= for bet <- @bets do %>
       <div class="w-full rounded-md shadow-md bg-white flex flex-row divide-x">
-        <div class="p-4 w-8/12">
-          <h2 class="font-medium text-lg"><%= gettext "Apostas"%></h2>
+        <div class="w-8/12">
+          <div class="p-4">
+            <h2 class="font-medium text-lg"><%= gettext "Apostas"%></h2>
 
-          <ul class="list-disc list-inside">
-            <%= for entry <- bet.entries do %>
-              <li>
-                <strong class="font-medium"><%= Rasbet.Games.get_name(entry.game) %></strong> | <%= entry.outcome %> &ndash; <span class="text-primary-500"><%= show_odds entry.odds %></span>
-              </li>
-            <% end %>
-          </ul>
+            <ul class="list-disc list-inside">
+              <%= for entry <- bet.entries do %>
+                <li>
+                  <strong class="font-medium"><%= Rasbet.Games.get_name(entry.game) %></strong> | <%= entry.outcome %> &ndash; <span class="text-primary-500"><%= show_odds entry.odds %></span>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+
+          <%= if bet.promo do %>
+            <hr>
+            <div class="p-4">
+              <span class="font-medium"><%= gettext "Foi utilizada uma promoção:" %></span>
+              <span><%= Gettext.gettext(RasbetWeb.Gettext, bet.promo.name) %></span>
+            </div>
+          <% end %>
         </div>
         <div class="p-4 w-60 w-4/12 flex items-center flex-col justify-center">
           <h2 class="font-medium text-md"><%= gettext "Montante apostado"%></h2>

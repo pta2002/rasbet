@@ -35,7 +35,7 @@ defmodule RasbetWeb.WalletLive.Bets do
            order_by: [desc: b.inserted_at],
            where: [completed: ^(action == :completed)]
          )},
-        bets: [entries: :game]
+        bets: [entries: :game, promo: []]
       ])
       |> Map.get(:bets)
       |> Enum.map(&Bets.assign_odds/1)

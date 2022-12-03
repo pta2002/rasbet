@@ -30,17 +30,17 @@
     <h1 class="text-2xl font-medium mx-4"><%= gettext "Apostas"%></h1>
 
     <div class="flex-grow shadow-inner bg-gray-50 p-4 flex gap-2 flex-col overflow-scroll">
-      <%= if Enum.count(@bets_odds) == 0 do %>
+      <%= if Enum.count(@bets) == 0 do %>
         <%= gettext "Não tem apostas"%>
       <% else %>
-        <%= Enum.map(Enum.with_index(@bets_odds), fn {bet, i} -> %>
+        <%= Enum.map(Enum.with_index(@bets), fn {bet, i} -> %>
           <div class="bg-white shadow-md rounded-md flex flex-row justify-between items-center p-2">
             <div class="col-span-4">
               <div class="text-xs text-gray-500 font-medium">
                 <%= bet.game.home_team %> &ndash; <%= bet.game.away_team %>
               </div>
               <div class="text-sm">
-                <span class="font-semibold"><%= bet.outcome %></span> &ndash; <span class="text-primary-500 font-semibold"><%= show_odds bet.odd %></span>
+                <span class="font-semibold"><%= bet.outcome %></span> &ndash; <span class="text-primary-500 font-semibold"><%= show_odds bet.odds %></span>
               </div>
             </div>
             <div class="text-gray-500 h-full border-primary-500 flex cursor-pointer items-center" phx-click="delete_bet" phx-value-index={i}>
@@ -57,7 +57,7 @@
         <.input type="select" form={f} field={:promo_id} label={gettext "Promoção a aplicar"} options={[{"---", nil}] ++ @promos}/>
         <div class="flex flex-row justify-between w-full">
           <span><%= gettext "Cota final"%></span>
-          <span><%= show_odds @final_odd %></span>
+          <span><%= show_odds @bet.final_odds %></span>
         </div>
         <div class="flex flex-row justify-between w-full text-lg">
           <span><%= gettext "Ganhos"%></span>

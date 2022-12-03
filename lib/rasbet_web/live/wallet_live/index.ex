@@ -113,7 +113,7 @@ defmodule RasbetWeb.WalletLive.Index do
 
       transaction = %Wallet.Transaction{
         type: :withdrawal,
-        value: withdrawal.amount,
+        value: Money.neg(withdrawal.amount),
         user_id: user.id,
         description: "Levantamento"
       }
