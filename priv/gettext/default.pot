@@ -80,13 +80,15 @@ msgstr ""
 #: lib/rasbet_web/components/user_settings.ex:24
 #: lib/rasbet_web/live/user_live/list.html.heex:23
 #: lib/rasbet_web/templates/user_registration/new.html.heex:16
-#: lib/rasbet_web/templates/user_session/new.html.heex:15
+#: lib/rasbet_web/templates/user_session/new.html.heex:12
 #, elixir-autogen, elixir-format
 msgid "Email"
 msgstr ""
 
 #: lib/rasbet_web/components/user_settings.ex:127
 #: lib/rasbet_web/templates/layout/_nav.html.heex:50
+#: lib/rasbet_web/templates/user_session/new.html.heex:4
+#: lib/rasbet_web/templates/user_session/new.html.heex:38
 #, elixir-autogen, elixir-format
 msgid "Entrar"
 msgstr ""
@@ -132,10 +134,10 @@ msgstr ""
 msgid "Já tem conta?"
 msgstr ""
 
-#: lib/rasbet_web/templates/user_session/new.html.heex:31
+#: lib/rasbet_web/templates/user_session/new.html.heex:28
 #, elixir-autogen, elixir-format
 msgid "Keep me logged in for 60 days"
-msgstr ""
+msgstr "Mantenha-me logado por 60 dias"
 
 #: lib/rasbet_web/components/user_settings.ex:59
 #, elixir-autogen, elixir-format
@@ -190,7 +192,7 @@ msgid "Palavra-passe"
 msgstr ""
 
 #: lib/rasbet_web/templates/user_registration/new.html.heex:25
-#: lib/rasbet_web/templates/user_session/new.html.heex:23
+#: lib/rasbet_web/templates/user_session/new.html.heex:20
 #, elixir-autogen, elixir-format
 msgid "Password"
 msgstr ""
@@ -203,6 +205,7 @@ msgstr ""
 #: lib/rasbet_web/components/user_settings.ex:126
 #: lib/rasbet_web/live/user_live/registration.html.heex:1
 #: lib/rasbet_web/templates/layout/_nav.html.heex:51
+#: lib/rasbet_web/templates/user_session/new.html.heex:36
 #, elixir-autogen, elixir-format
 msgid "Registar"
 msgstr ""
@@ -240,6 +243,7 @@ msgid "Todos"
 msgstr ""
 
 #: lib/rasbet_web/templates/layout/auth.html.heex:8
+#: lib/rasbet_web/templates/user_session/new.html.heex:44
 #, elixir-autogen, elixir-format
 msgid "Voltar"
 msgstr ""
@@ -463,4 +467,9 @@ msgstr ""
 #: lib/rasbet_web/live/game_live/index.html.heex:57
 #, elixir-autogen, elixir-format
 msgid "Promoção a aplicar"
+msgstr ""
+
+#: lib/rasbet_web/templates/user_session/new.html.heex:36
+#, elixir-autogen, elixir-format
+msgid "Ainda não tem conta?"
 msgstr ""

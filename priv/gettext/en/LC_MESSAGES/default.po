@@ -81,13 +81,15 @@ msgstr "Sports"
 #: lib/rasbet_web/components/user_settings.ex:24
 #: lib/rasbet_web/live/user_live/list.html.heex:23
 #: lib/rasbet_web/templates/user_registration/new.html.heex:16
-#: lib/rasbet_web/templates/user_session/new.html.heex:15
+#: lib/rasbet_web/templates/user_session/new.html.heex:12
 #, elixir-autogen, elixir-format
 msgid "Email"
 msgstr ""
 
 #: lib/rasbet_web/components/user_settings.ex:127
 #: lib/rasbet_web/templates/layout/_nav.html.heex:50
+#: lib/rasbet_web/templates/user_session/new.html.heex:4
+#: lib/rasbet_web/templates/user_session/new.html.heex:38
 #, elixir-autogen, elixir-format
 msgid "Entrar"
 msgstr "Login"
@@ -133,7 +135,7 @@ msgstr "Games"
 msgid "Já tem conta?"
 msgstr "Already have an account?"
 
-#: lib/rasbet_web/templates/user_session/new.html.heex:31
+#: lib/rasbet_web/templates/user_session/new.html.heex:28
 #, elixir-autogen, elixir-format
 msgid "Keep me logged in for 60 days"
 msgstr ""
@@ -191,7 +193,7 @@ msgid "Palavra-passe"
 msgstr "Password"
 
 #: lib/rasbet_web/templates/user_registration/new.html.heex:25
-#: lib/rasbet_web/templates/user_session/new.html.heex:23
+#: lib/rasbet_web/templates/user_session/new.html.heex:20
 #, elixir-autogen, elixir-format
 msgid "Password"
 msgstr ""
@@ -204,6 +206,7 @@ msgstr "Country"
 #: lib/rasbet_web/components/user_settings.ex:126
 #: lib/rasbet_web/live/user_live/registration.html.heex:1
 #: lib/rasbet_web/templates/layout/_nav.html.heex:51
+#: lib/rasbet_web/templates/user_session/new.html.heex:36
 #, elixir-autogen, elixir-format
 msgid "Registar"
 msgstr "Register"
@@ -241,6 +244,7 @@ msgid "Todos"
 msgstr "All"
 
 #: lib/rasbet_web/templates/layout/auth.html.heex:8
+#: lib/rasbet_web/templates/user_session/new.html.heex:44
 #, elixir-autogen, elixir-format
 msgid "Voltar"
 msgstr "Back"
@@ -465,3 +469,8 @@ msgstr "Profession"
 #, elixir-autogen, elixir-format
 msgid "Promoção a aplicar"
 msgstr "Promotion to apply"
+
+#: lib/rasbet_web/templates/user_session/new.html.heex:36
+#, elixir-autogen, elixir-format
+msgid "Ainda não tem conta?"
+msgstr "Don't have an account yet?"
