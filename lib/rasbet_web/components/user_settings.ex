@@ -94,7 +94,29 @@ defmodule RasbetWeb.Components.UserSettings do
               field={:taxid}
               label={gettext "NIF"}
               required
+           />
+           <.input
+              type="date"
+              form={f}
+              field={:birthdate}
+              label={gettext "Data de Nascimento"}
+              required
             />
+            <.input
+              type="text"
+              form={f}
+              field={:profession}
+              label={gettext "Profissão"}
+              required
+            />
+           <.input
+              type="text"
+              form={f}
+              field={:id_number}
+              label={gettext "Número Identificação Civil"}
+              required
+            />
+
         </div>
 
         <div class="flex place-content-between w-full items-center flex-row-reverse">
