@@ -61,7 +61,18 @@ defmodule Rasbet.Promotions.Promo do
 
         :percent ->
           changeset
-          |> put_change(:discount, get_change(changeset, :value))
+          |> put_change(
+            :discount,
+            get_change(changeset, :value)
+            |> then(
+              # Forma demasiado complicada de converter só se não for nil
+              &if &1 != nil do
+                trunc(round(&1))
+              else
+                nil
+              end
+            )
+          )
           |> validate_number(:value, greater_than: 0, less_than_or_equal_to: 100)
 
         :freebet ->

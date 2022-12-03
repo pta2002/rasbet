@@ -51,7 +51,7 @@
       <% end %>
     </div>
 
-    <.form let={f} for={@changeset} phx-change="update_amount" phx-submit="bet">
+    <.form let={f} for={@changeset} phx-change="validate" phx-submit="bet">
       <div class="p-4 flex flex-col items-center">
         <.input type="number" form={f} field={:amount} label={gettext "Montante a apostar"} value={@amount}/>
         <.input type="select" form={f} field={:promo_id} label={gettext "Promoção a aplicar"} options={[{"---", nil}] ++ @promos}/>

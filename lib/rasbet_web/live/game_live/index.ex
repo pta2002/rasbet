@@ -54,7 +54,7 @@ defmodule RasbetWeb.GameLive.Index do
      |> assign_validity()}
   end
 
-  def handle_event("update_amount", %{"bet" => bet}, socket) do
+  def handle_event("validate", %{"bet" => bet}, socket) do
     changeset =
       %Bet{}
       |> Bet.changeset(bet)
@@ -64,7 +64,7 @@ defmodule RasbetWeb.GameLive.Index do
      socket
      |> assign(:bet, changeset |> Ecto.Changeset.apply_changes())
      |> assign_gains()
-     #  |> assign(:amount, amount)
+     |> assign(:amount, Map.get(bet, "amount"))
      |> assign(:changeset, changeset)
      |> assign_validity()}
   end

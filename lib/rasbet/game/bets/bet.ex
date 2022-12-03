@@ -30,18 +30,42 @@ defmodule Rasbet.Game.Bets.Bet do
     |> validate_required([:amount])
     |> validate_change(:amount, fn :amount, a ->
       unless Money.positive?(a) do
-        [amount: "Montante a apostar tem de ser maior que 0"]
+        [
+          amount:
+            RasbetWeb.ErrorHelpers.translate_error(
+              {"must be greater than %{number}", [number: 0]}
+            )
+        ]
       else
         []
       end
     end)
-    |> validate_change(:promo_id, fn :promo_id, promo_id ->
-      promo = Rasbet.Promotions.Promo |> Rasbet.Repo.get_by(id: promo_id)
+    |> validate_promo()
+  end
+
+  defp validate_promo(changeset) do
+    amount = changeset |> get_field(:amount)
+
+    changeset
+    |> foreign_key_constraint(:promo_id)
+    |> validate_change(:promo_id, fn :promo_id, id ->
+      promo = Rasbet.Promotions.Promo |> Rasbet.Repo.get_by(id: id)
 
       case promo do
-        nil -> [promo_id: RasbetWeb.ErrorHelpers.translate_error({"invalid promo id", []})]
-        # TODO: Validar isto com as outras opções
-        _promo -> []
+        nil ->
+          [promo_id: RasbetWeb.ErrorHelpers.translate_error({"invalid promo id", []})]
+
+        promo ->
+          if Money.cmp(amount, promo.minimum) == :lt do
+            [
+              amount:
+                RasbetWeb.ErrorHelpers.translate_error(
+                  {"must be greater than or equal to %{number}", [number: promo.minimum]}
+                )
+            ]
+          else
+            []
+          end
       end
     end)
   end

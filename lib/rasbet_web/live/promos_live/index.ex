@@ -5,7 +5,7 @@ defmodule RasbetWeb.PromosLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket |> assign_promos()}
+    {:ok, socket}
   end
 
   @impl true
@@ -56,12 +56,13 @@ defmodule RasbetWeb.PromosLive.Index do
     {:noreply,
      socket
      |> assign(promo: %Promo{})
+     |> assign_promos()
      |> assign(changeset: %Promo{} |> Promo.changeset(%{}))}
   end
 
   @impl true
   def handle_params(_params, _uri, socket) do
-    {:noreply, socket}
+    {:noreply, socket |> assign_promos()}
   end
 
   defp assign_promos(socket) do
