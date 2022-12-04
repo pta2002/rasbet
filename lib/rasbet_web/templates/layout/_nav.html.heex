@@ -1,54 +1,60 @@
-<nav class="w-full flex place-content-between bg-primary-600 text-white min-h-[4rem] max-h-16 sticky top-0">
-
-  <div class="flex flex-row items-center align-center gap-4 px-6">
-    <.link navigate={Routes.game_index_path(@socket, :index)} class="wordmark px-6">RASBet</.link>
-    <.link navigate={Routes.game_index_path(@socket, :index)} class={"nav-item #{if @current_page == :home do "selected" end}"}><%= gettext "Jogos" %></.link>
-    <.link navigate={Routes.promos_index_path(@socket, :index)} class={"nav-item px-8 #{if @current_page == :promos do "selected" end}"}><%= gettext "Promoções" %></.link>
+<div x-data="{navopen: false}" class="sticky top-0">
+  <div class="w-full px-6 bg-primary-600 text-white min-h-[4rem] max-h-16 flex flex-row items-center align-center place-content-between gap-4 pl-6 md:hidden cursor-pointer" x-on:click="navopen = !navopen">
+    <span class="wordmark">RASBet</span>
+    <span><Heroicons.bars_3 class="w-8 h-8"/></span>
   </div>
 
-  <div class="flex flex-row items-center align-center gap-4 px-6" x-data="{ open: false }">
-    <%= if @current_user do %>
-      <%= if @current_user.is_admin do %>
-        <.link navigate={Routes.user_list_path(@socket, :index)} class="nav-item"><%= gettext "Gerir utilizadores" %></.link>
+  <nav x-cloak x-show="navopen" class="w-full flex flex-col md:flex-row md:place-content-between bg-primary-600 text-white min-h-[4rem] md:max-h-16 md:!flex">
+    <div class="md:flex md:flex-row md:items-center align-center md:gap-4 grid grid-flow-row auto-rows-[3rem] md:px-6">
+      <.link navigate={Routes.game_index_path(@socket, :index)} class="wordmark px-6 hidden md:block">RASBet</.link>
+      <.link navigate={Routes.game_index_path(@socket, :index)} class={"nav-item #{if @current_page == :home do "selected" end}"}><%= gettext "Jogos" %></.link>
+      <.link navigate={Routes.promos_index_path(@socket, :index)} class={"nav-item px-8 #{if @current_page == :promos do "selected" end}"}><%= gettext "Promoções" %></.link>
+    </div>
+
+    <div class="md:flex md:flex-row md:items-center align-center md:gap-4 grid grid-flow-row auto-rows-[3rem] md:px-6" x-data="{ open: false }">
+      <%= if @current_user do %>
+        <%= if @current_user.is_admin do %>
+          <.link navigate={Routes.user_list_path(@socket, :index)} class="nav-item"><%= gettext "Gerir utilizadores" %></.link>
+        <% end %>
+        <.link navigate={Routes.wallet_index_path(@socket, :index)} class="nav-item"><%= @current_user.balance %></.link>
+        <div class="h-full">
+          <a class="nav-item cursor-pointer" x-on:click="open = !open"><%= gettext "Minha conta" %></a>
+
+          <div class="relative bg-white shadow-md rounded-md w-full text-black py-2 flex flex-col gap-2 text-sm" x-show="open" x-cloak x-on:click.outside="open = false">
+
+            <.link x-show="open" class="w-full flex justify-between items-center px-2" x-cloak navigate={Routes.user_edit_path(@socket, :index)}>
+              <%= gettext "Definições"%>
+            </.link>
+            <.link x-show="open" class="w-full flex justify-between items-center px-2" x-cloak navigate={Routes.wallet_bets_path(@socket, :index)}>
+              <%= gettext "Minhas apostas"%>
+            </.link>
+            <.link x-show="open" class="w-full flex justify-between items-center px-2" x-cloak navigate={Routes.wallet_index_path(@socket, :index)}>
+              <%= gettext "Carteira"%>
+            </.link>
+            <hr/>
+            <.link class="w-full flex justify-between items-center text-red-500 px-2" href={Routes.user_session_path(@socket, :delete)} method={:delete}>
+              <%= gettext "Sair"%>
+              <Heroicons.arrow_right_on_rectangle class="w-4 h-4"/>
+            </.link>
+          </div>
+        </div>
+      <% else %>
+        <div class="h-full" x-data="{ open: false}">
+          <a class="nav-item cursor-pointer" x-on:click="open = !open"><%= gettext "Idioma" %></a>
+
+          <div class="relative bg-white shadow-md rounded-md w-full text-black py-2 flex flex-col gap-2 text-sm" x-show="open" x-cloak x-on:click.outside="open = false">
+
+            <.link x-show="open" class="w-full flex justify-between items-center px-2" x-cloak href="?locale=pt">
+              <%= gettext "Português"%>
+            </.link>
+            <.link x-show="open" class="w-full flex justify-between items-center px-2" x-cloak href="?locale=en">
+              <%= gettext "Inglês"%>
+            </.link>
+          </div>
+        </div>
+        <.link href={Routes.user_session_path(@socket, :new)} class="rounded-full px-6 py-2 border border-primary-50 font-medium hover:bg-primary-50 hover:text-primary-500 duration-150 transition-colors"><%= gettext "Entrar"%></.link>
+        <.link navigate={Routes.user_registration_path(@socket, :new)} class="rounded-full px-6 py-2 border border-primary-50 bg-primary-50 text-primary-500 font-medium"><%= gettext "Registar"%></.link>
       <% end %>
-      <.link navigate={Routes.wallet_index_path(@socket, :index)} class="nav-item"><%= @current_user.balance %></.link>
-      <div class="h-full">
-        <a class="nav-item cursor-pointer" x-on:click="open = !open"><%= gettext "Minha conta" %></a>
-
-        <div class="relative bg-white shadow-md rounded-md w-full text-black py-2 flex flex-col gap-2 text-sm" x-show="open" x-cloak x-on:click.outside="open = false">
-
-          <.link x-show="open" class="w-full flex justify-between items-center px-2" x-cloak navigate={Routes.user_edit_path(@socket, :index)}>
-            <%= gettext "Definições"%>
-          </.link>
-          <.link x-show="open" class="w-full flex justify-between items-center px-2" x-cloak navigate={Routes.wallet_bets_path(@socket, :index)}>
-            <%= gettext "Minhas apostas"%>
-          </.link>
-          <.link x-show="open" class="w-full flex justify-between items-center px-2" x-cloak navigate={Routes.wallet_index_path(@socket, :index)}>
-            <%= gettext "Carteira"%>
-          </.link>
-          <hr/>
-          <.link class="w-full flex justify-between items-center text-red-500 px-2" href={Routes.user_session_path(@socket, :delete)} method={:delete}>
-            <%= gettext "Sair"%>
-            <Heroicons.arrow_right_on_rectangle class="w-4 h-4"/>
-          </.link>
-        </div>
-      </div>
-    <% else %>
-      <div class="h-full" x-data="{ open: false}">
-        <a class="nav-item cursor-pointer" x-on:click="open = !open"><%= gettext "Idioma" %></a>
-
-        <div class="relative bg-white shadow-md rounded-md w-full text-black py-2 flex flex-col gap-2 text-sm" x-show="open" x-cloak x-on:click.outside="open = false">
-
-          <.link x-show="open" class="w-full flex justify-between items-center px-2" x-cloak href="?locale=pt">
-            <%= gettext "Português"%>
-          </.link>
-          <.link x-show="open" class="w-full flex justify-between items-center px-2" x-cloak href="?locale=en">
-            <%= gettext "Inglês"%>
-          </.link>
-        </div>
-      </div>
-      <.link href={Routes.user_session_path(@socket, :new)} class="rounded-full px-6 py-2 border border-primary-50 font-medium hover:bg-primary-50 hover:text-primary-500 duration-150 transition-colors"><%= gettext "Entrar"%></.link>
-      <.link navigate={Routes.user_registration_path(@socket, :new)} class="rounded-full px-6 py-2 border border-primary-50 bg-primary-50 text-primary-500 font-medium"><%= gettext "Registar"%></.link>
-    <% end %>
-  </div>
-</nav>
+    </div>
+  </nav>
+</div>
