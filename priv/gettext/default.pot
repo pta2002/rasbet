@@ -15,13 +15,17 @@ msgstr ""
 msgid "A carregar..."
 msgstr ""
 
+#: lib/rasbet_web/live/game_live/index.html.heex:21
+msgid "Futebol"
+msgstr ""
+
 #: lib/rasbet_web/live/game_live/index.html.heex:66
 #, elixir-autogen, elixir-format
 msgid "Apostar"
 msgstr ""
 
 #: lib/rasbet_web/live/game_live/index.html.heex:30
-#: lib/rasbet_web/live/wallet_live/bets.html.heex:26
+#: lib/rasbet_web/live/wallet_live/bets.html.heex:27
 #, elixir-autogen, elixir-format
 msgid "Apostas"
 msgstr ""
@@ -85,7 +89,7 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: lib/rasbet_web/components/user_settings.ex:127
+#: lib/rasbet_web/components/user_settings.ex:128
 #: lib/rasbet_web/templates/layout/_nav.html.heex:50
 #: lib/rasbet_web/templates/user_session/new.html.heex:4
 #: lib/rasbet_web/templates/user_session/new.html.heex:38
@@ -108,12 +112,12 @@ msgstr ""
 msgid "Ganhos"
 msgstr ""
 
-#: lib/rasbet_web/live/wallet_live/bets.html.heex:43
+#: lib/rasbet_web/live/wallet_live/bets.html.heex:53
 #, elixir-autogen, elixir-format
 msgid "Ganhos possíveis"
 msgstr ""
 
-#: lib/rasbet_web/live/wallet_live/bets.html.heex:40
+#: lib/rasbet_web/live/wallet_live/bets.html.heex:50
 #, elixir-autogen, elixir-format
 msgid "Ganhos realizados"
 msgstr ""
@@ -129,15 +133,10 @@ msgstr ""
 msgid "Jogos"
 msgstr ""
 
-#: lib/rasbet_web/components/user_settings.ex:127
+#: lib/rasbet_web/components/user_settings.ex:128
 #, elixir-autogen, elixir-format
 msgid "Já tem conta?"
 msgstr ""
-
-#: lib/rasbet_web/templates/user_session/new.html.heex:28
-#, elixir-autogen, elixir-format
-msgid "Keep me logged in"
-msgstr "Mantenha-me logado"
 
 #: lib/rasbet_web/components/user_settings.ex:59
 #, elixir-autogen, elixir-format
@@ -154,7 +153,7 @@ msgstr ""
 msgid "Minhas apostas"
 msgstr ""
 
-#: lib/rasbet_web/live/wallet_live/bets.html.heex:37
+#: lib/rasbet_web/live/wallet_live/bets.html.heex:47
 #, elixir-autogen, elixir-format
 msgid "Montante apostado"
 msgstr ""
@@ -202,7 +201,7 @@ msgstr ""
 msgid "País"
 msgstr ""
 
-#: lib/rasbet_web/components/user_settings.ex:126
+#: lib/rasbet_web/components/user_settings.ex:127
 #: lib/rasbet_web/live/user_live/registration.html.heex:1
 #: lib/rasbet_web/templates/layout/_nav.html.heex:51
 #: lib/rasbet_web/templates/user_session/new.html.heex:36
@@ -339,7 +338,6 @@ msgstr ""
 msgid "Ainda não fez nenhuma transação"
 msgstr ""
 
-#: lib/rasbet_web/components/user_settings.ex:124
 #: lib/rasbet_web/live/user_live/edit.html.heex:2
 #, elixir-autogen, elixir-format
 msgid "Editar"
@@ -472,4 +470,24 @@ msgstr ""
 #: lib/rasbet_web/templates/user_session/new.html.heex:36
 #, elixir-autogen, elixir-format
 msgid "Ainda não tem conta?"
+msgstr ""
+
+#: lib/rasbet_web/components/user_settings.ex:124
+#, elixir-autogen, elixir-format
+msgid "Confirmar"
+msgstr ""
+
+#: lib/rasbet_web/live/wallet_live/bets.html.heex:41
+#, elixir-autogen, elixir-format
+msgid "Foi utilizada uma promoção:"
+msgstr ""
+
+#: lib/rasbet_web/templates/user_session/new.html.heex:28
+#, elixir-autogen, elixir-format
+msgid "Keep me logged in"
+msgstr ""
+
+#: lib/rasbet_web/live/user_live/edit.ex:45
+#, elixir-autogen, elixir-format
+msgid "Utilizador Eliminado"
 msgstr ""
