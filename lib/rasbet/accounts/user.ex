@@ -110,7 +110,14 @@ defmodule Rasbet.Accounts.User do
         end
 
       if(age < 18) do
-        add_error(changeset, :birthdate, "You need to be over 18 to create an account")
+        add_error(
+          changeset,
+          :birthdate,
+          RasbetWeb.ErrorHelpers.translate_error({
+            "You need to be over 18 to create an account",
+            []
+          })
+        )
       else
         changeset
       end

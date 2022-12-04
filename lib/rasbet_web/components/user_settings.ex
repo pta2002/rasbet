@@ -124,7 +124,7 @@ defmodule RasbetWeb.Components.UserSettings do
             <div class="flex w-full items-center justify-center">
               <%= submit gettext("Confirmar"), class: "bg-primary-500 px-6 py-2 rounded-full text-white w-80" %>
             </div>
-            <span><%= link "Apagar Conta", to: Routes.user_session_path(@socket,:delete), method: :delete, phx_click: "delete",  data: [confirm: "Are you sure?"] %></span>
+            <%= link "Apagar Conta", to: Routes.user_session_path(@socket,:delete), method: :delete, phx_click: "delete",  data: [confirm: "Are you sure?"], class: "text-red-600 w-full w-80"%>
           <% else %>
             <%= submit gettext("Registar"), class: "bg-primary-500 px-6 py-2 rounded-full text-white" %>
             <div><%= gettext "Já tem conta?"%> <a href="/users/log_in" class="text-primary-500 font-semibold"><%= gettext "Entrar"%></a></div>
