@@ -11,7 +11,7 @@ defmodule RasbetWeb.Components.UserSettings do
         <h2 class="text-2xl font-medium mb-4"><%= gettext "Informações básicas" %></h2>
       <% end %>
       <.form let={f} for={@changeset} phx-change="validate" phx-submit="save" phx-target={@myself}>
-        <div class={"grid grid-cols-1 md:grid-cols-3 md:gap-x-4 gap-y-1 grid-flow-col #{if @edit do "grid-rows-4" else "grid-rows-5" end}"}>
+        <div class={"grid grid-cols-1 md:grid-cols-3 md:gap-x-4 gap-y-1 md:grid-flow-col grid-flow-row #{if @edit do "grid-rows-4" else "grid-rows-5" end}"}>
             <.input
               type="text"
               form={f}

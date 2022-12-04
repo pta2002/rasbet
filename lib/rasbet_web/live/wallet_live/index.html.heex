@@ -1,5 +1,5 @@
-<div class="flex flex-row gap-8">
-  <div class="bg-white w-96 py-4 flex rounded-md shadow-md sticky top-[6.5rem] h-[calc(100vh-8rem)] flex-col">
+<div class="flex flex-col md:flex-row gap-8">
+  <div class="bg-white md:w-96 py-4 flex rounded-md shadow-md md:sticky md:top-[6.5rem] md:h-[calc(100vh-8rem)] flex-col">
 <!--  <div class="bg-white w-96 py-4 flex rounded-md shadow-md sticky top-[6.5rem] h-[calc(100vh-8rem)] flex-col gap-2">-->
 
     <div class="flex flex-col gap-4 justify-center items-center">
@@ -7,7 +7,7 @@
       <.h2><%= gettext "%{balance}", balance: @current_user.balance %></.h2>
     </div>
 
-    <div class="flex flex-col gap-2 justify-center items-center">
+    <div class="flex flex-row gap-2 justify-around items-center">
       <.button class="px-6 py-2 font-bold rounded-full" link_type="live_patch" to={Routes.wallet_index_path(@socket, :topup_d)} label={gettext "Depositar"}/>
       <.button class="px-6 py-2 font-bold rounded-full" link_type="live_patch" to={Routes.wallet_index_path(@socket, :topup_w)} label={gettext "Levantar"}/>
     </div>
