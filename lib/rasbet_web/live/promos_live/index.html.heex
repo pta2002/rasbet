@@ -1,6 +1,6 @@
 <div class="flex flex-row justify-between">
   <h1 class="mb-5 text-3xl font-medium"><%= gettext("Promoções") %></h1>
-  <%= if @current_user.is_admin do %>
+  <%= if @current_user != nil and @current_user.is_admin do %>
     <%= if @live_action == :create do %>
       <.modal max_width="sm" title={gettext "Criar promoção"}>
         <.form :let={f} for={@changeset} phx-change="validate" phx-submit="create">
