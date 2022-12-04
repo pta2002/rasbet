@@ -1,6 +1,5 @@
 defmodule RasbetWeb.Plugs.SetLocale do
   import Plug.Conn
-  import Phoenix.LiveView
 
   @supported_locales Gettext.known_locales(RasbetWeb.Gettext)
 

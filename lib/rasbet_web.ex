@@ -51,6 +51,7 @@ defmodule RasbetWeb do
 
       on_mount {RasbetWeb.LiveAuth, :fetch_current_user}
       on_mount {RasbetWeb.Plugs.SetLocale, :set_locale}
+      on_mount {RasbetWeb.SetCurrentPage, :set_page}
 
       def handle_info(%{event: "update-user", payload: user}, socket) do
         {:noreply, socket |> assign(:current_user, user)}

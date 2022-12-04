@@ -16,7 +16,8 @@ defmodule RasbetWeb.GameLive.Index do
      |> assign_changeset()
      |> assign_bet()
      |> assign_gains()
-     |> assign(:page_title, "Jogos")}
+     |> assign(:page_title, "Jogos")
+     |> assign(:current_page, :home)}
   end
 
   def handle_event(
@@ -106,13 +107,6 @@ defmodule RasbetWeb.GameLive.Index do
        socket
        |> put_flash(:info, "Inicie sessão para apostar")
        |> redirect(to: Routes.user_session_path(socket, :new))}
-    end
-  end
-
-  defp parse_amount(amount) do
-    case Float.parse(amount) do
-      {a, _} -> Money.new(round(a * 100))
-      :error -> Money.new(0)
     end
   end
 

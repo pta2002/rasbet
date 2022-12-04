@@ -2,8 +2,8 @@
 
   <div class="flex flex-row items-center align-center gap-4 px-6">
     <.link navigate={Routes.game_index_path(@socket, :index)} class="wordmark px-6">RASBet</.link>
-    <.link navigate={Routes.game_index_path(@socket, :index)} class="nav-item selected"><%= gettext "Jogos" %></.link>
-    <.link navigate={Routes.promos_index_path(@socket, :index)} class="nav-item px-8"><%= gettext "Promoções" %></.link>
+    <.link navigate={Routes.game_index_path(@socket, :index)} class={"nav-item #{if @current_page == :home do "selected" end}"}><%= gettext "Jogos" %></.link>
+    <.link navigate={Routes.promos_index_path(@socket, :index)} class={"nav-item px-8 #{if @current_page == :promos do "selected" end}"}><%= gettext "Promoções" %></.link>
   </div>
 
   <div class="flex flex-row items-center align-center gap-4 px-6" x-data="{ open: false }">

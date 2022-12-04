@@ -5,7 +5,7 @@ defmodule RasbetWeb.PromosLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket}
+    {:ok, socket |> assign(:page_title, gettext("Promoções")) |> assign(:current_page, :promos)}
   end
 
   @impl true
