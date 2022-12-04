@@ -134,10 +134,6 @@ msgstr ""
 msgid "Jogos"
 msgstr ""
 
-#: lib/rasbet_web/live/game_live/index.html.heex:99
-msgid "Draw"
-msgstr "Empate"
-
 #: lib/rasbet_web/components/user_settings.ex:128
 #, elixir-autogen, elixir-format
 msgid "Já tem conta?"
@@ -495,4 +491,14 @@ msgstr "Mantenha-me logado"
 #: lib/rasbet_web/live/user_live/edit.ex:45
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Utilizador Eliminado"
+msgstr ""
+
+#: lib/rasbet_web/components/user_settings.ex:145
+#, elixir-autogen, elixir-format
+msgid "Nova Password"
+msgstr ""
+
+#: lib/rasbet_web/components/user_settings.ex:138
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Password Antiga"
 msgstr ""

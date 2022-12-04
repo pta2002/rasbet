@@ -129,6 +129,26 @@ defmodule RasbetWeb.Components.UserSettings do
           <% end %>
         </div>
       </.form>
+            <.form let={f} for={@changeset} phx-submit="change_password" phx-target={@myself}>
+                  <div class={"grid grid-cols-1 md:grid-cols-2 md:gap-x-4 gap-y-1 grid-flow-col #{if @edit do "grid-rows-4" else "grid-rows-5" end}"}>
+             <.input
+                type="text"
+                form={f}
+                field={:old_password}
+                label={gettext "Password Antiga"}
+                required
+                />
+             <.input
+                type="text"
+                form={f}
+                field={:new_password}
+                label={gettext "Nova Password"}
+                required
+                />
+                    </div>
+              <%= submit gettext("Mudar Password"), class: "bg-primary-500 px-6 py-2 rounded-full text-white w-80" %>
+            </.form>
+
     </div>
     """
   end
@@ -172,6 +192,12 @@ defmodule RasbetWeb.Components.UserSettings do
   @impl true
   def handle_event("save", %{"user" => params}, socket) do
     send(self(), {:save, params})
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event("change_password", %{"user" => params}, socket) do
+    # todo
     {:noreply, socket}
   end
 end

@@ -491,3 +491,13 @@ msgstr ""
 #, elixir-autogen, elixir-format
 msgid "Utilizador Eliminado"
 msgstr ""
+
+#: lib/rasbet_web/components/user_settings.ex:145
+#, elixir-autogen, elixir-format
+msgid "Nova Password"
+msgstr ""
+
+#: lib/rasbet_web/components/user_settings.ex:138
+#, elixir-autogen, elixir-format
+msgid "Password Antiga"
+msgstr ""

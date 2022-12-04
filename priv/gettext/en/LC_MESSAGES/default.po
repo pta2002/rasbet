@@ -456,7 +456,7 @@ msgstr "Full Name"
 #: lib/rasbet_web/components/user_settings.ex:116
 #, elixir-autogen, elixir-format
 msgid "Número Identificação Civil"
-msgstr "civil identification number"
+msgstr "Civil Identification number"
 
 #: lib/rasbet_web/components/user_settings.ex:109
 #, elixir-autogen, elixir-format
@@ -476,19 +476,29 @@ msgstr "Don't have an account yet?"
 #: lib/rasbet_web/components/user_settings.ex:124
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Confirmar"
-msgstr ""
+msgstr "Confirm"
 
 #: lib/rasbet_web/live/wallet_live/bets.html.heex:41
 #, elixir-autogen, elixir-format
 msgid "Foi utilizada uma promoção:"
-msgstr ""
+msgstr "A promotion was used"
 
 #: lib/rasbet_web/templates/user_session/new.html.heex:28
 #, elixir-autogen, elixir-format
 msgid "Keep me logged in"
-msgstr ""
+msgstr "Mantenha-me logado"
 
 #: lib/rasbet_web/live/user_live/edit.ex:45
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Utilizador Eliminado"
 msgstr "Updated user"
+
+#: lib/rasbet_web/components/user_settings.ex:145
+#, elixir-autogen, elixir-format
+msgid "Nova Password"
+msgstr "New Password"
+
+#: lib/rasbet_web/components/user_settings.ex:138
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Password Antiga"
+msgstr "Old Password"
