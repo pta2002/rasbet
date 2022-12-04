@@ -1,5 +1,5 @@
-<div class="flex flex-row gap-8">
-  <div class="bg-white w-96 py-4 flex rounded-md shadow-md sticky top-[6.5rem] h-[calc(100vh-8rem)] flex-col gap-2">
+<div class="flex md:flex-row flex-col gap-8">
+  <div class="bg-white md:w-96 py-4 flex rounded-md shadow-md md:sticky top-[6.5rem] md:h-[calc(100vh-8rem)] flex-col gap-2">
     <h1 class="text-2xl font-medium px-4"><%= gettext "Filtros"%></h1>
 
     <div class="px-4">
@@ -73,8 +73,8 @@
 
     <%= if is_list @games do %>
       <%= for game <- @games do %>
-        <div class="bg-white shadow-md p-4 mb-5 rounded grid grid-cols-2">
-          <div class="flex justify-between flex-col">
+        <div class="bg-white shadow-md p-4 mb-5 rounded md:grid md:grid-cols-2 md:grid-rows-1">
+          <div class="flex justify-between flex-col text-center items-center md:items-start md:text-left mb-2 md:mb-0">
             <div class="text-gray-500 text-sm">
               <strong class="font-medium"><%= Gettext.gettext(RasbetWeb.Gettext,sport_name game.sport) %></strong> - <%= Calendar.strftime(game.start_time, "%d/%m/%Y às %H:%M") %>
             </div>
@@ -88,15 +88,15 @@
           </div>
 
           <%= if not game.completed do %>
-            <div class={"grid grid-rows-1 grid-cols-#{Enum.count game.odds} gap-5"}>
+            <div class={"grid grid-rows-1 grid-flow-col auto-cols-fr gap-5"}>
               <%= for {outcome, odd} <- game.odds do %>
                 <%= with bet? = Enum.find(@bets, nil, fn %{id: id, outcome: o} -> id == game.id and o == outcome end) do %>
                   <div
-                    class={"rounded #{if bet? do "bg-gray-900" else "bg-primary-500" end} flex flex-col items-center p-2 cursor-pointer transition-colors duration-150"}
+                    class={"rounded #{if bet? do "bg-gray-900" else "bg-primary-500" end} flex flex-col items-center justify-center p-2 cursor-pointer transition-colors duration-150"}
                     phx-click="toggle_bet"
                     phx-value-game={game.id}
                     phx-value-outcome={outcome}>
-                    <span class="text-xs text-white"><%= Gettext.gettext(RasbetWeb.Gettext, outcome) %></span>
+                    <span class="text-xs text-white text-center"><%= Gettext.gettext(RasbetWeb.Gettext, outcome) %></span>
                     <span class="font-bold text-white"><%= show_odds odd %></span>
                   </div>
                 <% end %>

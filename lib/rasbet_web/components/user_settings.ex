@@ -7,8 +7,11 @@ defmodule RasbetWeb.Components.UserSettings do
   def render(assigns) do
     ~H"""
     <div>
+      <%= if @edit do %>
+        <h2 class="text-2xl font-medium mb-4"><%= gettext "Informações básicas" %></h2>
+      <% end %>
       <.form let={f} for={@changeset} phx-change="validate" phx-submit="save" phx-target={@myself}>
-        <div class={"grid grid-cols-1 md:grid-cols-2 md:gap-x-4 gap-y-1 grid-flow-col #{if @edit do "grid-rows-4" else "grid-rows-5" end}"}>
+        <div class={"grid grid-cols-1 md:grid-cols-3 md:gap-x-4 gap-y-1 grid-flow-col #{if @edit do "grid-rows-4" else "grid-rows-5" end}"}>
             <.input
               type="text"
               form={f}
@@ -121,7 +124,7 @@ defmodule RasbetWeb.Components.UserSettings do
 
         <div class="flex place-content-between w-full items-center flex-row-reverse">
           <%= if @edit do %>
-              <%= submit gettext("Confirmar"), class: "bg-primary-500 px-6 py-2 rounded-full text-white w-80" %>
+              <%= submit gettext("Confirmar"), class: "bg-primary-500 px-6 py-2 rounded-full text-white h-min-fit" %>
               <%= link "Apagar Conta", to: Routes.user_session_path(@socket,:delete), method: :delete, phx_click: "delete",  data: [confirm: "Are you sure?"], class: "text-red-600 w-full"%>
           <% else %>
             <%= submit gettext("Registar"), class: "bg-primary-500 px-6 py-2 rounded-full text-white" %>
@@ -129,25 +132,39 @@ defmodule RasbetWeb.Components.UserSettings do
           <% end %>
         </div>
       </.form>
-            <.form let={f} for={@changeset} phx-submit="change_password" phx-target={@myself}>
-                  <div class={"grid grid-cols-1 md:grid-cols-2 md:gap-x-4 gap-y-1 grid-flow-col #{if @edit do "grid-rows-4" else "grid-rows-5" end}"}>
-             <.input
-                type="text"
-                form={f}
-                field={:old_password}
-                label={gettext "Password Antiga"}
-                required
-                />
-             <.input
-                type="text"
-                form={f}
-                field={:new_password}
-                label={gettext "Nova Password"}
-                required
-                />
-                    </div>
-              <%= submit gettext("Mudar Password"), class: "bg-primary-500 px-6 py-2 rounded-full text-white w-80" %>
-            </.form>
+
+      <%= if @edit do %>
+        <h2 class="text-2xl font-medium mt-8 mb-4"><%= gettext "Alterar password" %></h2>
+        <.form let={f} for={@changeset_password} phx-submit="change_password" phx-target={@myself}>
+          <div class={"grid grid-cols-1 md:grid-cols-3 md:gap-x-4 gap-y-1"}>
+            <.input
+              type="text"
+              form={f}
+              field={:old_password}
+              label={gettext "Password Antiga"}
+              required
+              />
+            <.input
+              type="text"
+              form={f}
+              field={:new_password}
+              label={gettext "Nova Password"}
+              required
+              />
+
+            <.input
+              type="text"
+              form={f}
+              field={:new_password_confirmation}
+              label={gettext "Confirmar nova Password"}
+              required
+              />
+          </div>
+          <div class="flex place-content-between w-full items-center flex-row-reverse">
+            <%= submit gettext("Mudar Password"), class: "bg-primary-500 px-6 py-2 rounded-full text-white h-min-fit" %>
+          </div>
+        </.form>
+      <% end %>
 
     </div>
     """
@@ -160,7 +177,8 @@ defmodule RasbetWeb.Components.UserSettings do
     {:ok,
      socket
      |> assign(assigns)
-     |> assign(:changeset, changeset)}
+     |> assign(:changeset, changeset)
+     |> assign(:changeset_password, Accounts.change_user_password(user))}
   end
 
   @impl true
