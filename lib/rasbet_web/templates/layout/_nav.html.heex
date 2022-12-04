@@ -12,6 +12,19 @@
     </div>
 
     <div class="md:flex md:flex-row md:items-center align-center md:gap-4 grid grid-flow-row auto-rows-[3rem] md:px-6" x-data="{ open: false }">
+      <div class="h-full" x-data="{ open: false }">
+        <a class="nav-item cursor-pointer" x-on:click="open = !open"><%= gettext "Idioma" %></a>
+
+        <div class="relative bg-white shadow-md rounded-md w-full text-black py-2 flex flex-col gap-2 text-sm" x-show="open" x-cloak x-on:click.outside="open = false">
+
+          <.link x-show="open" class="w-full flex justify-between items-center px-2" x-cloak href="?locale=pt">
+            <%= gettext "Português"%>
+          </.link>
+          <.link x-show="open" class="w-full flex justify-between items-center px-2" x-cloak href="?locale=en">
+            <%= gettext "Inglês"%>
+          </.link>
+        </div>
+      </div>
       <%= if @current_user do %>
         <%= if @current_user.is_admin do %>
           <.link navigate={Routes.user_list_path(@socket, :index)} class="nav-item"><%= gettext "Gerir utilizadores" %></.link>
@@ -39,21 +52,8 @@
           </div>
         </div>
       <% else %>
-        <div class="h-full" x-data="{ open: false}">
-          <a class="nav-item cursor-pointer" x-on:click="open = !open"><%= gettext "Idioma" %></a>
-
-          <div class="relative bg-white shadow-md rounded-md w-full text-black py-2 flex flex-col gap-2 text-sm" x-show="open" x-cloak x-on:click.outside="open = false">
-
-            <.link x-show="open" class="w-full flex justify-between items-center px-2" x-cloak href="?locale=pt">
-              <%= gettext "Português"%>
-            </.link>
-            <.link x-show="open" class="w-full flex justify-between items-center px-2" x-cloak href="?locale=en">
-              <%= gettext "Inglês"%>
-            </.link>
-          </div>
-        </div>
-        <.link href={Routes.user_session_path(@socket, :new)} class="rounded-full px-6 py-2 border border-primary-50 font-medium hover:bg-primary-50 hover:text-primary-500 duration-150 transition-colors"><%= gettext "Entrar"%></.link>
-        <.link navigate={Routes.user_registration_path(@socket, :new)} class="rounded-full px-6 py-2 border border-primary-50 bg-primary-50 text-primary-500 font-medium"><%= gettext "Registar"%></.link>
+        <.link href={Routes.user_session_path(@socket, :new)} class="button !bg-primary-600 text-center !font-medium border border-primary-50 md:mx-0 mx-4 hover:!bg-primary-50 hover:text-primary-500"><%= gettext "Entrar"%></.link>
+        <.link navigate={Routes.user_registration_path(@socket, :new)} class="button !bg-primary-50 !text-primary-500 text-center !font-medium border border-primary-50 md:mx-0 mx-4"><%= gettext "Registar"%></.link>
       <% end %>
     </div>
   </nav>
