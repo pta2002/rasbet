@@ -74,7 +74,7 @@ config :rasbet, Rasbet.Scheduler,
   jobs: [
     fetch_games: [
       schedule: {:extended, "*/10"},
-      task: {Rasbet.Game.TwoTeams.Api, :update_games, []}
+      task: {Rasbet.APIs, :update, []}
     ]
   ]
 

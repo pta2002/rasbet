@@ -1,4 +1,4 @@
-defmodule Rasbet.Game.TwoTeams.Api do
+defmodule Rasbet.APIs.UCRas do
   use HTTPoison.Base
 
   alias Rasbet.Game.TwoTeams.Game
@@ -27,7 +27,7 @@ defmodule Rasbet.Game.TwoTeams.Api do
     Poison.decode(body)
   end
 
-  def update_games() do
+  def update() do
     case games() do
       {:ok, games} ->
         for game <- games do
