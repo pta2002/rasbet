@@ -8,7 +8,7 @@ defmodule Rasbet.Game.TwoTeams.Game do
 
   require Ecto.Query
 
-  schema "two_team_game_info" do
+  schema "games" do
     field(:api_id, :string)
     field(:away_score, :integer)
     field(:away_team, :string)

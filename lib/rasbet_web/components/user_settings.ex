@@ -214,7 +214,7 @@ defmodule RasbetWeb.Components.UserSettings do
   end
 
   @impl true
-  def handle_event("change_password", %{"user" => params}, socket) do
+  def handle_event("change_password", %{"user" => _params}, socket) do
     # todo
     {:noreply, socket}
   end

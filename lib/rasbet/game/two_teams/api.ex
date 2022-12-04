@@ -30,8 +30,6 @@ defmodule Rasbet.Game.TwoTeams.Api do
   def update_games() do
     case games() do
       {:ok, games} ->
-        Logger.debug("Saving games...")
-
         for game <- games do
           Multi.new()
           |> Multi.one(:game, from(i in Game, where: i.api_id == ^game.api_id))
@@ -91,7 +89,7 @@ defmodule Rasbet.Game.TwoTeams.Api do
 
   @spec games :: {:error, any} | {:ok, list}
   def games() do
-    case IO.inspect(get("/games", [], timeout: 50_000, recv_timeout: 50_000)) do
+    case get("/games", [], timeout: 50_000, recv_timeout: 50_000) do
       {:ok, %{body: {:ok, body}}} -> {:ok, Enum.map(body, &cast_game/1)}
       {:ok, %{body: {:error, reason}}} -> {:error, reason}
       {:error, reason} -> {:error, reason}
@@ -150,6 +148,7 @@ defmodule Rasbet.Game.TwoTeams.Api do
 
     %{
       api_id: id,
+      game_source: "ucras",
       home_team: home_team,
       away_team: away_team,
       start_time: time,
