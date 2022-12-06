@@ -138,14 +138,14 @@ defmodule RasbetWeb.Components.UserSettings do
         <.form let={f} for={@changeset_password} phx-submit="change_password" phx-target={@myself}>
           <div class={"grid grid-cols-1 md:grid-cols-3 md:gap-x-4 gap-y-1"}>
             <.input
-              type="text"
+              type="password"
               form={f}
               field={:old_password}
               label={gettext "Password Antiga"}
               required
               />
             <.input
-              type="text"
+              type="password"
               form={f}
               field={:new_password}
               label={gettext "Nova Password"}
