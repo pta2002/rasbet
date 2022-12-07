@@ -76,7 +76,7 @@
         <div class="bg-white shadow-md p-4 mb-5 rounded md:grid md:grid-cols-2 md:grid-rows-1">
           <div class="flex justify-between flex-col text-center items-center md:items-start md:text-left mb-2 md:mb-0">
             <div class="text-gray-500 text-sm">
-              <strong class="font-medium"><%= Gettext.gettext(RasbetWeb.Gettext,sport_name game.sport) %></strong> - <%= Calendar.strftime(game.start_time, "%d/%m/%Y às %H:%M") %>
+              <strong class="font-medium"><%= Gettext.gettext(RasbetWeb.Gettext,sport_name game.sport) %></strong> - <%= Calendar.strftime(game.start_time, gettext("%d/%m/%Y às %H:%M")) %>
             </div>
             <div class="flex gap-3">
               <span><%= game.home_team %></span>

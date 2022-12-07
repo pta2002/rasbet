@@ -20,6 +20,10 @@ msgstr "Loading..."
 msgid "Futebol"
 msgstr "Football"
 
+#: lib/rasbet_web/live/game_live/index.html.heex:21
+msgid "Ténis"
+msgstr "Tennis"
+
 #: lib/rasbet_web/live/game_live/index.html.heex:66
 #, elixir-autogen, elixir-format
 msgid "Apostar"
@@ -42,12 +46,12 @@ msgid "Apostas concluídas"
 msgstr "Completed bets"
 
 #: lib/rasbet_web/live/wallet_live/index.html.heex:6
-#: lib/rasbet_web/templates/layout/_nav.html.heex:27
+#: lib/rasbet_web/templates/layout/_nav.html.heex:47
 #, elixir-autogen, elixir-format
 msgid "Carteira"
 msgstr "Wallet"
 
-#: lib/rasbet_web/components/user_settings.ex:80
+#: lib/rasbet_web/components/user_settings.ex:83
 #, elixir-autogen, elixir-format
 msgid "Cidade"
 msgstr "City"
@@ -62,7 +66,7 @@ msgstr ""
 msgid "Confirm password"
 msgstr ""
 
-#: lib/rasbet_web/components/user_settings.ex:50
+#: lib/rasbet_web/components/user_settings.ex:53
 #, elixir-autogen, elixir-format
 msgid "Confirmar palavra-passe"
 msgstr "Confirm password"
@@ -72,7 +76,7 @@ msgstr "Confirm password"
 msgid "Cota final"
 msgstr "Final quota"
 
-#: lib/rasbet_web/components/user_settings.ex:73
+#: lib/rasbet_web/components/user_settings.ex:76
 #, elixir-autogen, elixir-format
 msgid "Código postal"
 msgstr "Postal code"
@@ -82,7 +86,7 @@ msgstr "Postal code"
 msgid "Desportos"
 msgstr "Sports"
 
-#: lib/rasbet_web/components/user_settings.ex:24
+#: lib/rasbet_web/components/user_settings.ex:27
 #: lib/rasbet_web/live/user_live/list.html.heex:23
 #: lib/rasbet_web/templates/user_registration/new.html.heex:16
 #: lib/rasbet_web/templates/user_session/new.html.heex:12
@@ -90,8 +94,8 @@ msgstr "Sports"
 msgid "Email"
 msgstr ""
 
-#: lib/rasbet_web/components/user_settings.ex:128
-#: lib/rasbet_web/templates/layout/_nav.html.heex:50
+#: lib/rasbet_web/components/user_settings.ex:131
+#: lib/rasbet_web/templates/layout/_nav.html.heex:58
 #: lib/rasbet_web/templates/user_session/new.html.heex:4
 #: lib/rasbet_web/templates/user_session/new.html.heex:38
 #, elixir-autogen, elixir-format
@@ -129,27 +133,27 @@ msgid "Jogo concluído"
 msgstr "Game finished"
 
 #: lib/rasbet_web/live/game_live/index.html.heex:72
-#: lib/rasbet_web/templates/layout/_nav.html.heex:5
+#: lib/rasbet_web/templates/layout/_nav.html.heex:10
 #, elixir-autogen, elixir-format
 msgid "Jogos"
 msgstr "Games"
 
-#: lib/rasbet_web/components/user_settings.ex:128
+#: lib/rasbet_web/components/user_settings.ex:131
 #, elixir-autogen, elixir-format
 msgid "Já tem conta?"
 msgstr "Already have an account?"
 
-#: lib/rasbet_web/components/user_settings.ex:59
+#: lib/rasbet_web/components/user_settings.ex:62
 #, elixir-autogen, elixir-format
 msgid "Linha morada 1"
 msgstr "Address line 1"
 
-#: lib/rasbet_web/components/user_settings.ex:66
+#: lib/rasbet_web/components/user_settings.ex:69
 #, elixir-autogen, elixir-format
 msgid "Linha morada 2"
 msgstr "Address line 2"
 
-#: lib/rasbet_web/templates/layout/_nav.html.heex:24
+#: lib/rasbet_web/templates/layout/_nav.html.heex:44
 #, elixir-autogen, elixir-format
 msgid "Minhas apostas"
 msgstr "My bets"
@@ -159,7 +163,7 @@ msgstr "My bets"
 msgid "Montante apostado"
 msgstr "Bet amount"
 
-#: lib/rasbet_web/components/user_settings.ex:95
+#: lib/rasbet_web/components/user_settings.ex:98
 #, elixir-autogen, elixir-format
 msgid "NIF"
 msgstr "Tax ID"
@@ -186,7 +190,7 @@ msgstr "No bets"
 msgid "Oops, something went wrong! Please check the errors below."
 msgstr ""
 
-#: lib/rasbet_web/components/user_settings.ex:42
+#: lib/rasbet_web/components/user_settings.ex:45
 #, elixir-autogen, elixir-format
 msgid "Palavra-passe"
 msgstr "Password"
@@ -197,14 +201,14 @@ msgstr "Password"
 msgid "Password"
 msgstr ""
 
-#: lib/rasbet_web/components/user_settings.ex:88
+#: lib/rasbet_web/components/user_settings.ex:91
 #, elixir-autogen, elixir-format
 msgid "País"
 msgstr "Country"
 
-#: lib/rasbet_web/components/user_settings.ex:127
+#: lib/rasbet_web/components/user_settings.ex:130
 #: lib/rasbet_web/live/user_live/registration.html.heex:1
-#: lib/rasbet_web/templates/layout/_nav.html.heex:51
+#: lib/rasbet_web/templates/layout/_nav.html.heex:59
 #: lib/rasbet_web/templates/user_session/new.html.heex:36
 #, elixir-autogen, elixir-format
 msgid "Registar"
@@ -221,7 +225,7 @@ msgstr ""
 msgid "Reset password"
 msgstr ""
 
-#: lib/rasbet_web/templates/layout/_nav.html.heex:31
+#: lib/rasbet_web/templates/layout/_nav.html.heex:52
 #, elixir-autogen, elixir-format
 msgid "Sair"
 msgstr "Exit"
@@ -231,7 +235,7 @@ msgstr "Exit"
 msgid "Saldo"
 msgstr "Balance"
 
-#: lib/rasbet_web/components/user_settings.ex:33
+#: lib/rasbet_web/components/user_settings.ex:36
 #: lib/rasbet_web/live/user_live/list.html.heex:24
 #, elixir-autogen, elixir-format
 msgid "Telemóvel"
@@ -249,18 +253,19 @@ msgid "Voltar"
 msgstr "Back"
 
 #: lib/rasbet_web/live/user_live/list.ex:10
-#: lib/rasbet_web/templates/layout/_nav.html.heex:12
+#: lib/rasbet_web/templates/layout/_nav.html.heex:30
 #, elixir-autogen, elixir-format
 msgid "Gerir utilizadores"
 msgstr "Manage users"
 
-#: lib/rasbet_web/templates/layout/_nav.html.heex:16
+#: lib/rasbet_web/templates/layout/_nav.html.heex:35
 #, elixir-autogen, elixir-format
 msgid "Minha conta"
 msgstr "My account"
 
+#: lib/rasbet_web/live/promos_live/index.ex:8
 #: lib/rasbet_web/live/promos_live/index.html.heex:2
-#: lib/rasbet_web/templates/layout/_nav.html.heex:6
+#: lib/rasbet_web/templates/layout/_nav.html.heex:11
 #, elixir-autogen, elixir-format
 msgid "Promoções"
 msgstr "Promos"
@@ -318,7 +323,7 @@ msgid "Pesquisar utilizador"
 msgstr "Search users"
 
 #: lib/rasbet_web/live/user_live/edit.ex:14
-#: lib/rasbet_web/templates/layout/_nav.html.heex:21
+#: lib/rasbet_web/templates/layout/_nav.html.heex:40
 #, elixir-autogen, elixir-format
 msgid "Definições"
 msgstr "Settings"
@@ -371,17 +376,17 @@ msgstr "Updated user"
 msgid "Adicionar Utilizador"
 msgstr "Add user"
 
-#: lib/rasbet_web/templates/layout/_nav.html.heex:38
+#: lib/rasbet_web/templates/layout/_nav.html.heex:16
 #, elixir-autogen, elixir-format
 msgid "Idioma"
 msgstr "Language"
 
-#: lib/rasbet_web/templates/layout/_nav.html.heex:46
+#: lib/rasbet_web/templates/layout/_nav.html.heex:24
 #, elixir-autogen, elixir-format
 msgid "Inglês"
 msgstr "English"
 
-#: lib/rasbet_web/templates/layout/_nav.html.heex:43
+#: lib/rasbet_web/templates/layout/_nav.html.heex:21
 #, elixir-autogen, elixir-format
 msgid "Português"
 msgstr "Portuguese"
@@ -438,7 +443,7 @@ msgstr "Promotion created successfully"
 msgid "Valor mínimo"
 msgstr "Minimum Value"
 
-#: lib/rasbet_web/components/user_settings.ex:102
+#: lib/rasbet_web/components/user_settings.ex:105
 #, elixir-autogen, elixir-format
 msgid "Data de Nascimento"
 msgstr "Birth date"
@@ -448,17 +453,17 @@ msgstr "Birth date"
 msgid "Montante a apostar"
 msgstr "Bet amount"
 
-#: lib/rasbet_web/components/user_settings.ex:16
+#: lib/rasbet_web/components/user_settings.ex:19
 #, elixir-autogen, elixir-format
 msgid "Nome Completo"
 msgstr "Full Name"
 
-#: lib/rasbet_web/components/user_settings.ex:116
+#: lib/rasbet_web/components/user_settings.ex:119
 #, elixir-autogen, elixir-format
 msgid "Número Identificação Civil"
 msgstr "Civil Identification number"
 
-#: lib/rasbet_web/components/user_settings.ex:109
+#: lib/rasbet_web/components/user_settings.ex:112
 #, elixir-autogen, elixir-format
 msgid "Profissão"
 msgstr "Profession"
@@ -473,7 +478,7 @@ msgstr "Promotion to apply"
 msgid "Ainda não tem conta?"
 msgstr "Don't have an account yet?"
 
-#: lib/rasbet_web/components/user_settings.ex:124
+#: lib/rasbet_web/components/user_settings.ex:127
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Confirmar"
 msgstr "Confirm"
@@ -493,12 +498,37 @@ msgstr "Mantenha-me logado"
 msgid "Utilizador Eliminado"
 msgstr "Updated user"
 
-#: lib/rasbet_web/components/user_settings.ex:145
+#: lib/rasbet_web/components/user_settings.ex:151
 #, elixir-autogen, elixir-format
 msgid "Nova Password"
 msgstr "New Password"
 
-#: lib/rasbet_web/components/user_settings.ex:138
+#: lib/rasbet_web/components/user_settings.ex:144
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Password Antiga"
 msgstr "Old Password"
+
+#: lib/rasbet_web/components/user_settings.ex:137
+#, elixir-autogen, elixir-format
+msgid "Alterar password"
+msgstr "Change password"
+
+#: lib/rasbet_web/components/user_settings.ex:159
+#, elixir-autogen, elixir-format
+msgid "Confirmar nova Password"
+msgstr "Confirm new password"
+
+#: lib/rasbet_web/components/user_settings.ex:11
+#, elixir-autogen, elixir-format
+msgid "Informações básicas"
+msgstr "Basic info"
+
+#: lib/rasbet_web/components/user_settings.ex:164
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Mudar Password"
+msgstr "New Password"
+
+#: lib/rasbet_web/live/game_live/index.html.heex:79
+#, elixir-autogen, elixir-format
+msgid "%d/%m/%Y às %H:%M"
+msgstr "%d/%m/%Y at %H:%M"

@@ -40,7 +40,6 @@ defmodule Rasbet.Game.TwoTeams.Game do
       :sport
     ])
     |> validate_required([
-      :api_id,
       :away_team,
       :home_team,
       :start_time,

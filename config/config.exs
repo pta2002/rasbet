@@ -12,7 +12,8 @@ config :rasbet,
   endpoint: "http://ucras.di.uminho.pt/v1",
   # endpoint: "https://rasapi.pta2002.com/v1",
   sports: %{
-    football: "Futebol"
+    football: "Futebol",
+    tennis: "Ténis"
   }
 
 # Configures the endpoint
