@@ -246,7 +246,7 @@ defmodule Rasbet.Accounts do
 
     query
     |> Repo.one()
-    |> Repo.preload(:notifications)
+    |> Repo.preload(notifications: [:game])
   end
 
   @doc """

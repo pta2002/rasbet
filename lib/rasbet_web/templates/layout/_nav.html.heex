@@ -59,13 +59,13 @@
                     <%= for notification <- @current_user.notifications do %>
                       <div class="flex flex-row p-4 gap-2 w-full">
                         <%= if not notification.read do %>
-                        <div class="rounded-full w-3 h-3 mt-1.5"></div>
+                          <div class="rounded-full w-3 h-3 mt-1.5"></div>
                         <% else %>
-                        <div class="rounded-full w-3 h-3 bg-primary-600 mt-1.5"></div>
+                          <div class="rounded-full w-3 h-3 bg-primary-600 mt-1.5"></div>
                         <% end %>
                         <div class="w-full">
                           <div class="flex items-center place-content-between mb-2">
-                            <h3><span class="font-medium">Vizela &ndash; Arouca</span> &mdash; <%= Rasbet.Accounts.Notifications.get_title(notification) %></h3>
+                            <h3><span class="font-medium"><%= notification.game |> Rasbet.Games.get_name() %></span> &mdash; <%= Rasbet.Accounts.Notifications.get_title(notification) %></h3>
                             <div class="text-gray-500 flex items-center gap-2">
                               5m
                             </div>

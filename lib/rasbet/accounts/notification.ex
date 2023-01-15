@@ -5,9 +5,10 @@ defmodule Rasbet.Accounts.Notification do
   schema "notifications" do
     field :event, Ecto.Enum, values: [:started, :ended, :odds]
     field :extra_data, :map
-    field :user_id, :id
-    field :game_id, :id
     field :read, :boolean
+
+    belongs_to :game, Rasbet.Game.TwoTeams.Game
+    belongs_to :user, Rasbet.Accounts.User
 
     timestamps()
   end
