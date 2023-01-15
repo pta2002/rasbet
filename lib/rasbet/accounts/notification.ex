@@ -7,6 +7,7 @@ defmodule Rasbet.Accounts.Notification do
     field :extra_data, :map
     field :user_id, :id
     field :game_id, :id
+    field :read, :boolean
 
     timestamps()
   end

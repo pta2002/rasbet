@@ -3,6 +3,7 @@ defmodule Rasbet.Accounts.User do
   import Ecto.Changeset
 
   alias Rasbet.Game.Bets.Bet
+  alias Rasbet.Accounts.Notification
 
   schema "users" do
     field(:name, :string)
@@ -32,6 +33,7 @@ defmodule Rasbet.Accounts.User do
     field(:id_number, :string)
 
     has_many(:bets, Bet)
+    has_many(:notifications, Notification)
 
     timestamps()
   end
