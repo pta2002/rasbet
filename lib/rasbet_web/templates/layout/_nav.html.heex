@@ -31,6 +31,7 @@
         <% else %>
           <.link navigate={Routes.wallet_index_path(@socket, :index)} class="nav-item"><%= @current_user.balance %></.link>
         <% end %>
+        <.link navigate={Routes.wallet_index_path(@socket, :index)} class="nav-item"><Heroicons.bell class="w-7 h-7"/></.link>
         <div class="h-full">
           <a class="nav-item cursor-pointer" x-on:click="open = !open"><%= gettext "Minha conta" %></a>
 
