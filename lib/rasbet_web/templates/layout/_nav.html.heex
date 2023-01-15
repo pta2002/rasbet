@@ -11,7 +11,7 @@
       <.link navigate={Routes.promos_index_path(@socket, :index)} class={"nav-item px-8 #{if @current_page == :promos do "selected" end}"}><%= gettext "Promoções" %></.link>
     </div>
 
-    <div class="md:flex md:flex-row md:items-center align-center md:gap-4 grid grid-flow-row auto-rows-[3rem] md:px-6" x-data="{ open: false }">
+    <div class="md:flex md:flex-row md:items-center align-center md:gap-4 grid grid-flow-row auto-rows-[3rem] md:px-6" x-data="{ open: false, notsOpen: true }">
       <div class="h-full" x-data="{ open: false }">
         <a class="nav-item cursor-pointer" x-on:click="open = !open"><%= gettext "Idioma" %></a>
 
@@ -31,7 +31,45 @@
         <% else %>
           <.link navigate={Routes.wallet_index_path(@socket, :index)} class="nav-item"><%= @current_user.balance %></.link>
         <% end %>
-        <.link navigate={Routes.wallet_index_path(@socket, :index)} class="nav-item"><Heroicons.bell class="w-7 h-7"/></.link>
+        <div class="h-full">
+          <a class="nav-item cursor-pointer" x-on:click="notsOpen = !notsOpen"><Heroicons.bell class="w-7 h-7"/></a>
+
+          <div x-show="notsOpen" class="relative flex flex-col items-center">
+            <div class="absolute top-0 flex flex-col items-center flex">
+              <div class="w-5 h-5 -mb-3 rotate-45 bg-white shadow-md"></div>
+              <div class="relative z-10 bg-white w-96 shadow-md rounded-lg text-black">
+                <div class="flex place-content-between p-4 shadow-md">
+                  <h2 class="font-bold"><%= gettext "Notificações" %></h2>
+                  <a href="#" class="font-medium text-primary-600"><%= gettext "Marcar todas como lidas" %></a>
+                </div>
+
+                <div class="p-4">
+                  <div class="flex items-center place-content-between">
+                    <h3><span class="font-medium">Vizela &ndash; Arouca</span> &mdash; Novas odds</h3>
+                    <div class="text-gray-500 flex items-center gap-2">
+                      <div class="rounded-full w-3 h-3 bg-primary-600"></div>
+                      5m
+                    </div>
+                  </div>
+                  <div class="grid grid-rows-1 grid-flow-col gap-2">
+                    <div class="bg-primary-500 rounded-md flex flex-col items-center justify-center text-white">
+                      <div class="text-sm">Arouca</div>
+                      <div class="font-bold">4.00</div>
+                    </div>
+                    <div class="bg-primary-500 rounded-md flex flex-col items-center justify-center text-white">
+                      <div class="text-sm">Draw</div>
+                      <div class="font-bold">3.40</div>
+                    </div>
+                    <div class="bg-primary-500 rounded-md flex flex-col items-center justify-center text-white">
+                      <div class="text-sm">Vizela</div>
+                      <div class="font-bold">1.95</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="h-full">
           <a class="nav-item cursor-pointer" x-on:click="open = !open"><%= gettext "Minha conta" %></a>
 
