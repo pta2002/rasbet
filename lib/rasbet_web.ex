@@ -57,6 +57,15 @@ defmodule RasbetWeb do
         {:noreply, socket |> assign(:current_user, user)}
       end
 
+      def handle_info(
+            %{event: "new-notification", payload: notification},
+            %{assigns: %{current_user: u}} = socket
+          ) do
+        {:noreply,
+         socket
+         |> assign(:current_user, Map.put(u, :notifications, [notification | u.notifications]))}
+      end
+
       unquote(view_helpers())
     end
   end
