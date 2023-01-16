@@ -23,7 +23,7 @@ defmodule RasbetWeb.Components.Notifications do
           <% end %>
         </a>
 
-        <div x-show="notsOpen" x-cloak class="relative flex flex-col items-center">
+        <div x-show="notsOpen" x-cloak x-on:click.outside="notsOpen = false" class="relative flex flex-col items-center">
           <div class="absolute top-0 flex flex-col items-center flex">
             <div class="w-5 h-5 -mb-3 rotate-45 bg-white shadow-md"></div>
             <div class="relative z-10 bg-white w-96 shadow-md rounded-lg text-black">
