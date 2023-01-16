@@ -246,7 +246,13 @@ defmodule Rasbet.Accounts do
 
     query
     |> Repo.one()
-    |> Repo.preload(notifications: [:game])
+    |> Repo.preload(
+      notifications:
+        {from(q in Rasbet.Accounts.Notification,
+           order_by: [desc: q.updated_at],
+           where: [read: false]
+         ), [:game]}
+    )
   end
 
   @doc """
