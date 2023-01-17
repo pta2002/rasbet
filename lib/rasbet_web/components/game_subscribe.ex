@@ -22,14 +22,16 @@ defmodule RasbetWeb.Components.GameSubscribe do
   end
 
   def handle_event("update", %{"subscription" => subscription}, socket) do
-    changeset = Subscription.changeset(socket.assigns.changeset.data, subscription)
+    changeset = Subscription.changeset(socket.assigns.subscription, subscription)
+
+    IO.inspect(changeset.data)
 
     case Rasbet.Repo.insert_or_update(changeset) do
-      {:ok, _} ->
+      {:ok, res} ->
         {:noreply,
          assign(socket,
            changeset: changeset,
-           subscription: changeset |> Ecto.Changeset.apply_changes()
+           subscription: res
          )}
 
       {:error, changeset} ->
