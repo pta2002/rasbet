@@ -5,7 +5,7 @@ defmodule Rasbet.Accounts.Subscription do
   schema "subscriptions" do
     field :user_id, :id
     field :game_id, :id
-    field :events, {:array, Ecto.Enum}, values: [:started, :odds_changed, :ended]
+    field :events, {:array, Ecto.Enum}, values: [:started, :odds, :ended]
 
     timestamps()
   end

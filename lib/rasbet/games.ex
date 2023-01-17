@@ -58,7 +58,7 @@ defmodule Rasbet.Games do
                {:started, %{}}
              end,
              if odds do
-               {:odds_changed, %{odds: new_game.odds}}
+               {:odds, %{odds: new_game.odds}}
              end
            ]
            |> Enum.filter(fn a -> a != nil end)}

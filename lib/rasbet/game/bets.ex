@@ -51,7 +51,7 @@ defmodule Rasbet.Game.Bets do
          entries,
          &Rasbet.Accounts.User.subscribe_event(repo, user_id, &1.game_id, [
            :started,
-           :odds_changed,
+           :odds,
            :ended
          ])
        )}

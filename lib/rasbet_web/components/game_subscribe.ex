@@ -71,7 +71,7 @@ defmodule RasbetWeb.Components.GameSubscribe do
                     class="mb-0"
                     options={[
                       {gettext("Começar"), :started},
-                      {gettext("Mudança de odds"), :odds_changed},
+                      {gettext("Mudança de odds"), :odds},
                       {gettext("Terminar"), :ended}
                     ]}/>
                 </div>
