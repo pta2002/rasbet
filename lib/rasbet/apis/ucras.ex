@@ -30,60 +30,14 @@ defmodule Rasbet.APIs.UCRas do
   def update() do
     case games() do
       {:ok, games} ->
-        for game <- games do
-          Multi.new()
-          |> Multi.one(:game, from(i in Game, where: i.api_id == ^game.api_id))
-          |> Multi.insert_or_update(:new_game, fn %{game: db_game} ->
-            Game.changeset(db_game || %Game{api_id: game.api_id}, game)
-          end)
-          |> Multi.run(:completed_bets, fn repo, %{game: game, new_game: new_game} ->
-            if game != nil and new_game.completed and not game.completed do
-              {:ok,
-               game
-               |> repo.preload(bets: [entries: :game])
-               |> Map.get(:bets)
-               |> Enum.filter(&(Bets.bet_status(&1) != :in_progress))
-               |> Enum.map(&Bets.assign_winnings/1)}
-            else
-              {:ok, []}
-            end
-          end)
-          |> Multi.run(:winning_transactions, fn repo, %{completed_bets: bets} ->
-            {:ok,
-             bets
-             |> Enum.filter(&Money.positive?(&1.final_gains))
-             |> Enum.map(fn bet ->
-               {bet,
-                %Transaction{
-                  type: :bet_winnings,
-                  value: bet.final_gains,
-                  description: "Recompensa aposta",
-                  bet_id: bet.id,
-                  user_id: bet.user_id,
-                  inserted_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second),
-                  updated_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second)
-                }}
-             end)
-             |> Enum.map(fn {bet, tx} ->
-               Wallet.apply_transaction(tx)
-               |> Multi.update_all(
-                 :bet,
-                 fn _ ->
-                   from(b in Bet, where: b.id == ^bet.id, update: [set: [completed: true]])
-                 end,
-                 []
-               )
-             end)
-             |> Enum.map(&repo.transaction/1)}
-          end)
-          |> Multi.inspect(only: :winning_transactions)
-          |> Repo.transaction()
-        end
-
-        Logger.debug("Games saved.")
+        {:ok,
+         Enum.map(games, fn game ->
+           {from(g in Game, where: g.api_id == ^game.api_id and g.game_source == "ucras"),
+            %Game{api_id: game.api_id}, game}
+         end)}
 
       {:error, reason} ->
-        Logger.error("Failed to fetch games", reason: reason)
+        {:error, reason}
     end
   end
 
@@ -149,6 +103,7 @@ defmodule Rasbet.APIs.UCRas do
     %{
       api_id: id,
       game_source: "ucras",
+      api_info: %{},
       home_team: home_team,
       away_team: away_team,
       start_time: time,

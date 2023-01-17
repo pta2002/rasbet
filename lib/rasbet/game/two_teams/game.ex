@@ -19,6 +19,8 @@ defmodule Rasbet.Game.TwoTeams.Game do
     field(:completed, :boolean)
     field(:odds, :map)
     field(:sport, Ecto.Enum, values: Application.fetch_env!(:rasbet, :sports) |> Map.keys())
+    field(:game_source, :string)
+    field(:api_info, :map)
 
     has_many(:entries, Entry)
     has_many(:bets, through: [:entries, :bet])

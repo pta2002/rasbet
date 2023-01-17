@@ -1,9 +1,11 @@
 defmodule Rasbet.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query
 
   alias Rasbet.Game.Bets.Bet
-  alias Rasbet.Accounts.Notification
+  alias Rasbet.Game.Bets
+  alias Rasbet.Accounts.Subscription
 
   schema "users" do
     field(:name, :string)
@@ -256,5 +258,21 @@ defmodule Rasbet.Accounts.User do
     else
       add_error(changeset, :current_password, "is not valid")
     end
+  end
+
+  def subscribe_event(repo, user_id, game_id, events) do
+    subscription =
+      case from(s in Subscription, where: s.game_id == ^game_id and s.user_id == ^user_id)
+           |> Rasbet.Repo.one() do
+        nil -> %Subscription{game_id: game_id, user_id: user_id, events: []}
+        sub -> sub
+      end
+
+    changeset =
+      Subscription.changeset(subscription, %{
+        events: (events ++ subscription.events) |> MapSet.new() |> MapSet.to_list()
+      })
+
+    repo.insert_or_update(changeset)
   end
 end

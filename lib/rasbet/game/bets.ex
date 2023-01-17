@@ -44,6 +44,17 @@ defmodule Rasbet.Game.Bets do
        end)}
     end)
     |> Multi.insert_all(:insert_entries, Entry, & &1.entries)
+    |> Multi.run(:notify, fn repo, %{bet: %{user_id: user_id}, entries: entries} ->
+      {:ok,
+       Enum.map(
+         entries,
+         &Rasbet.Accounts.User.subscribe_event(repo, user_id, &1.game_id, [
+           :started,
+           :odds_changed,
+           :ended
+         ])
+       )}
+    end)
   end
 
   def assign_odds(%{entries: entries, amount: amount, promo: promo} = bet) do

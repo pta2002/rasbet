@@ -64,7 +64,6 @@ defmodule RasbetWeb.Components.Notifications do
                           <% :ended -> %>
                           <p>
                             <%= gettext "Um jogo que segue terminou!" %>
-                            <%= gettext "Ganhou %{winnings}.", winnings: Money.new(Map.get(notification.extra_data, "winnings")) %>
                           </p>
                         <% end %>
                         <p class="text-gray-500 text-sm mt-1"><%= Calendar.strftime(notification.updated_at, gettext("%d/%m/%Y às %H:%M")) %></p>
