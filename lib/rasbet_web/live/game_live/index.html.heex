@@ -76,7 +76,7 @@
           <div class="flex justify-between flex-col text-center items-center md:items-start md:text-left mb-2 md:mb-0">
             <div class="text-gray-500 text-sm flex gap-2">
               <span><strong class="font-medium"><%= Gettext.gettext(RasbetWeb.Gettext,sport_name game.sport) %></strong> - <%= Calendar.strftime(game.start_time, gettext("%d/%m/%Y às %H:%M")) %></span>
-              <.live_component module={RasbetWeb.Components.GameSubscribe} id={"subscribe-#{game.id}"} game={game}/>
+              <.live_component module={RasbetWeb.Components.GameSubscribe} id={"subscribe-#{game.id}"} game={game} user={@current_user}/>
             </div>
             <div class="flex gap-3">
               <span><%= game.home_team %></span>

@@ -3,9 +3,9 @@ defmodule Rasbet.Accounts.Subscription do
   import Ecto.Changeset
 
   schema "subscriptions" do
-    field :event, Ecto.Enum, values: [:started, :ended, :odds]
     field :user_id, :id
     field :game_id, :id
+    field :events, {:array, Ecto.Enum}, values: [:started, :odds_changed, :ended]
 
     timestamps()
   end
@@ -13,7 +13,7 @@ defmodule Rasbet.Accounts.Subscription do
   @doc false
   def changeset(subscription, attrs) do
     subscription
-    |> cast(attrs, [:event, :game_id])
-    |> validate_required([:event, :game_id])
+    |> cast(attrs, [:events, :game_id])
+    |> validate_required([:game_id])
   end
 end

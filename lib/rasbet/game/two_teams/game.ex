@@ -5,6 +5,7 @@ defmodule Rasbet.Game.TwoTeams.Game do
   alias Rasbet.Game.TwoTeams.Game
   alias Rasbet.Repo
   alias Rasbet.Game.Bets.Entry
+  alias Rasbet.Accounts.Subscription
 
   require Ecto.Query
 
@@ -21,6 +22,7 @@ defmodule Rasbet.Game.TwoTeams.Game do
 
     has_many(:entries, Entry)
     has_many(:bets, through: [:entries, :bet])
+    has_many(:subscriptions, Subscription)
 
     timestamps()
   end
