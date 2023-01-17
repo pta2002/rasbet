@@ -5,6 +5,7 @@ defmodule Rasbet.Game.Bets do
   alias Rasbet.Game.Bets.Entry
   alias Rasbet.Game.Bets.Bet
   alias Rasbet.Wallet.Transaction
+  alias Rasbet.Game.Bets
   alias Rasbet.Wallet
   alias Rasbet.Games
 
@@ -108,5 +109,40 @@ defmodule Rasbet.Game.Bets do
         a -> a
       end
     end)
+  end
+
+  def update_game(bets, repo, events) do
+    if :ended in events do
+      bets =
+        bets
+        |> Enum.filter(&(Bets.bet_status(&1) != :in_progress))
+        |> Enum.map(&Bets.assign_winnings/1)
+
+      bets
+      |> Enum.filter(&Money.positive?(&1.final_gains))
+      |> Enum.map(fn bet ->
+        {bet,
+         %Transaction{
+           type: :bet_winnings,
+           value: bet.final_gains,
+           description: "Recompensa aposta",
+           bet_id: bet.id,
+           user_id: bet.user_id,
+           inserted_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second),
+           updated_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second)
+         }}
+      end)
+      |> Enum.map(fn {bet, tx} ->
+        Wallet.apply_transaction(tx)
+        |> Multi.update_all(
+          :bet,
+          fn _ ->
+            from(b in Bet, where: b.id == ^bet.id, update: [set: [completed: true]])
+          end,
+          []
+        )
+      end)
+      |> Enum.map(&repo.transaction/1)
+    end
   end
 end

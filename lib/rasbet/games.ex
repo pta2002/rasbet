@@ -91,46 +91,12 @@ defmodule Rasbet.Games do
            end)
          end)}
       end)
-      |> Multi.run(:completed_bets, fn repo, %{game: game, new_game: new_game} ->
-        # Fetch the bets that are now complete
-        if game != nil and new_game.completed and not game.completed do
-          {:ok,
-           game
-           |> repo.preload(bets: [entries: :game])
-           |> Map.get(:bets)
-           |> Enum.filter(&(Bets.bet_status(&1) != :in_progress))
-           |> Enum.map(&Bets.assign_winnings/1)}
-        else
-          {:ok, []}
-        end
-      end)
-      |> Multi.run(:winning_transactions, fn repo, %{completed_bets: bets} ->
+      |> Multi.run(:update_bets, fn repo, %{new_game: game, events: events} ->
         {:ok,
-         bets
-         |> Enum.filter(&Money.positive?(&1.final_gains))
-         |> Enum.map(fn bet ->
-           {bet,
-            %Transaction{
-              type: :bet_winnings,
-              value: bet.final_gains,
-              description: "Recompensa aposta",
-              bet_id: bet.id,
-              user_id: bet.user_id,
-              inserted_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second),
-              updated_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second)
-            }}
-         end)
-         |> Enum.map(fn {bet, tx} ->
-           Wallet.apply_transaction(tx)
-           |> Multi.update_all(
-             :bet,
-             fn _ ->
-               from(b in Bet, where: b.id == ^bet.id, update: [set: [completed: true]])
-             end,
-             []
-           )
-         end)
-         |> Enum.map(&repo.transaction/1)}
+         game
+         |> repo.preload(bets: [entries: :game])
+         |> Map.get(:bets)
+         |> Bets.update_game(repo, events |> Enum.map(fn {e, _} -> e end))}
       end)
 
     res = multi |> Rasbet.Repo.transaction()
