@@ -65,7 +65,7 @@ defmodule RasbetWeb.Components.GameSubscribe do
                 <div class="flex flex-col mt-2">
                   <.form_field
                     type="checkbox_group"
-                    label={gettext("Receber notificaões para:")}
+                    label={gettext("Receber notificações para:")}
                     form={f}
                     field={:events}
                     class="mb-0"
