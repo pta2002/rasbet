@@ -1,0 +1,13 @@
+Admin:
+
+User ID 1
+Email: admin@admin.pt
+Pass: adminadminadmin
+
+Enviar notificação:
+Rasbet.Accounts.Notifications.send_notifications([%Rasbet.Accounts.Notification{user_id: 1, game_id: 1, event: :started, extra_data: %{}, read: false}])
+
+Jogo concluído: Rio Ave - Famalicão, id: 3, resultado 0-0
+
+Marcar jogo como por concluir:
+Rasbet.Game.TwoTeams.Game |> Rasbet.Repo.get(3) |> Rasbet.Game.TwoTeams.Game.changeset(%{completed: false}) |> Rasbet.Repo.update()

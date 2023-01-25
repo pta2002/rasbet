@@ -6,6 +6,7 @@ defmodule Rasbet.Accounts.User do
   alias Rasbet.Game.Bets.Bet
   alias Rasbet.Game.Bets
   alias Rasbet.Accounts.Subscription
+  alias Rasbet.Accounts.Notification
 
   schema "users" do
     field(:name, :string)
